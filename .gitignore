@@ -1,0 +1,21 @@
+# Artefactos de compilación LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.idx
+*.ind
+*.ilg
+*.nav
+*.snm
+*.vrb
+
+# PDF generado (se sube como artefacto en CI)
+main.pdf

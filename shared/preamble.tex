@@ -1,0 +1,34 @@
+% Preámbulo compartido del libro de Cálculo I
+\documentclass[12pt, letterpaper, oneside]{book}
+
+% Codificación y lenguaje
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+% Matemáticas
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+% Gráficos
+\usepackage{graphicx}
+\graphicspath{{assets/images/}{assets/figures/}}
+
+% Diseño de página
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+% Hipervínculos (sin color para impresión)
+\usepackage[hidelinks]{hyperref}
+
+% Entornos de teoremas
+\newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{lema}[teorema]{Lema}
+\newtheorem{corolario}[teorema]{Corolario}
+\newtheorem{proposicion}[teorema]{Proposición}
+\theoremstyle{definition}
+\newtheorem{definicion}[teorema]{Definición}
+\newtheorem{ejemplo}[teorema]{Ejemplo}
+\theoremstyle{remark}
+\newtheorem{observacion}[teorema]{Observación}
