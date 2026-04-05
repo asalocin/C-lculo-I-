@@ -1,0 +1,607 @@
+\documentclass[12pt]{book}
+\usepackage[spanish]{babel}
+\usepackage[top=3.5cm, bottom=3cm, left=2cm, right=2cm, headheight=2.5cm, footskip=1.5cm, marginparwidth=2cm]{geometry}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{fancybox}
+\usepackage{lastpage}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{marginnote}
+\usepackage{cancel}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usetikzlibrary{patterns} 
+\tcbuselibrary{skins}
+\usetikzlibrary{calc,angles,quotes}
+\usepackage{tzplot}
+\usepackage{float}
+\usepackage{kinematikz}
+\usepackage{titlesec}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{plotmarks}
+\usepgfplotslibrary{polar}
+\tcbuselibrary{theorems}
+
+
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{gre}{RGB}{101, 191, 127}
+\definecolor{gree}{RGB}{7, 135, 44}
+\definecolor{safetyorange(blazeorange)}{rgb}{1.0, 0.4, 0.0}
+\definecolor{gold(web)(golden)}{rgb}{1.0, 0.84, 0.0}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}
+\definecolor{internationalkleinblue}{rgb}{0.0, 0.18, 0.65}
+\definecolor{citrine}{rgb}{0.89, 0.82, 0.04}
+\arrayrulecolor{internationalkleinblue}
+
+
+\newcommand{\ChapterStyle}[2]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Fondo decorativo
+    \fill[safetyorange(blazeorange)] (-3,0) rectangle (40,4); 
+    \draw[blue, line width=2mm] (-3,4) -- (40,4);
+    \draw[blue, line width=2mm] (-3,0) -- (40,0);
+    \fill[white] (15,2) circle (1.7);
+    \draw[line width=1mm] (15,2) circle (1.7)
+    \draw[line width=0.5mm] (15,2) circle (1.5)
+    \fill[kellygreen] (15,2) circle (1.5)
+    \node at (15,2) {\Huge\bfseries\sffamily\color{white}{\thechapter}}
+   \node[anchor=west] at (2,2) {\Huge\bfseries\sffamily\color{white}{#2}};
+  \end{tikzpicture}
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {%
+    \ChapterStyle{\thechapter}{} % Pasa el número del capítulo y el título al diseño
+  }
+
+
+\newcommand{\Estilo}{
+ \begin{tikzpicture}[remember picture, overlay]
+         \draw
+     (current page header area.south west) -- (current page header area.south east)
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=7cm]current page.south east) {\textbf{Ingeniería Matemática}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=16.1cm]current page.south east) {\textbf{Cálculo II}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \draw[safetyorange(blazeorange), line width=2mm]
+    (current page.south west) rectangle (current page.north west)
+\end{tikzpicture}
+
+}
+%Carga el estilo
+\fancypagestyle{Normal}{%
+  \fancyhead[L]{\emph{Departamento de Matemáticas}}
+  \fancyhead[R]{\emph{Univesidad de Santiago de Chile}}
+  
+  \fancyhead[C]{\Estilo}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+
+
+
+%Estilo de Pagina resumen
+\newcommand{\mypage}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        
+        \fill[fill=safetyorange(blazeorange)](current page.north west) rectangle ([yshift=-22mm]current page.north east) node[midway] {\Huge\bfseries\sffamily\color{white}{Resumen}};
+
+        
+    \end{tikzpicture}
+}%
+%Carga el estilo
+\fancypagestyle{Resumen}{%
+  \fancyhf{}
+  \fancyhead[C]{\mypage}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+\renewcommand{\footrulewidth}{0.5pt}
+
+%Ejemplo
+\NewTcbTheorem[number within=section]{eje}{Ejemplo}
+{ blanker,breakable,left=5mm,
+ before skip=10pt,after skip=10pt,
+ borderline west={1mm}{0pt}{red}}
+
+%Problemas comunes
+\NewTcbTheorem[number within=section]{prob}{Problema}{colback=gray!15!white, enhanced
+,title= Definition, attach boxed title to top left={yshift=1mm}, fonttitle=\bfseries, sharp corners,boxrule=1pt,coltitle=black, boxed title style={size=Big,colback=black!10,boxrule=1.5pt}}{th}
+
+ %Propuestos
+ \tcbset{ribbonbox/.style={enhanced,colback=gray!15!white, sharpish corners,  frame style={left color=red!75!black,
+ right color=blue!75!black}, overlay={\path[fill=blue!75!white,draw=blue,double=white!85!blue,
+ preaction={opacity=0.6,fill=blue!75!white},
+ line width=0.1mm,double distance=0.2mm,
+ pattern=fivepointed stars,pattern color=white!75!blue]
+ ([xshift=-0.2mm,yshift=-1.02cm]frame.north east)-- ++(-1,1)-- ++(-0.5,0)-- ++(1.5,-1.5)-- cycle;}}}
+
+ %DiseñoTCB
+\NewTcbTheorem[number within=section]{defi}{Definición}{colback=bleudefrance!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=bleudefrance,colbacktitle=bleudefrance, boxed title style={
+		frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+ \NewTcbTheorem[number within=section]{mytheo}{My Theorem}%
+ {colback=bleudefrance!10,enhanced, title=Definition, attach boxed title to top left={xshift=-4mm}, boxrule=0pt, after skip=1cm,right skip=0cm, breakable, fonttitle=\bfseries, toprule= 0pt, bottomrule=0pt, rightrule=0pt, leftrule=0pt, arc=0mm, skin=enhancedlast jigsaw, sharpcorners, colframe=bleudefrance, colbacktitle=bleudefrance, boxed title style={
+ frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\NewTcbTheorem[number within=section]{teo}{Teorema}{colback=cadmiumred!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=cadmiumred,colbacktitle=cadmiumred, boxed title style={
+		frame code={ 
+			\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+            
+\NewTcbTheorem[number within=section]{prop}{Proposición}{colback=gold(web)(golden)!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=gold(web)(golden),colbacktitle=gold(web)(golden), boxed title style={
+		frame code={ 
+			\fill[gold(web)(golden)](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,gold(web)(golden)]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,gold(web)(golden)]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[gold(web)(golden)!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+\NewTcbTheorem[number within=section]{coro}{Corolario}{colback=kellygreen!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=kellygreen,colbacktitle=kellygreen, boxed title style={
+		frame code={ 
+			\fill[kellygreen](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,kellygreen]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,kellygreen]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[kellygreen!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+ \pagestyle{Normal}
+ %Sangía
+\setlength{\parindent}{0pt}
+
+ 
+\begin{document}
+
+
+\chapter{Axiomas de Orden}
+
+\begin{prob}{}{}
+    Se define la sucesión $(x_n)_{n \in \mathbb{N}}$ por la recurrecia:
+    \begin{align*}
+        x_1=1, \quad x_n = \sqrt[4]{x_{n-1}^2+1} \quad \forall n \geq 1
+    \end{align*}
+    \begin{itemize}
+        \item[\textbf{a)}] Demuestre que la sucesión es monótona creciente.
+        \item[\textbf{b)}] Demuestre que la sucesión es acotada superiormente.
+        \item[\textbf{c)}] Analice la existencia del límite de la sucesión.
+        \item[\textbf{d)}] Si en \textbf{c)} afirma la existencia del límite, calcularlo.
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] Para probar que la sucesión es monótona creciente, procederemos por inducción.
+
+    \begin{itemize}
+        \item \textbf{Caso Base:} Para $n=2$, $x_2=\sqrt[4]{x_1^2+1}=\sqrt[4]{2}\geq 1$. Por lo tanto se cumple.
+
+        \item \textbf{Hipótesis Inductiva:} Para $n=k$, $k\geq 1$ fijo, supongamos que $x_k \leq x_{k+1}$
+
+        \item \textbf{Tesis Inductiva:} Tenemos que probar que $x_{k+1} \leq x_{k+2}$.
+    \end{itemize}
+    En efecto, por hipótesis 
+    \begin{align*}
+        x_k \leq x_{k+1} &\Longleftrightarrow x_k^2 \leq x_{k+1}^2 \\
+        &\Longleftrightarrow x_k^2+1 \leq x_{k+1}^2 +1\\ 
+         &\Longleftrightarrow \sqrt[4]{x_k^2+1} \leq \sqrt[4]{x_{k+1}^2 +1} \\
+          &\Longleftrightarrow x_{k+1} \leq x_{k+2}
+    \end{align*}
+    Por lo tanto $\forall n \geq 1$ se tiene que $x_n \leq x_{n+1}$.
+    
+    \item[\textbf{b)}] Tenemos que probar que $\exists M >0$ tal que $x_n \leq M$ $\forall n \in \mathbb{N}$. Para ello procederemos por inducción.
+
+    \textbf{Propuesta:} Vamos a demostrar que $x_n \leq 2$ $\forall n \in \mathbb{N}$
+
+    \begin{itemize}
+        \item \textbf{Caso Base:} Para $n=1$ $x_1=1 \leq 2$
+
+        \item \textbf{Hipótesis Inductiva:} Para $n=k$ $k\geq 1$ fijo, supongamos que $x_k \leq 2$
+
+        \item \textbf{Tesis Inductiva:} Tenemos que probar que $x_{k+1} \leq 2$
+    \end{itemize}
+    En efecto, notemos que por hipótesis
+    \begin{align*}
+        x_k  \leq 2 \Longrightarrow x_k^2 \leq 4
+    \end{align*}
+    Ahora, 
+    \begin{align*}
+        x_{k+1}= \sqrt[4]{x_k^2+1} \leq \sqrt[4]{4+1}=\sqrt[4]{5}\approx 1.495 \leq 2
+    \end{align*}
+    Por lo tanto $\forall n \in \mathbb{N}$ se cumple que $x_n \leq 2$.
+    \item[\textbf{c)}] Dado que $x_n$ es una sucesión creciente y acotada superiormente, por teorema de conververgencia su límite existe. Es decir 
+    \begin{align*}
+        \lim_{n \to \infty} x_n = L
+    \end{align*}
+    
+    \item[\textbf{d)}] Aplicamos límite a ambos lados
+    \begin{align*}
+        \lim_{n \to \infty} x_n &=  \lim_{n \to \infty} \sqrt[4]{x_n^2 +1 } \\
+        L&=  \sqrt[4]{ \lim_{n \to \infty}x_n^2 +1 } \\
+        L&= \sqrt[4]{L^2+1} \\
+        L^4 &= L^2+1 \\
+        0&= L^4 -L^2-1 
+    \end{align*}
+Haciendo el cambio de variable $x=L^2$, tenemos la ecuación cuadrática
+\begin{align*}
+    x^2-x-1=0
+\end{align*}
+Cuyas soluciones son 
+\begin{align*}
+    x_1= \frac{1-\sqrt{5}}{2} \quad \text{y} \quad x_2 = \frac{1+\sqrt{5}}{2}
+\end{align*}
+Tomamos $x_2$, dado que $1\leq x_n \leq 2$ $\Longrightarrow$ $1\leq L \leq 2$. Así
+\begin{align*}
+    L=\sqrt{\frac{1+\sqrt{5}}{2}}
+\end{align*}
+\end{itemize}
+
+\begin{prob}{}{}
+    Sea $a \in (0,1)$. Consideramos la sucesión $(a_n)_{n \in \mathbb{N}}$ definida mediante la recurrencia:
+\begin{align*}
+    a_1=a, \quad a_{n+1}=a_n(2-a_n)
+\end{align*}
+\begin{itemize}
+    \item[\textbf{a)}] Demuestre que $\forall x \in \mathbb{R}$ se tiene que $x(2-x) \leq 1$
+    \item[\textbf{b)}] Utilizando inducción pruebe que $\forall n \geq 1$, $a_n \in (0,1)$.
+    \item[\textbf{c)}] Demuestre que $(a_n)_{n\in \mathbb{N}}$ es una sucesión estrictamente creciente.
+    \item[\textbf{d)}] Argumente la convergencia de $(a_n)_{n \in \mathbb{N}}$ y calcule su límite.
+\end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] En efecto,
+    \begin{align*}
+        x(2-x) \leq 1 &\Longleftrightarrow 2x-x^2\leq 1  \\
+        &\Longleftrightarrow x^2 -2x +1 \geq 0  \\
+         &\Longleftrightarrow (x-1)^2 \geq 0 
+    \end{align*}
+    Por lo tanto se cumple $\forall x \in \mathbb{R}$.
+    \item[\textbf{b)}] 
+
+    \begin{itemize}
+        \item \textbf{Caso Base:} Para $n=1$ tenemos que $a_1=a \in (0,1)$. Por lo tanto es verdad.
+
+        \item \textbf{Hipótesis Inductiva:} Para $n=k$ $k\geq 1$ fijo, supongamos que $a_k \in (0,1)$.
+        \item \textbf{Tesis Inductiva:} Tenemos que probar que $a_{k+1} \in (0,1)$.
+    \end{itemize}
+    En efecto, por hipótesis 
+    \begin{align*}
+        0<a_k < 1 &\Longleftrightarrow -1 < -a_k < 0 \\
+         &\Longleftrightarrow 2-1 < 2-a_k < 2 \\
+          &\Longleftrightarrow 1 < 2-a_k < 2 \\
+           &\Longrightarrow a_k(2-a_k)>0 \\
+    \end{align*}
+    Por lo tanto, utilizando la parte \textbf{a)}, tenemos que 
+    \begin{align*}
+        0<a_n(2-a_n) <1 &\Longrightarrow 0 < a_{n+1} <1 \\
+        &\Longleftrightarrow a_{n+1} \in (0,1)
+    \end{align*}
+    Así, $\forall n \in \mathbb{N}$ $a_n \in (0,1)$
+    \begin{align*}
+        a_{k+1}=a_k(2-a_k) 
+    \end{align*}
+    \item[\textbf{c)}] Tenemos que probar que $a_n \leq a_{n+1}$ $\forall n \in \mathbb{N}$.
+    En efecto, notemos que 
+    \begin{align*}
+        a_{n+1}-a_n&=a_n(2-a_n) -a _n \\
+        &=a_n(1-a_n) \geq 0
+    \end{align*}
+    Por lo tanto
+    \begin{align*}
+        a_n \leq a_{n+1} 
+ \quad \forall n \in \mathbb{N}
+    \end{align*}
+    
+    \item[\textbf{d)}] Dado que $(a_n)_{n \in \mathbb{N}}$ es una sucesión acotada superiomente y creciente, entonces por teorema de convergencia $a_n$ converge. Es decir 
+    \begin{align*}
+        \lim_{n \to \infty} a_n =L
+    \end{align*}
+    Tomando límite a ambos lados
+    \begin{align*}
+        \lim_{n \to \infty} a_{n+1}&=  \lim_{n \to \infty}a_n(2-a_n) \\
+        L&=L(2-L) \\
+        0&=L^2-L \\
+        0&=L(1-L)
+    \end{align*}
+    Entonces $(L=0)$ $\vee$ $(L=1)$. Como $a_n$ es creciente, entonces $\displaystyle \lim_{n \to \infty} a_n = 1$.
+\end{itemize}
+\begin{prob}{}{}
+    Considere la sucesión $(P_n)_{n \in \mathbb{N}}$ definida por:
+    \begin{align*}
+        P_0 >0, \quad P_{n+1}=\frac{bP_n}{a+P_n}
+    \end{align*}
+    Donde $a,b>0$.
+    \begin{itemize}
+        \item[\textbf{a)}] Demuestre que si $(P_n)_{n \in \mathbb{N}}$ es convergente, los únicos valores posible de su límite son $0$ y $b-a$,
+        
+        \item[\textbf{b)}] Prube que si $a>b$, entonces $(P_n)_{n \in \mathbb{N}}$ es decreciente y converge a $0$.
+        
+        \item[\textbf{c)}] Suponga ahora que $a<b$ y $0 < P_0 < b-a$.
+        \begin{itemize}
+            \item Pruebe que $0<P_n < b-a$, $\forall n \in \mathbb{N}$ y que $(P_n)_{n \in \mathbb{N}}$ es creciente.
+            \item Calcule $\displaystyle \lim_{n \to \infty} P_n$.
+        \end{itemize}
+    \end{itemize}
+\end{prob}
+\begin{itemize}
+    \item[\textbf{a)}] Dado que $(P_n)_{n \in \mathbb{N}}$ es convergente, entonces $P_n \to L$ y $P_{n+1} \to L$. Por lo tanto, tomando límite a ambos lados
+    \begin{align*}
+        \lim_{n \to \infty} P_{n+1}&= \lim_{n \to \infty} \frac{b P_n}{a+ P_n} \\
+        L&=\frac{bL}{a+L} \\
+        0&=L^2+L(a-b) \\
+        &=L(L+(a-b)) \\
+        \Longrightarrow& \quad (L=0) \vee (L=b-a)
+    \end{align*}
+
+    \item[\textbf{b)}] Si $a>b$ entonces $\displaystyle\frac{b}{a}<1$. Además
+    \begin{align*}
+        a \leq a+ P_n \Longrightarrow \frac{1}{a+P_n} \leq \frac{1}{a}
+    \end{align*}
+    Luego,
+    \begin{align*}
+        P_{n+1}= \frac{bP_n}{a+P_n} \leq \frac{bP_n}{a} < P_n
+    \end{align*}
+    Por lo tanto, $(P_n)_{n \in \mathbb{N}}$ es una sucesión decrecient y acotada inferiormente por 0. Por lo tanto $P_n \to 0$, dado que $b-a <0$ y $P_n >0$ $\forall n \in \mathbb{N}$.
+
+    \item[\textbf{c)}] Primero probemos que $0<P_n < b-a$ $\forall n \in \mathbb{N}$. Procederemos por inducción:
+    \begin{itemize}
+        \item \textbf{Caso Base:}  Para $n=0$ sabemos que $0 < P_0 < b-a$. Por lo tanto es cierta.
+        \item \textbf{Hipotesis Inductiva:} Para $n=k$ $k \geq 0$ fijo, supongamos que $0<P_k < b-a$ 
+        \item \textbf{Tesis Inductiva:} Tenemos que probar que $0<P_{k+1} < b-a$
+    \end{itemize}
+    En efecto, notemos que 
+    \begin{align*}
+        P_{k+1}= \frac{b P_k}{a+P_k} < b-a &\Longleftrightarrow bP_k< (b-a)(a+P_k) \\
+        &\Longleftrightarrow bP_k < ba + bP_k -a^2-a P_k \\
+        &\Longleftrightarrow 0 < ba-a^2-aP_k \\
+        &\Longleftrightarrow 0 < a(b-a-P_k) \\
+        &\Longrightarrow P_k < b-a && \textbf{(HI)}
+    \end{align*}
+    La cual por \textbf{(HI)} es verdadera. Así $\forall n \in \mathbb{N}$ $0<P_n < b-a$. Es decir $(P_n)_{n \in \mathbb{N}}$ es acotada superiormente. Ahora probemos que $(P_n)_{n \in \mathbb{N}}$  es creciente. Notemos que 
+    \begin{align*}
+        0<P_n < b-a \Longrightarrow \frac{1}{b-a} < \frac{1}{P_n}
+    \end{align*}
+    Así
+    \begin{align*}
+        P_{n+1}=\frac{bP_n}{a+P_n} > \frac{bP_n}{a+(b-a)} = \frac{bP_n}{b} = P_n
+    \end{align*}
+    Probando así que es creciente. 
+
+    Finalmente, dado que $(P_n)_{n \in \mathbb{N}}$ es creciente y acotada superiormente $P_n \to b-a$ por teorema de convergencia. 
+\end{itemize}
+\begin{prob}{}{}
+    Sea $(a_n)_{n \in \mathbb{N}}$ una sucesión convergente de números reales. Demuestre que 
+    \begin{align*}
+        \lim_{n \to \infty} a_{n+k}=\lim_{n \to \infty}a_n \quad \forall n \geq k \in \mathbb{N}
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+Supongamos que $\displaystyle\lim_{n \to \infty}a_n =L $. Entonces 
+\begin{align*}
+    \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ |a_n - L| < \varepsilon \quad \forall n \geq n_0
+\end{align*}
+Entonces es claro que $n+k \geq n_0$. Por lo que 
+\begin{align*}
+     \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ |a_{n+k} - L| < \varepsilon \quad \forall (n+k )\geq n_0
+\end{align*}
+Es decir $\displaystyle\lim_{n \to \infty} a_{n+k} = L$.
+
+\begin{prob}{}{}
+Calcule los siguientes Límites:
+    \begin{itemize}
+        \item[\textbf{a)}] $ \displaystyle \lim_{n \to \infty} \left(\frac{n \sin(\cos(n))+9^n}{3n^3+9^{n+1}} \right)^n$
+        \item[\textbf{b)}] $\displaystyle \lim_{n \to \infty} \frac{5n^3+3n^2+2}{10n^3+4}$
+        \item[\textbf{c)}] $\displaystyle \lim_{n \to \infty} \sum_{k=1}^n \frac{nk}{n^3+k}$
+        \item[\textbf{d)}] $\displaystyle \lim_{n \to \infty} \frac{a^{n+1}+b^{n+1}}{a^n+b^n}$ \quad Si $a>b$.
+        \item[\textbf{e)}] $\displaystyle \lim_{n \to \infty}  \sqrt{n+1}-\sqrt{n} $
+        \item[\textbf{f)}] $\displaystyle \frac{1}{n} \sum_{k=1}^n \ln\left( 1+ \frac{1}{k}\right)$
+        \item[\textbf{g)}] $\displaystyle \lim_{n \to \infty} \frac{1}{n} \sum_{k=1}^n \left(e^{\frac{1}{n}}\right)^k$
+        
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] Tomemos 
+    \begin{align*}
+        x_n= \frac{n \sin(\cos(n))+9^n}{3n^3+9^{n+1}}
+    \end{align*}
+    Dividimos por $9^n$
+    \begin{align*}
+        \lim_{n \to \infty}\frac{n \sin(\cos(n))+9^n}{3n^3+9^{n+1}}= \lim_{n \to \infty} \frac{\frac{n \sin(\cos(n))}{9^n}+1}{\frac{3n^3}{9^n}+9}
+    \end{align*}
+    Luego, veamos los límites resultantes
+    \begin{itemize}
+        \item  Dado que $\sin(\cos(n))$ es acotada, y $\displaystyle \frac{n}{9^n} \underset{n \to \infty}{\longrightarrow} 0$.
+        \item $\displaystyle \lim_{n \to \infty}\frac{3n^3}{9^n} =0$. Entonces 
+        \begin{align*}
+          \lim_{n \to \infty} \frac{n \sin(\cos(n))}{9^n}=0
+        \end{align*}
+        \item Por otro lado es claro que 
+        \begin{align*}
+            \lim_{n  \to \infty} \frac{3n^3}{9^n}=0
+        \end{align*}
+    \end{itemize}
+    Así 
+    \begin{align*}
+        \lim_{n \to \infty} x_n= \frac{\frac{n \sin(\cos(n))}{9^n}+1}{\frac{3n^3}{9^n}+9}= \frac{0+1}{3(0)+9}=\frac{1}{9}
+    \end{align*}
+    Por último, tenemos que $0<\frac{1}{9} <1$. Por lo tanto
+    \begin{align*}
+        \lim_{n \to \infty} (x_n)^n =0
+    \end{align*}
+
+    \item[\textbf{b)}] Divimos por $n^3$
+
+    \begin{align*}
+        \lim_{n\to \infty} \frac{5n^3+3n^2+2}{10n^3+4}= \lim_{n\to \infty} \frac{5+\frac{3}{n}+\frac{2}{n^3}}{10+\frac{4}{n^3}}=\frac{5+0+0}{10+}=\frac{1}{2}
+    \end{align*}
+
+    \item[\textbf{c)}] Utilizaremos el Teorema del Sandwich para acotar a conveniencia. Notemos que
+    \begin{align*}
+        \frac{n}{n^3+n}\sum_{k=1}^nk= \sum_{k=1}^n \frac{nk}{n^3+n}\leq \sum_{k=1}^n\frac{nk}{n^3+k} \leq \sum_{k=1}^n \frac{nk}{n^3+1}=\frac{n}{n^3+1}\sum_{k=1}^n k
+    \end{align*}
+    Utilizando el hecho de que 
+    \begin{align*}
+        \sum_{k=1}^n k=\frac{n(n+1)}{2}
+    \end{align*}
+    Tenemos que 
+    \begin{align*}
+        \frac{n^2+n}{2(n^2+1)} &\leq \sum_{k=1}^n \frac{nk}{n^3+k} \leq \frac{n^3+n^2}{2(n^3+1)} \\
+        \lim_{n\to \infty}  \frac{n^2+n}{2(n^2+1)} &\leq \lim_{n\to \infty} \sum_{k=1}^n \frac{nk}{n^3+k} \leq  \lim_{n\to \infty}  \frac{n^3+n^2}{2(n^3+1)}\\
+        \frac{1}{2} &\leq \lim_{n\to \infty} \sum_{k=1}^n \frac{nk}{n^3+k} \leq  \frac{1}{2}
+    \end{align*}
+    Así 
+    \begin{align*}
+        \lim_{n\to \infty} \sum_{k=1}^n \frac{nk}{n^3+k} = \frac{1}{2}
+    \end{align*}
+
+    \item[\textbf{d)}] Dividimos por $a^{n+1}$. Entonces
+
+    \begin{align*}
+        \lim_{n \to \infty} \frac{a^{n+1}+b^{n+1}}{a^n+b^n}=\lim_{n \to \infty} \frac{1+\left(\frac{b}{a}\right)^{n+1}}{\frac{1}{a}+\left(\frac{b}{b}\right)^n}
+    \end{align*}
+    Dado que $0<\displaystyle \frac{b}{a}<1$, entonces $\displaystyle \left(\frac{b}{a} \right)^{n+1} \underset{n \to \infty}{\longrightarrow} 0 $ y $\left(\frac{b}{a} \right)^{n} \underset{n \to \infty}{\longrightarrow} 0 $. Así 
+    \begin{align*}
+        \lim_{n \to \infty} \frac{1+\left(\frac{b}{a}\right)^{n+1}}{\frac{1}{a}+\left(\frac{b}{b}\right)^n} = \frac{1+0}{\frac{1}{a}+0}=a
+    \end{align*}
+    \item[\textbf{e)}]
+
+    \begin{align*}
+        \lim_{n \to \infty} \sqrt{n+1}-\sqrt{n}&=\lim_{n \to \infty} \left(\sqrt{n+1}-\sqrt{n} \right) \cdot \frac{\sqrt{n+1}+\sqrt{n}}{\sqrt{n+1}+\sqrt{n}} \\
+        &= \lim_{n \to \infty}  \frac{(n+1)-n}{\sqrt{n+1}+\sqrt{n}} \\
+        &= \lim_{n \to \infty} \frac{1}{\sqrt{n+1}+\sqrt{n}} \\
+        &\approx  \lim_{n \to \infty} \frac{1}{2 \sqrt{n}} && \textbf{(Para $n$ grande)}
+    \end{align*}
+
+    \item[\textbf{f)}] 
+
+    \begin{align*}
+        \lim_{n \to \infty} \frac{1}{n}\sum_{k=1}^n \ln\left(1+\frac{1}{k} \right)&= \lim_{n \to \infty} \frac{1}{n} \sum_{k=1}^n \ln\left(\frac{k+1}{k} \right) \\
+        &= \lim_{n \to \infty} \frac{1}{n} \sum_{k=1}^n  \ln(k+1)-\ln(k) &&\textbf{(Telescópica)} \\
+        &= \lim_{n \to \infty} \frac{1}{n}\ln(n+1)-\cancelto{0}{\ln(1)} \\
+        &=\lim_{n \to \infty} \ln(\sqrt[n]{n+1}) \\
+        &= \ln(\lim_{n \to \infty}\sqrt[n]{n+1}) \\
+        &=\ln(1) \\
+        &= 0
+    \end{align*}
+
+
+\item [\textbf{g)}]
+\end{itemize} 
+
+\begin{prob}{}{}
+    Calcule los siguientes límites
+    \begin{itemize}
+        \item[\textbf{a)}] $\displaystyle \lim_{n \to \infty} n \left(n^2 \left(\exp\left(\frac{1}{n^2}\right)  -1\right)-1\right)$. \quad \emph{Hint: Utilice $1+x \leq \exp(x) \leq \frac{1}{1-x}$} $\forall x<1$
+        \item[\textbf{b)}] $\displaystyle \lim_{n \to \infty} \sum_{k=1}^n  \frac{1}{\left(n+k\right)^2}$
+        \item[\textbf{c)}] $\displaystyle \lim_{n \to \infty} \frac{}{}$
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] Utilizamos el \emph{Hint} para $1/n^2 <1$ $\forall n >1$. Notemos que 
+    \begin{align*}
+        1+\frac{1}{n^2}&\leq \exp\left(\frac{1}{n^2} \right) \leq \frac{1}{1-\frac{1}{n^2}}=\frac{n^2}{n^2-1}  \\
+        \Longrightarrow \quad \quad \frac{1}{n^2} &\leq \exp\left(\frac{1}{n^2}\right)  -1 \leq \frac{1}{n^2-1} \\
+  \Longrightarrow \quad \quad \quad 1&\leq  n^2 \left(\exp\left(\frac{1}{n^2}\right)  -1\right) \leq \frac{n^2}{n^2-1} \\
+\Longrightarrow \quad \quad \quad 0 &\leq \left(n^2 \left(\exp\left(\frac{1}{n^2}\right)  -1\right)-1\right) \leq \frac{1}{n^2-1} \\
+\Longrightarrow \quad \quad \quad 0 &\leq n \left(n^2 \left(\exp\left(\frac{1}{n^2}\right)  -1\right)-1\right) \leq \frac{n}{n^2-1}
+    \end{align*}
+Ahora dado que 
+\begin{align*}
+    \lim_{n \to \infty} \frac{n}{n^2-1} = 0
+\end{align*}
+Entonces por Teorema del Sandwich
+\begin{align*}
+    \lim_{n \to \infty} n \left(n^2 \left(\exp\left(\frac{1}{n^2}\right)  -1\right)-1\right) =0
+\end{align*}
+
+\item[\textbf{b)}] Tratemos de acotar convenientemente:
+
+\begin{align*}
+    \frac{n}{4n^2}=\sum_{k=1}^n \frac{1}{(2n)^2}\leq \sum_{k=1}^n \frac{1}{(n+k)^2}\leq \sum_{k=1}^n \frac{1}{(n+1)^2}=\frac{n}{(n+1)^2}
+ \end{align*}
+Dado que 
+\begin{align*}
+    \lim_{n \to \infty} \frac{n}{4n^2}= \lim_{n \to \infty} \frac{n}{(n+1)^2}=0
+\end{align*}
+Por \textbf{Teorema del Sandwich} tenemos que 
+\begin{align*}
+    \lim_{n \to \infty}  \sum_{k=1}^n  \frac{1}{\left(n+k\right)^2}=0
+\end{align*}
+
+\end{itemize}
+
+\begin{prob}{}{}
+    Sean $a,b \in (0, +\infty)$ con $a<b$. Definimos la sucesión
+    \begin{align*}
+        x_1=a, \ x_2=b, \ x_{n+2}=\frac{x_{n+1}+x_n}{2} \quad \forall n \geq 3.
+    \end{align*}
+    Demuestre que $(x_n)_{n \in \mathbb{N}}$ es convergente y encuentre su límite.
+\end{prob}
+\textbf{Solución:}
+La idea que perseguiremos para resolver en este problema es hallar una expresión para $x_n$. Notemos que si $n>2$, entonces
+\begin{align*}
+    x_{n+1}-x_n&=\frac{x_n+x_{n-1}}{2}-x_n \\
+    &=-\frac{1}{2}(x_n-x_{n-1}) \\
+    &= -\frac{1}{2}\left(\frac{x_{n-1}+x_{n-2}}{2}-x_{n-1}\right) \\
+    & \ \ \vdots \\
+    &=\left(-\frac{1}{2} \right)^n(x_2-x_1) \\
+    &=\left(-\frac{1}{2} \right)^n(b-a) 
+\end{align*}
+Luego 
+\begin{align*}
+    x_n=x_1+(x_n-x_{n-1})+ \cdots + (x_2-x_1) &= a+ \left[\left(-\frac{1}{2}\right)^{n-2}+ \cdots + 1 \right](b-a) \\
+    &= a+ \frac{1-\left(\frac{1}{2}\right)^{n-1}}{1+ \frac{1}{2}}\cdot (b-a) \\
+    &= a+ \frac{2}{3}\left[1+\left(-\frac{1}{2} \right)^{n-1} \right](b-a)
+\end{align*}
+Por lo tanto,
+\begin{align*}
+    \lim_{n \to \infty} x_n&=a+\frac{2}{3}\left[ 1-\lim_{n \to \infty}\left(-\frac{1}{2}\right)^{n-1} \right](b-a) \\
+    &= a+ \frac{2}{3}(1-0)(b-a) \\
+    &=\frac{a+2b}{3}
+\end{align*}
+\end{document}

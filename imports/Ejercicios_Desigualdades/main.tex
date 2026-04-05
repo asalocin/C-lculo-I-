@@ -1,0 +1,1511 @@
+\documentclass[12pt]{book}
+\usepackage[spanish]{babel}
+\usepackage[top=3.5cm, bottom=3cm, left=2cm, right=2cm, headheight=2.5cm, footskip=1.5cm, marginparwidth=2cm]{geometry}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{fancybox}
+\usepackage{lastpage}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{marginnote}
+\usepackage{cancel}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usetikzlibrary{patterns} 
+\tcbuselibrary{skins}
+\usetikzlibrary{calc,angles,quotes}
+\usepackage{tzplot}
+\usepackage{float}
+\usepackage{kinematikz}
+\usepackage{titlesec}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{plotmarks}
+\usepgfplotslibrary{polar}
+\tcbuselibrary{theorems}
+
+
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{gre}{RGB}{101, 191, 127}
+\definecolor{gree}{RGB}{7, 135, 44}
+\definecolor{safetyorange(blazeorange)}{rgb}{1.0, 0.4, 0.0}
+\definecolor{gold(web)(golden)}{rgb}{1.0, 0.84, 0.0}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}
+\definecolor{internationalkleinblue}{rgb}{0.0, 0.18, 0.65}
+\definecolor{citrine}{rgb}{0.89, 0.82, 0.04}
+\arrayrulecolor{internationalkleinblue}
+
+
+\newcommand{\ChapterStyle}[2]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Fondo decorativo
+    \fill[safetyorange(blazeorange)] (-3,0) rectangle (40,4); 
+    \draw[blue, line width=2mm] (-3,4) -- (40,4);
+    \draw[blue, line width=2mm] (-3,0) -- (40,0);
+    \fill[white] (15,2) circle (1.7);
+    \draw[line width=1mm] (15,2) circle (1.7)
+    \draw[line width=0.5mm] (15,2) circle (1.5)
+    \fill[kellygreen] (15,2) circle (1.5)
+    \node at (15,2) {\Huge\bfseries\sffamily\color{white}{\thechapter}}
+   \node[anchor=west] at (2,2) {\Huge\bfseries\sffamily\color{white}{#2}};
+  \end{tikzpicture}
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {%
+    \ChapterStyle{\thechapter}{} % Pasa el número del capítulo y el título al diseño
+  }
+
+
+\newcommand{\Estilo}{
+ \begin{tikzpicture}[remember picture, overlay]
+         \draw
+     (current page header area.south west) -- (current page header area.south east)
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=7cm]current page.south east) {\textbf{Ingeniería Matemática}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=16.1cm]current page.south east) {\textbf{Cálculo II}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \draw[safetyorange(blazeorange), line width=2mm]
+    (current page.south west) rectangle (current page.north west)
+\end{tikzpicture}
+
+}
+%Carga el estilo
+\fancypagestyle{Normal}{%
+  \fancyhead[L]{\emph{Departamento de Matemáticas}}
+  \fancyhead[R]{\emph{Univesidad de Santiago de Chile}}
+  
+  \fancyhead[C]{\Estilo}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+
+
+
+%Estilo de Pagina resumen
+\newcommand{\mypage}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        
+        \fill[fill=safetyorange(blazeorange)](current page.north west) rectangle ([yshift=-22mm]current page.north east) node[midway] {\Huge\bfseries\sffamily\color{white}{Resumen}};
+
+        
+    \end{tikzpicture}
+}%
+%Carga el estilo
+\fancypagestyle{Resumen}{%
+  \fancyhf{}
+  \fancyhead[C]{\mypage}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+\renewcommand{\footrulewidth}{0.5pt}
+
+%Ejemplo
+\NewTcbTheorem[number within=section]{eje}{Ejemplo}
+{ blanker,breakable,left=5mm,
+ before skip=10pt,after skip=10pt,
+ borderline west={1mm}{0pt}{red}}
+
+%Problemas comunes
+\NewTcbTheorem[number within=section]{prob}{Problema}{colback=gray!15!white, enhanced
+,title= Definition, attach boxed title to top left={yshift=1mm}, fonttitle=\bfseries, sharp corners,boxrule=1pt,coltitle=black, boxed title style={size=Big,colback=black!10,boxrule=1.5pt}}{th}
+
+ %Propuestos
+ \tcbset{ribbonbox/.style={enhanced,colback=gray!15!white, sharpish corners,  frame style={left color=red!75!black,
+ right color=blue!75!black}, overlay={\path[fill=blue!75!white,draw=blue,double=white!85!blue,
+ preaction={opacity=0.6,fill=blue!75!white},
+ line width=0.1mm,double distance=0.2mm,
+ pattern=fivepointed stars,pattern color=white!75!blue]
+ ([xshift=-0.2mm,yshift=-1.02cm]frame.north east)-- ++(-1,1)-- ++(-0.5,0)-- ++(1.5,-1.5)-- cycle;}}}
+
+ %DiseñoTCB
+\NewTcbTheorem[number within=section]{defi}{Definición}{colback=bleudefrance!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=bleudefrance,colbacktitle=bleudefrance, boxed title style={
+		frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+ \NewTcbTheorem[number within=section]{mytheo}{My Theorem}%
+ {colback=bleudefrance!10,enhanced, title=Definition, attach boxed title to top left={xshift=-4mm}, boxrule=0pt, after skip=1cm,right skip=0cm, breakable, fonttitle=\bfseries, toprule= 0pt, bottomrule=0pt, rightrule=0pt, leftrule=0pt, arc=0mm, skin=enhancedlast jigsaw, sharpcorners, colframe=bleudefrance, colbacktitle=bleudefrance, boxed title style={
+ frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\NewTcbTheorem[number within=section]{teo}{Teorema}{colback=cadmiumred!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=cadmiumred,colbacktitle=cadmiumred, boxed title style={
+		frame code={ 
+			\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+            
+\NewTcbTheorem[number within=section]{prop}{Proposición}{colback=gold(web)(golden)!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=gold(web)(golden),colbacktitle=gold(web)(golden), boxed title style={
+		frame code={ 
+			\fill[gold(web)(golden)](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,gold(web)(golden)]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,gold(web)(golden)]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[gold(web)(golden)!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+\NewTcbTheorem[number within=section]{coro}{Corolario}{colback=kellygreen!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=kellygreen,colbacktitle=kellygreen, boxed title style={
+		frame code={ 
+			\fill[kellygreen](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,kellygreen]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,kellygreen]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[kellygreen!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+ \pagestyle{Normal}
+ %Sangía
+\setlength{\parindent}{0pt}
+
+ 
+\begin{document}
+
+
+\chapter{Axiomas de Orden}
+
+
+
+\begin{prob}{}{}
+   Sean $a,b \geq 0 $, demuestre que $\sqrt{a+b}\leq \sqrt{a}+\sqrt{b}$
+\end{prob}
+\textbf{Solución:}
+
+Notemos que 
+
+\begin{align*}
+    \left(\sqrt{a+b}\right)^2=a+b \leq a +2 \sqrt{a}\sqrt{b}+b = \left(\sqrt{a}+\sqrt{b}\right)^2
+\end{align*}
+
+Por lo tanto se tiene que 
+
+\begin{align*}
+     \left(\sqrt{a+b}\right)^2 \leq \left(\sqrt{a}+\sqrt{b}\right)^2
+\end{align*}
+Luego utilizando el problema {\Large citar problema}
+
+\begin{prob}{}{}
+    Sean $a,b \in \mathbb{R}$, demuestre que $\sqrt{x^2+y^2}\leq |x|+|y|$
+\end{prob}
+\textbf{Solución:}
+
+Por el problema anteior, tenemos que 
+
+\begin{align*}
+    \sqrt{x^2+y^2}\leq \sqrt{x^2}+\sqrt{y^2}=|x|+|y|
+\end{align*}
+
+\begin{prob}{}{}
+Sean $x,y,z \in \mathbb{R}$, demuestra que 
+\begin{align*}
+    x^2+y^2+z^2+xy+yz+zx &\geq 0 \\
+    x^2+y^2+z^2-xy-yz-zx &\geq 0 
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+
+Notemos que 
+
+\begin{align}
+    x^2+y^2+z^2+xy+yz+zx&= \frac{1}{2}\cdot ( 2x^2+2y^2+2z^2+2xy+2yz+2zx) \\
+    &=\frac{1}{2}\cdot ((x^2+2xy+y^2)+(y^2+2yz+z^2)+(z^2+2zx+x^2)) \\
+    &=\frac{(x+y)^2+(y+z)^2+(z+x)^2}{2} \geq 0
+\end{align}
+Análogamente, tenemos para la otra expresión
+
+\begin{align*}
+    x^2+y^2+z^2-xy-yz-zx&= \frac{1}{2}\cdot(2x^2+2y^2+2z^2-2xy-2yz-2zx) \\
+    &=\frac{1}{2}\cdot((x^2-2xy+y^2)+(y^2-2yz+z^2)+(z^2-2zx+x^2)) \\
+    &=\frac{(x-y)^2+(y-z)^2+(z-x)^2}{2} \geq 0
+\end{align*}
+\begin{prob}{}{}
+Sea $x>0$, demuestre que 
+\begin{align*}
+    x+\frac{1}{x}\geq 2
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+
+Por la desigualdad \textbf{AM-GM}, tenemos que 
+
+\begin{align*}
+    \frac{x+\frac{1}{x}}{2}\geq \sqrt{x \cdot \frac{1}{x}}=\sqrt{1}=1
+\end{align*}
+En consecuencia,
+\begin{align*}
+    x+\frac{1}{x}\geq 2
+\end{align*}
+
+\begin{prob}{}{}
+    Sean $a,b,c \in \mathbb{R}^+$, arbitrarios. Muestre que siempre se cumple que 
+    \begin{align*}
+    (a+b)(b+c)(a+c)\geq8abc
+\end{align*}
+\end{prob}
+
+Primero notemos que se tienen las desigualdades
+
+\begin{align*}
+    \frac{a+b}{2}\geq\sqrt{ab}, \quad \frac{b+c}{2}\geq \sqrt{bc}, \quad \frac{a+c}{2}\geq\sqrt{ac}
+\end{align*}
+
+Luego
+
+\begin{align*}
+    \left(\frac{a+b}{2}\right) \left(\frac{b+c}{2}\right) \left(\frac{a+c}{2}\right)\geq \sqrt{a^2 b^2 c^2}=abc
+\end{align*}
+Por lo tanto
+
+\begin{align*}
+      (a+b)(b+c)(a+c)\geq8abc
+\end{align*}
+
+\begin{prob}{}{}
+    Muestre que $\forall a,b,c \in \mathbb{R}^+$ se tiene que 
+    \begin{align*}
+        (a+b+c)\left(\frac{1}{a}+\frac{1}{b}+\frac{1}{c}\right) \geq 9
+    \end{align*}
+\end{prob}
+
+\textbf{Solución:}
+
+Siempre es bueno recordar que se tienen las desigualdades
+
+\begin{align*}
+    a^2+b^2\geq2 ab, \ a^2+c^2\geq 2ac, \ c^2+b^2 \geq 2 bc
+\end{align*}
+
+En efecto, notemos que haciendo un poco de álgebra
+
+\begin{align*}
+    (a+b+c)\left(\frac{1}{a}+\frac{1}{b}+\frac{1}{c}\right)
+    &=a \left(\frac{1}{a}+\frac{1}{b}+\frac{1}{c}\right)+b\left(\frac{1}{a}+\frac{1}{b}+\frac{1}{c}\right)+c\left(\frac{1}{a}+\frac{1}{b}+\frac{1}{c}\right) \\
+    &=1+ \frac{a}{b}+\frac{a}{c}+\frac{b}{a}+1+\frac{b}{c}+\frac{c}{a}+\frac{c}{b}+1 \\
+    &=3+\frac{a^2+b^2}{ab}+\frac{a^2+c^2}{ac}+\frac{c^2+b^2}{cb}\geq 3+2+2+2=9    
+\end{align*}
+
+\begin{prob}{}{}
+Sean $x,y,z \in \mathbb{R}^+$, demuestre que
+\begin{align*}
+    \frac{1}{x}+\frac{1}{y}+\frac{1}{z} \geq \frac{1}{\sqrt{xy}}+\frac{1}{\sqrt{yz}}+\frac{1}{\sqrt{zx}}
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+
+
+
+
+\begin{prob}{}{}
+    Sean $a,b,c,d \in \mathbb{R}$ que cumplen la propiedad que $a^2+b^2=1$ y $c^2+d^2=1$. Pruebe que entonces $ab+cd\leq1$ 
+\end{prob}
+\textbf{Solución:}
+
+Recordemos que $(a-b)^2\geq0$ y $(c-d)^2\geq 0$. Entonces sumando ambas expresiones tenemos que 
+
+\begin{align*}
+    (a-b)^2+(c-d)^2 \geq 0
+\end{align*}
+Entonces, desarrollando un poco
+
+\begin{align*}
+    (a-b)^2+(c-d)^2&=a^2-2ab+b^2+c^2-2cd+d^2 \\
+    &=a^2+b^2+c^2+d^2-2ab-2cd \geq 0 \\
+     &=1+1-2ab-2cd \geq 0 && \textbf{(Hipótesis)} \\ 
+    \Longrightarrow&\quad \  2\geq 2 (ab+cd) \\ 
+   \Longrightarrow& \quad \ 1\geq ab+cd
+\end{align*}
+
+\begin{prob}{}{}
+    Sean $x,y \in \mathbb{R}^+$. Pruebe que 
+\begin{align*}
+    \frac{1}{x}+\frac{1}{y}\geq \frac{4}{x+y}
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+
+Notemos que por la desigualdad \textbf{AM-GM}, siempre se cumple que
+
+\begin{align*}
+    \frac{2}{\frac{1}{x}+\frac{1}{y}}\leq\sqrt{xy}\leq\frac{x+y}{2}
+\end{align*}
+Por lo que en particular
+\begin{align*}
+  \frac{2}{\frac{1}{x}+\frac{1}{y}}\leq \frac{x+y}{2}
+\end{align*}
+Luego 
+\begin{align*}
+     \frac{1}{\frac{1}{x}+\frac{1}{y}}&\leq\frac{x+y}{4} \\
+     \Longrightarrow \frac{1}{x}+\frac{1}{y}&\geq \frac{4}{x+y}
+\end{align*}
+\begin{prob}{}{}
+    Sean $a,b,c,d \in \mathbb{R}^+$ números reales arbitrarios. Muestre que siempre se tiene que 
+
+    \begin{align*}
+        \frac{a+b+c+d}{4}\geq \sqrt[4]{abcd}
+    \end{align*}
+\end{prob}
+En efecto, notemos que 
+
+\begin{align*}
+    \frac{a+b+c+d}{4}&=\frac{1}{2}\cdot \left(\frac{a+b}{2}+\frac{c+d}{2} \right) \\
+    &\geq \frac{1}{2}\cdot(\sqrt{ab}+\sqrt{cd}) \\
+   &\geq \sqrt{\sqrt{ab}\sqrt{cd}} \\
+   &=\sqrt[4]{abcd}
+\end{align*}
+
+\begin{prob}{}{}
+    Sean $x,y \in \mathbb{R}^+$ tal que $0<x,y\leq 1$. Pruebe que 
+    \begin{align*}
+        \frac{1}{1-x^2}+\frac{1}{1-y^2}\geq \frac{2}{1-xy}
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+
+Usando la desigualdad $a+b \geq 2 \sqrt{ab}$. Tomamos los números $\displaystyle a=\frac{1}{1-x^2}$, $\displaystyle b=\frac{1}{1-y^2}$. Entonces tenemos que 
+
+\begin{align*}
+      \frac{1}{1-x^2}+\frac{1}{1-y^2}\geq \frac{2}{\sqrt{(1-x^2)(1-y^2)}}
+\end{align*}
+
+Desarrollemos la multiplicación
+
+\begin{align*}
+    (1-x^2)(1-y^2)&=1+x^2y^2-x^2-y^2 \\
+    &\leq 1+x^2y^2-2xy=(1-xy)^2
+\end{align*}
+Por lo tanto
+  \begin{align*}
+        \frac{1}{1-x^2}+\frac{1}{1-y^2}\geq \frac{2}{1-xy}
+    \end{align*}
+
+\begin{prob}{}{}
+    Sean $a,b,c,d \in \mathbb{R}^+$. Prube que siempre se cumple que 
+
+    \begin{align*}
+        \frac{a}{b}+\frac{b}{c}+\frac{c}{d}+\frac{d}{a} \geq 4
+    \end{align*}
+
+    \emph{Hint: Utilice la desigualdad} \textbf{AM-GM}
+\end{prob}
+\textbf{Solución:} Utilizamos directamente la  desigualdad \textbf{AM-GM}. En efecto,
+
+\begin{align*}
+      \frac{a}{b}+\frac{b}{c}+\frac{c}{d}+\frac{d}{a} \geq 4 \sqrt[4]{\frac{a}{b}\cdot \frac{b}{c}\cdot \frac{c}{d} \cdot \frac{d}{a}}= 4 \sqrt[4]{1}=4
+\end{align*}
+
+\begin{prob}{}{}
+    Sean $a,b \in \mathbb{R}^+$, tal que $ab=1$. Demuestre que 
+
+    \begin{align*}
+        \frac{a}{a^2+3}+\frac{b}{b^2+3}\leq \frac{1}{2}
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+Notemos que por \textbf{(AM-GM)} se tiene
+
+\begin{align*}
+    a^2+3&=a^2+1+1+1 \geq 4 \sqrt{a^2\cdot1\cdot1\cdot1}=4a \\
+    b^2+3&=b^2+1+1+1 \geq 4 \sqrt{b^2\cdot1\cdot1\cdot1}=4b
+\end{align*}
+Se sigue que
+\begin{align*}
+    4a \leq a^2 +3 \Longrightarrow \frac{1}{a^2+3} \leq \frac{1}{4a} \\
+     4b \leq b^2 +3 \Longrightarrow \frac{1}{b^2+3} \leq \frac{1}{4b}
+\end{align*}
+
+Entonces 
+
+\begin{align*}
+    \frac{a}{a^2+3} + \frac{b}{b^2+3} &\leq \frac{a}{4a} +\frac{b}{4b} \\
+    &=\frac{1}{4}+\frac{1}{4} \\
+    &=
+\end{align*}
+
+\begin{prob}{}{}
+Sean $a,b,c,d \in \mathbb{R}^+$, tales que $a+b+c+d=1$. Pruebe que 
+\begin{align*}
+    ab+bc+cd \leq \frac{1}{4}
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+
+Notemos que 
+
+\begin{align*}
+      ab+bc+cd&\leq ab+bc+cd+da \\
+      &=b(a+c)+d(c+a) \\
+      &=(a+c)(b+d) \\
+      &\leq \left( \frac{a+b+c+d}{2} \right)^2 && \left(\text{Recuerde que } \sqrt{xy} \leq \frac{x+y}{2}\right)\\
+      &=\frac{1}{4}
+\end{align*}
+
+\begin{prob}{}{}
+    Sean $x_1,x_2, \ldots x_n \in \mathbb{R}^+$. Demuestre la siguiente desigualdad 
+ \begin{align*}
+     (x_1+x_2+\dots +x_n)\left(\frac{1}{x_1}+\frac{1}{x_2}+\dots + \frac{1}{x_n}\right) \geq n^2
+ \end{align*}
+
+    \emph{Hint: Utilice la desigualdad} \textbf{AM-GM}
+ 
+\end{prob}
+\textbf{Solución:}
+
+Utilizando la desigualdad \textbf{AM-GM} podemos establecer ciertas desigualdades. Notemos que 
+
+\begin{align*}
+    (x_1+x_2+\dots +x_n) \geq n \sqrt[n]{x_1 \cdots x_n}
+\end{align*}
+Y por otro lado, tenemos que 
+\begin{align*}
+    \frac{1}{x_1}+\frac{1}{x_2}+\dots + \frac{1}{x_n} \geq n \sqrt[n]{\frac{1}{x_1 \cdots x_n}}
+\end{align*}
+Por lo tanto, tenemos que 
+\begin{align*}
+     (x_1+x_2+\dots +x_n)\left(\frac{1}{x_1}+\frac{1}{x_2}+\dots + \frac{1}{x_n}\right) &\geq \left(n \sqrt[n]{x_1 \cdots x_n}\right)\cdot\left(n \sqrt[n]{\frac{1}{x_1 \cdots x_n}}\right) \\
+     &=n^2
+\end{align*}
+
+\begin{prob}{}{}
+    Sean $a,b\in \mathbb{R}^+$ tal que $a^2+b^2=4$. Pruebe que $a^2b^2\leq 4$
+\end{prob}
+\textbf{Solución:}
+Notemos que por la desigualdad $a^2+b^2\geq 2ab$ tenemos que 
+\begin{align*}
+    2ab &\leq 4 && \textbf{(Hipótesis)} \\
+     ab &\leq 2  \\ 
+     \Longrightarrow a^2b^2&\leq 4
+\end{align*}
+
+
+\begin{prob}{}{}
+    Determine para qué valores de $a$, la ecuación $\displaystyle (x-1)^2+1=\frac{|a-2|}{a-1}$ tiene solución en $\mathbb{R}$.
+\end{prob}
+\textbf{Solución:}
+
+Para que la expresión sea válida en $\mathbb{R}$, notemos que la ecuación debe cumplir que 
+
+\begin{align*}
+    (x-1)^2=\frac{|a-2|}{a-1}-1 \geq 0
+\end{align*}
+
+Primero identificamos el punto crítico, $a=2$. Entonces analizamos los casos $a \in (-\infty,2)$ y $a \in (2,\infty)$
+
+\begin{itemize}
+    \item $a \in (2,\infty)$ 
+
+    \begin{align*}
+        \frac{a-2}{a-1}-1=\frac{-1}{a-1}\geq 0 \  \Longleftrightarrow a <1, \ a\neq 1
+    \end{align*}
+    Lo que es claramente una contradicción. Por lo tanto, $S_1=\emptyset$
+
+    \item $a  \in (-\infty,2)$ En este caso, tenemos que 
+
+    \begin{align*}
+        \frac{2-1}{a-1}-1=\frac{3-2a}{a-1} \geq 0  \ &\Longleftrightarrow \ (a-1)(3-2a) \geq 0 \\
+        &\Longleftrightarrow 2(a-1)\left(a-\frac{3}{2}\right)  \leq 0 \\
+        &\Longleftrightarrow a \in \left(1,\frac{3}{2} \right]
+    \end{align*}
+    Entonces 
+    
+   \begin{align*}
+     a\in   (-\infty,2) \cap \left(1,\frac{3}{2} \right] =\left(1,\frac{3}{2} \right]
+   \end{align*}
+   Por lo tanto el conjunto solución es 
+
+   \begin{align*}
+       S_2=\left(1,\frac{3}{2} \right]
+   \end{align*}
+   Así la solución general está dada por 
+
+   \begin{align*}
+       S=S_1 \cup S_2 = \left(1,\frac{3}{2} \right]
+   \end{align*}
+\end{itemize}
+
+
+\begin{prob}{}{}
+    Encuentre el conjunto solución $S$ de la siguiente inecuación
+
+    \begin{align*}
+        \frac{1}{5}\leq \frac{|1-x|-x^2}{-x^2+2x+5}
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+
+Tenemos el único punto crítico $x=1$. Por lo tanto tenemos los casos
+
+\begin{itemize}
+    \item $x \in (1,+\infty)$
+
+\begin{align*}
+    \frac{1}{5}\leq \frac{x-1-x^2}{-x^2+2x+5} &\Longleftrightarrow \frac{x-1-x^2}{-x^2+2x+5}-\frac{1}{5}\geq 0 \\
+     &\Longleftrightarrow \frac{-10+3x-4x^2}{-5(x^2-2x-5)}\geq 0 \\
+   &\Longleftrightarrow \frac{4x^2-3x+10}{5(x^2-2x-5)}\geq 0 
+\end{align*}
+
+Notamos que en el númerador $4x^2-3x +10 >0$ $ \forall x \in \mathbb{R}$, dado que su discriminante $\Delta <0$. Por lo tanto, basta analizar únicamente el denominador.
+
+Notamos que las raices del polinomio $x^2-2x-5$ son $x_1=1-\sqrt{6}$ y $x_2=1+\sqrt{6}$. Por lo tanto  $x^2-2x-5=(x-(1-\sqrt{6}))(x-(1+\sqrt{6}))$. Entonces los valores de $x$ que satisfacen $x^2-2x-5\geq 0$ son 
+
+\begin{align*}
+    x \in (-\infty,(1-\sqrt{6})) \cup ((1+\sqrt{6}, +\infty)
+\end{align*}
+Luego la solución es 
+
+\begin{align*}
+    S_1=(1,+\infty) \cap \left[(-\infty,(1-\sqrt{6})) \cup ((1+\sqrt{6}, +\infty)\right]=(1+\sqrt{6}, +\infty)
+\end{align*}
+
+
+\item $x \in (-\infty, 1)$
+
+\begin{align*}
+    \frac{1}{5}\leq \frac{1-x-x^2}{-x^2+2x+5}  &\Longleftrightarrow \frac{1-x-x^2}{-x^2+2x+5}-\frac{1}{5} \geq 0\\
+   &\Longleftrightarrow\frac{-7x-4x^2}{-5(x^2-2x-5)} \geq 0 \\
+    &\Longleftrightarrow \frac{4x(x+\frac{7}{4})}{5(x-(1-\sqrt{6}))(x-(1+\sqrt{6}))} \geq 0
+\end{align*}
+Esta última inecuación es equivalente a la inecuación dada por 
+
+\begin{align*}
+    x\left(x+\frac{7}{4}\right)\left(x-(1-\sqrt{6}) \right)\left(x-(1+\sqrt{6}) \right) \geq 0 
+\end{align*}
+
+Entonces los valores de $x$ que satisfacen la inecuación son
+
+$x \in \left(-\infty,-\frac{7}{4} \right]  \cup (1-\sqrt{6},0) \cup (1+\sqrt{6},+\infty)$
+Por lo tanto la solución es
+\begin{align*}
+    S_2&= (-\infty, 1) \cap \left[\left(-\infty,-\frac{7}{4} \right]  \cup (1-\sqrt{6},0) \cup (1+\sqrt{6},+\infty) \right] \\
+    &=\left(-\infty,-\frac{7}{4} \right] \cup (1-\sqrt{6},0)
+\end{align*}
+\end{itemize}
+Así la solución general es
+
+\begin{align*}
+    S=S_1 \cup S_2 = \left(-\infty,-\frac{7}{4} \right]  \cup (1-\sqrt{6},0) \cup (1+\sqrt{6},+\infty)
+\end{align*}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+   & $(-\infty,1) $  & $(1,+\infty)$  \\
+   \hline
+   $(x-2)$ & +  & - \\ \hline
+   $(x+3)$ & - & + \\ 
+   \hline
+\end{tabular}
+\end{center}
+
+\begin{prob}{}{}
+    Encuentre el conjunto solución de la siguiente ecuación 
+    \begin{align*}
+        \left|\frac{x^2+4x+4}{x^2+x-2}\right| \geq 2
+    \end{align*}
+\end{prob}
+\textbf{Solución:} Notamos que 
+
+\begin{align*}
+    \left|\frac{x^2+4x+4}{x^2+x-2} \right|=\left|\frac{(x+2)^2}{(x+2)(x-1)} \right| = \left|\frac{x+2}{x-1} \right|
+\end{align*}
+Siempre que $x \neq 2$ y $x \neq 1$. Luego, basta resolver 
+
+\begin{align*}
+     \left|\frac{x+2}{x-1} \right| \geq 2, \quad x \in \mathbb{R}\setminus\{-2,1\}
+\end{align*}
+
+Entonces, tenemos los puntos criticos $x=-2$ y $x=-1$. Por lo tanto, analizamos por casos
+
+\begin{itemize}
+    \item $x \in (-\infty,-2)$
+
+    \begin{align*}
+        \left|\frac{x+2}{x-1} \right|&=\frac{x+2}{x-1} \geq 2 \\
+        &= \frac{x+2}{x-1} -2 \geq 0 \\
+        &= \frac{4-x}{x-1} \geq 0
+    \end{align*}
+
+    Entonces, confeccionamos la tabla de signos
+
+    \begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,1) $  & $(1,4)$ & $(4,+\infty)$ \\
+   \hline
+   $4-x$ & $+$ &$+$ &  $-$ \\ \hline
+   $x-1$ & $-$ & $+$ & $+$ \\ \hline \hline
+\rule{0pt}{20pt} $\displaystyle \frac{4-x}{x-1}$ & $-$ & $+$ & $-$ \\
+   \hline
+\end{tabular}
+\end{center}
+
+De la tabla concluimos que  $x \in (1,4]$. Lo cual es una contradicción con nuestra hipótesis. Por lo tanto la solución en este caso es 
+
+\begin{align*}
+    S_1 = \emptyset
+\end{align*}
+
+\item $x \in (-2,1)$
+
+Entonces 
+
+\begin{align*}
+    \left|\frac{x+2}{x-1} \right|&=-\frac{x+2}{x-1} \geq 2 \\
+    &=-\frac{x+2}{x-1} -2 \geq 0 \\
+    &=-\frac{3x}{x-1} \geq 0 
+\end{align*}
+
+Tenemos los puntos críticos $x=0$ y $x=1$. Por lo tanto, confeccionamos la tabla 
+\begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,0) $  & $[0,1)$ &  $(1, +\infty)$\\
+
+$-3x$ & $+$ & $-$ & $-$ \\ \hline
+$x-1$ & $-$ & $-$ & $+$\\ \hline \hline
+$\displaystyle -\frac{3x}{x-1}$ & $-$ & $+$ &$-$ \\ 
+   \hline
+\end{tabular}
+\end{center}
+
+De la tabla $x \in [0,1)$. Así la solución es 
+
+\begin{align*}
+    S_2= (-2,1) \cap [0,1) = [0,1)
+\end{align*}
+
+\item $x \in (1,+\infty)$
+
+
+\begin{align*}
+    \left|\frac{x+2}{x-1} \right|&=\frac{x+2}{x-1} \geq 2 \\
+    &= \frac{x+2}{x-1} - 2 \geq 0 \\
+    &=\frac{4-x}{x-1}\geq 0
+\end{align*}
+Entonces, utilizando la misma tabla del caso 1 
+
+\begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,1) $  & $(1,4)$ & $(4,+\infty)$ \\
+   \hline
+   $4-x$ & $+$ &$+$ &  $-$ \\ \hline
+   $x-1$ & $-$ & $+$ & $+$ \\ \hline \hline
+\rule{0pt}{20pt} $\displaystyle \frac{4-x}{x-1}$ & $-$ & $+$ & $-$ \\
+   \hline
+\end{tabular}
+\end{center}
+
+Obtenemos que $x \in (1,4]$. Así la solución es 
+
+\begin{align*}
+    S_3= (1,4]\cap(1 , +\infty) 
+\end{align*}
+\end{itemize}
+Entonces el conjunto solución de la inecuación es 
+\begin{align*}
+    S=S_1 \cup S_2 \cup S_3=[0,1) \cup (1,4]
+\end{align*}
+
+\begin{prob}{}{}
+   Determine el conjunto solución $S$ de la inecuación
+ \begin{align*}
+     \frac{|x-2|+|2x+1|}{(x-2)\cdot|x+|x-2||} \leq 0
+ \end{align*}
+\end{prob}
+\textbf{Solución:} Tenemos que los puntos críticos de la inecuación viene dados por $x=-\frac{1}{2}$ y $x=2$. Entonces 
+
+\begin{itemize}
+    \item $x \in (-\infty, -\frac{1}{2})$
+
+    \begin{align*}
+        \frac{|x-2|+|2x+1|}{(x-2)\cdot|x+|x-2||} \leq 0 \ &\Longleftrightarrow \  \frac{-(x-2)-(2x+1)}{(x-2)\cdot |x-(x-2)|}\leq 0 \\
+        &\Longleftrightarrow \frac{1-3x}{(x-2) \cdot |2|} \leq 0 \\
+        &\Longleftrightarrow \frac{1-3x}{2(x-2)} \\
+         &\Longleftrightarrow (1-3x)(x-2) \leq 0 , \quad x \neq 2
+    \end{align*}
+
+    Entonces confeccionando la tabla
+    \begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,1/3) $  & $(1/3,2)$ & $(2,+\infty)$ \\
+   \hline
+   $1-3x$ & $+$ &$-$ &  $-$ \\ \hline
+   $x-2$ & $-$ & $-$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle (1-3x)(x-2)}$ & $-$ & $+$ & $-$ \\
+   \hline
+\end{tabular}
+\end{center}
+Luego la solución es 
+
+\begin{align*}
+    S_1= (-\infty,1/3) \cap \left[(-\infty,1/3) \cup (2, + \infty)\right]=  (-\infty,1/3) 
+\end{align*}
+
+\item $x \in (-1/2,2)$. Entonces
+
+\begin{align*}
+     \frac{|x-2|+|2x+1|}{(x-2)\cdot|x+|x-2||} \leq 0 \ &\Longleftrightarrow \  \frac{-(x-2)+(2x+1)}{(x-2)\cdot |x-(x-2)|} \leq 0 \\
+     &\Longleftrightarrow \frac{x+3}{(x-2)\cdot |2|} \leq 0 \\
+     &\Longleftrightarrow  \frac{x+3}{2(x-2)} \leq 0 \\
+     &\Longleftrightarrow (x+3)(x-2) \leq 0, \quad x \neq 2
+\end{align*}
+
+Entonces la tabla
+
+ \begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,-3) $  & $[-3,2)$ & $(2,+\infty)$ \\
+   \hline
+   $x+3$ & $-$ &$+$ &  $+$ \\ \hline
+   $x-2$ & $-$ & $-$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle (1-3x)(x-2)}$ & $+$ & $-$ & $+$ \\
+   \hline
+\end{tabular}
+\end{center}
+Entonces la solución en este caso es 
+
+\begin{align*}
+  S_2 =  [-3,2) \cap (-1/2,2)= (-1/2,2)
+\end{align*}
+
+\item $x \in  (2,+\infty)$
+
+\begin{align*}
+     \frac{|x-2|+|2x+1|}{(x-2)\cdot|x+|x-2||} \leq 0 \ &\Longleftrightarrow \  \frac{(x-2)+(2x+1)}{(x-2)\cdot |x+(x-2)|} \leq 0 \\
+      &\Longleftrightarrow \  \frac{3x-1}{2(x-2)(x-1)} \leq 0 \\
+\end{align*}
+
+ \begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,-3) $  & $[-3,2)$ & $(2,+\infty)$ \\
+   \hline
+   $x+3$ & $-$ &$+$ &  $+$ \\ \hline
+   $x-2$ & $-$ & $-$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle (1-3x)(x-2)}$ & $+$ & $-$ & $+$ \\
+   \hline
+\end{tabular}
+\end{center}
+
+Entonces la solución es 
+
+\begin{align*}
+    S_3= [-3,2) \cap (2, +\infty)= \emptyset
+    \end{align*}
+    
+\end{itemize}
+Entonces la solución general es 
+
+\begin{align*}
+    S=S_1 \cup S_2 \cup S_3= (-\infty,1/3
+) \cup (-1/2,2) 
+\end{align*}
+
+\begin{prob}{}{}
+    Halle el conjunto solución $S$ de la inecuación 
+    \begin{align*}
+        |x-4|\leq |2x+1|
+    \end{align*}
+\end{prob}
+\textbf{Solución:} Notemos que los puntos críticos de la inecuación son $x=4$ y $x=-1/2$. Entonces analizamos los siguientes intervalos
+
+\begin{itemize}
+    \item $x \in (-\infty,-1/2)$
+
+    \begin{align*}
+         |x-4|\leq |2x+1| \ &\Longleftrightarrow \ -(x-4)\leq - (2x+1) \\
+          &\Longleftrightarrow \quad \ \ \ x-4 \leq 2x+1 \\
+           &\Longleftrightarrow  \ -5 \leq x 
+    \end{align*}
+    Entonces la solución es 
+    \begin{align*}
+        S_1= (-\infty,-1/2) \cap (-5,+\infty)=(-5,+\infty)
+    \end{align*}
+
+    \item $x \in [-1/2,4)$
+\begin{align*}
+      |x-4|\leq |2x+1| \ &\Longleftrightarrow \ -(x-4) \leq 2x+1 \\
+      &\Longleftrightarrow \ 4-x \leq 2x+1  \\
+       &\Longleftrightarrow \ 1 \leq x
+\end{align*}
+Entonces la solución es 
+
+\begin{align*}
+    S_2= [-1/2,4) \cap (1, +\infty)=[1,4)
+\end{align*}
+
+\item $x \in (1, + \infty)$
+
+\begin{align*}
+     |x-4|\leq |2x+1| \ &\Longleftrightarrow \ x-4 \leq 2x+1  \\
+      &\Longleftrightarrow \ -5 \leq x
+\end{align*}
+
+Así, la solución esta dada por 
+
+\begin{align*}
+    S_3 = (1, + \infty) \cap (-5, +\infty)=(1,+\infty)
+\end{align*}
+\end{itemize}
+Para concluir, haremos la unión de todas las soluciones anteriores, dandonos la solución general del problema
+
+\begin{align*}
+    S=S_1 \cup S_2 \cup S_3=(-\infty,5) \cup (1, +\infty)
+\end{align*}
+
+\begin{prob}{}{}
+Considere el siguiente conjunto 
+
+\begin{align}
+    \mathcal{S}= \left\{ x \in \mathbb{R} : \frac{|x-1|-2}{|x+5|-1} \leq 0\right\}
+\end{align}
+
+Escriba el conjunto como un intervalo o una unión de intervalos.
+\end{prob}
+\textbf{Solución:}
+
+Primero hallamos los valores en el cual el denominador de la fracción se indetermina. En efecto,
+
+\begin{align*}
+    |x+5|-1 &= 0 \\
+    |x+5| &=1 \\
+\Longrightarrow  & ( x+5 =1 )\vee ( x+5=-1)\\
+\Longrightarrow  & ( x=-4 )\vee ( x=-6)
+\end{align*}
+Entonces descartamos inmediatamente estos puntos. Luego los puntos críticos son $x=1$ y $x=-5$. Luego hallamos los puntos en donde nuestro numerador se anula
+
+\begin{align*}
+    |x-1|-2 & = 0 \\
+    |x-1|&=2 \\
+    \Longrightarrow  & ( x-1 =2 )\vee ( x-1=-2)\\
+     \Longrightarrow  & ( x=3 )\vee ( x=-1)\\
+\end{align*}
+Dado que la desigualdad es "menor o igual", podemos añadir estos puntos al conjunto solución, es decir, $\{1,3\} \in \mathcal{S}$. Por otro lado, nuestros puntos críticos para los valores absolutos son $x=-5$ y $x=1$. Entonces nos quedan los siguientes intervalos a analizar
+
+\begin{itemize}
+    \item $x \in (-\infty,-5)$
+
+    \begin{align*}
+        \frac{|x-1|-2}{|x+5|-1} \leq 0  &\Longleftrightarrow \frac{-(x-1)-2}{-(x+5)-1} \leq 0 \ \\ &\Longleftrightarrow \ \frac{-(x+1)}{-(x+6)} \leq 0 \\
+        &\Longleftrightarrow \ \frac{(x+1)}{(x+6)} \leq 0 \\
+        &\Longleftrightarrow(x+1)(x+6)\leq 0, \quad x \neq -6
+    \end{align*}
+
+Entonces confeccionamos la tabla
+
+ \begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,-6) $  & $(-6,-1)$ & $(-1,+\infty)$ \\
+   \hline
+   $x+1$ & $-$ &$-$ &  $+$ \\ \hline
+   $x+6$ & $-$ & $+$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle (x+1)(x+6)$ & $+$ & $-$ & $+$ \\
+   \hline
+\end{tabular}
+\end{center}
+Entonces la solución es
+
+\begin{align*}
+    S_1 = (-6,-5) \cap  (-\infty,-5) =(-6,-5)
+\end{align*}
+\item $x \in [-5,1)$
+
+\begin{align*}
+         \frac{|x-1|-2}{|x+5|-1} \leq 0  &\Longleftrightarrow  \frac{-(x-1)-2}{(x+5)-1} \leq 0 \\ \ &\Longleftrightarrow \ \frac{-(x+1)}{x+4} \leq 0 \\
+        &\Longleftrightarrow \ \frac{(x+1)}{(x+4)} \geq 0 \\
+         &\Longleftrightarrow (x+1)(x+4) \geq 0, \quad x \neq -4
+\end{align*}
+
+En efecto
+
+\begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,-4) $  & $(-4,-1)$ & $(-1,+\infty)$ \\
+   \hline
+   $x+1$ & $-$ &$-$ &  $+$ \\ \hline
+   $x+4$ & $-$ & $+$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle \frac{(x+1)}{(x+4)}$ & $+$ & $-$ & $+$ \\
+   \hline
+\end{tabular}
+\end{center}
+Luego
+
+\begin{align*}
+    S_2= [-5,-1) \cap \left[ (-\infty,-4) \cup (-1,+\infty)\right]
+    &= [-5,4)
+\end{align*}
+
+\item $x \in (-1,+\infty)$
+
+\begin{align*}
+       \frac{|x-1|-2}{|x+5|-1} \leq 0  &\Longleftrightarrow    \frac{(x-1)-2}{(x+5)-1} \leq 0 \\ \ &\Longleftrightarrow \ \frac{x-3}{x+4} \leq 0 \\
+        &\Longleftrightarrow \ (x-3)(x+4), \quad x \neq -4
+    \end{align*}
+
+\begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,-4) $  & $(-4,3)$ & $(3,+\infty)$ \\
+   \hline
+   $x-3$ & $-$ &$-$ &  $+$ \\ \hline
+   $x+4$ & $-$ & $+$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle (x+1)(x+4)$ & $+$ & $-$ & $+$ \\
+   \hline
+\end{tabular}
+\end{center}
+Así, tenemos que la solución es 
+
+\begin{align*}
+    S_3=(-4,-3) \cap (1,+\infty)=(1,3]
+\end{align*}
+\end{itemize}
+Uniendo todas las soluciones, y además, tomando en cuenta la observación del inicio, tenemos que
+
+\begin{align*}
+    \mathcal{S}&=S_1 \cup S_2 \cup S_3 = (-6,5)\cup [-5,-4)\cup (-1,3] \cup \{-1,3\} \\
+    &=(-6,-4) \cup [-1,3]
+\end{align*}
+
+\begin{prob}{}{}
+    Sean $a,b \in \mathbb{R}$ y $n \in \mathbb{N}$, demuestre que 
+
+    \begin{itemize}
+        \item[\textbf{a)}] $|a^n-b^n|\leq M^{n-1}|a-b|$, donde $M=\max\{|a|,|b|\}$
+        \item[\textbf{b)}] $|a^{1/n}-b^{1/n}|\leq |a-b|^{1/n}$
+    \end{itemize}
+\end{prob}
+
+\textbf{Solución:}
+
+
+\begin{itemize}
+    \item[\textbf{a)}]
+Por las \textbf{Fórmulas de factorización} tenemos que 
+
+\begin{align*}
+    |a^n-b^n|&=|(a-b)(a^{n-1}+a^{n-2}b+\cdots + b^{n-1})| \\
+    &=|a-b||a^{n-1}+a^{n-2}b+\cdots + b^{n-1}| \\
+    &\leq |a-b|(|a|^{n-1}+|a|^{n-2}|b|+\cdots + |b|^{n-1}) \\
+    &\leq|a-b|(M^{n-1}+M^{n-2}M+ \cdots + M^{n-1}) \\
+    &=M^{n-1}|a-b|
+\end{align*}
+
+\item[\textbf{b)}] Si $n=1$ la desigualdad es trival. Por lo tanto, consideremos $n\geq 2$. Asi, sin pérdida de generalidad supongamos que $a\geq b$, y tomemos $x=a^{1/n}$ e $y=b^{1/n}$. Luego
+
+\begin{align*}
+    |a-b|=a-b&=x^n-y^n \\
+    &=(x-y)(x^{n-1}+x^{n-2}y+ \cdots + y^{n-1}) \\
+    &=(x-y)\left( \sum_{k=0}^{n-1} x^{n-1-k}y^k\right) \\
+    &\geq(x-y)\left( \sum_{k=0}^{n-1} \binom{n-1}{k}x^{n-1-k}(-y)^k\right) \\
+    &=(x-y)(x-y)^{n-1} \\
+    &=(x-y)^n \\
+    &=(a^{1/n}-b^{1/n})^n \\
+    &=|a^{1/n}-b^{1/n}|^n
+\end{align*}
+
+Por lo tanto 
+
+\begin{align}
+    |a^{1/n}-b^{1/n}| \leq |a-b|^{1/n}
+\end{align}
+\end{itemize}
+
+\begin{prob}{}{}
+    Sean $a,b,c,d \in \mathbb{R}$. Demuestre que 
+
+    \begin{align*}
+        a^4+b^4+c^4+d^4 \geq 4abcd
+    \end{align*}
+\end{prob}
+
+\textbf{Solución:}
+
+Siempre es bueno recordar que $a^2+b^2 \geq 2ab$. Luego
+
+\begin{align*}
+     a^4+b^4+c^4+d^4&=[ (a^2)^2+(b^2)^2]+[(c^2)^2+(d^2)^2] \\
+     &\geq2a^2b^2+ 2c^2d^2 \\
+     &=(\sqrt{2}ab)^2+(\sqrt{2}cd)^2 \\
+     &\geq2(\sqrt{2}ab)(\sqrt{2}cd)=4abcd
+\end{align*}
+
+\begin{prob}{}{}
+    Sean $a,b,c,d \in \mathbb{R}$. Demuestre que 
+    \begin{align*}
+        \max\{a+b,c+d\} \leq \max\{a,c\}+\max\{b,d\}
+    \end{align*}
+\end{prob}
+
+\textbf{Solución:}
+
+Recordemos que $\max\{a,b\}=\frac{a+b+|a-b|}{2}$. Entonces, tenemos que 
+
+\begin{align*}
+     \max\{a+b,c+d\} &=\frac{a+b+c+d+|a+b-c-d|}{2} \\
+     &=\frac{a+c+b+d+|(a-c)+(b-d)|}{2} \\
+     &\leq \frac{a+c+b+d+|a-c|+|b-d|}{2} \\
+     &=\frac{a+c+|a-c|}{2}+\frac{b+d+|b-d|}{2}   \\
+     &=\max\{a,c\}+\max\{b,d\}
+\end{align*}
+
+\begin{prob}{}{}
+    Describa el siguiente conjunto como intervalos o unión de intervalos.
+    \begin{align*}
+        A=\left\{x \in \mathbb{R} : \frac{|1-x|+x}{|x|+2}\geq1\right\}
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+
+Tenemos los puntos criticos $x=1$ y $x=0$. Entonces analizamos los siguientes intervalos
+
+\begin{itemize}
+    \item $x \in (-\infty,0)$
+
+\begin{align*}
+    \frac{|1-x|+x}{|x|+2}\geq2\} \ &\Longleftrightarrow  \ \frac{(1-x)+x}{-x+2} \geq 1\\
+    &\Longleftrightarrow \ \frac{1}{2-x}-1 \geq 0 \\
+     &\Longleftrightarrow \ \frac{x-1}{2-x}\geq 0 \\
+     \ &\Longleftrightarrow \ (x-1)(2-x) \geq 0, \quad x\neq 2
+\end{align*}
+Luego confeccionamos la tabla
+
+\begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,1) $  & $[1,2)$ & $(2,+\infty)$ \\
+   \hline
+   $x-1$ & $-$ &$+$ &  $+$ \\ \hline
+   $2-x$ & $+$ & $+$ & $-$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle \frac{(x-1)}{(2-x)}$ & $-$ & $+$ & $-$ \\
+   \hline
+\end{tabular}
+\end{center}
+
+Entonces, obtenemos la solución
+
+\begin{align*}
+    S_1= [1,2) \cap (-\infty,0)=\emptyset
+\end{align*}
+
+\item $x \in (0,1)$
+\begin{align*}
+    \frac{|1-x|+x}{|x|+2}\geq2\} \ &\Longleftrightarrow \ \frac{(1-x)+x}{x+2} \geq 1\\
+    &\Longleftrightarrow \ \frac{1}{x+2}-1 \geq 0 \\
+     &\Longleftrightarrow \ \frac{-(x+1)}{x+2} \geq 0 \\
+      &\Longleftrightarrow \ \frac{x+1}{x+2} \leq 0 \\
+       &\Longleftrightarrow \ (x+1)(x+2) \leq 0,\quad x\neq2
+\end{align*}
+
+Hacemos la tabla nuevamente
+
+\begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,-2) $  & $(-2,-1)$ & $(-1,+\infty)$ \\
+   \hline
+   $x+1$ & $-$ &$-$ &  $+$ \\ \hline
+   $x+2$ & $-$ & $+$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle (x+1)(x+2)$ & $+$ & $-$ & $+$ \\
+   \hline
+\end{tabular}
+\end{center}
+Entonces la solución en este caso es
+\begin{align*}
+    (-2,-1) \cap(0,1)=\emptyset
+\end{align*}
+
+\item $x \in (1,+\infty)$
+\begin{align*}
+    \frac{|1-x|+x}{|x|+2}\geq2\} \ &\Longleftrightarrow \ \frac{-(1-x)+x}{x+2} \geq 1\\
+    &\Longleftrightarrow \ \frac{2x-1}{x+2}-1 \geq 0 \\
+     &\Longleftrightarrow \ \frac{x-3}{x+2} \geq 0 \\
+      &\Longleftrightarrow \ (x-3)(x+2) \geq 0 , \quad x \neq 2\\
+\end{align*}
+
+Por útlimo
+
+\begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,-2) $  & $(-2,3)$ & $(3,+\infty)$ \\
+   \hline
+   $x+2$ & $-$ &$-$ &  $+$ \\ \hline
+   $x-3$ & $-$ & $+$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle (x-3)(x+2)$ & $+$ & $-$ & $+$ \\
+   \hline
+\end{tabular}
+\end{center}
+\end{itemize}
+
+\begin{prob}{}{}
+    Escriba como uniones de intervalo el siguiente conjunto
+\begin{align*}
+ \mathcal{S}=\left\{x \in \mathbb{R}:   \frac{||x|-|x-2||}{x^2-1}\leq2 \right\}
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+Primero notamos que en el denominador se cumple que $\forall x \in (-1,1)$, $x^2-1<0$. Y por otro lado, el numerador es siempre positivo. De esta manera, es claro que $(-1,1) \in \mathcal{S}$. Basta estudiar los intervalos $(-\infty,-1)$, $(1,2]$ y $(2,+\infty)$. En efecto
+
+\begin{itemize}
+    \item $x \in (-\infty,-1)$
+
+    \begin{align*}
+         \frac{||x|-|x-2||}{x^2-1}\leq2 \ &\Longleftrightarrow  \frac{|-x+x-2|}{x^2-1}\leq 2 \\
+         &\Longleftrightarrow \frac{2}{x^2-1}\leq2 \\
+         &\Longleftrightarrow \frac{1}{x^2-1}\leq 1 \\
+         &\Longleftrightarrow 1 \leq x^2-1 \\
+         &\Longleftrightarrow 2\leq x^2 \\
+          &\Longrightarrow \sqrt{2}\leq|x|
+    \end{align*}
+    Así la solución es
+
+    \begin{align*}
+        S_1= (-\infty,-1) \cap [(-\infty,-\sqrt{2}) \cup (\sqrt{2},+\infty)]=(-\infty,-\sqrt{2})
+    \end{align*}
+
+    \item $x \in (1,2]$
+
+    \begin{align*}
+         \frac{||x|-|x-2||}{x^2-1}\leq2 \ &\Longleftrightarrow \ \frac{|x+x-2|}{x^2-1}\leq 2 \\
+         &\Longleftrightarrow \ \frac{2|x-1|}{x^2-1}\leq 2 \\
+         &\Longleftrightarrow \ \frac{|x-1|}{(x-1)(x+1)} \leq 1 \\
+         &\Longleftrightarrow \ \frac{1}{x+1} \leq 1 , \quad x\neq 2 \\
+         &\Longleftrightarrow \ 1 \leq x+1 \\
+         &\Longleftrightarrow \ 0 \leq x
+    \end{align*}
+    La solución en este caso es
+\begin{align*}
+    S_2= (1,2] \cap (0,+ \infty)=(1,2]
+\end{align*}
+
+\item $x \in (2, +\infty)$
+
+\begin{align*}
+    \frac{||x|-|x-2||}{x^2-1}\leq2 \ &\Longleftrightarrow \ \frac{|x-(x-2)|}{x^2-1} \leq 2 \\
+    &\Longleftrightarrow \ \frac{2}{x^2-1}\leq 2 \\
+    &\Longleftrightarrow \ \frac{1}{x^2-1}\leq 1 \\
+    &\Longleftrightarrow \ 1\leq x^2-1 \\
+      &\Longleftrightarrow 2\leq x^2 \\
+          &\Longrightarrow \sqrt{2}\leq|x|
+\end{align*}
+La última solución está dada por 
+\begin{align*}
+    S_3= (2, +\infty) \cap [(-\infty,-\sqrt{2}) \cup (\sqrt{2},+\infty)]= (\sqrt{2},+\infty)
+\end{align*}
+\end{itemize}
+Así, el intervalo que describe a $\mathcal{S}$ es 
+
+\begin{align*}
+    \mathcal{S}=S_1 \cup S_2 \cup S_3 = (-\infty,-\sqrt{2}) \cup (-1,1) \cup (\sqrt{2},+\infty)
+\end{align*}
+
+\begin{prob}{}{}
+    Determine en forma de intervalos el conjunto
+    \begin{align*}
+        A = \left\{ x \in \mathbb{R} : \frac{1-2|x|}{x(x^2+1)} \geq 0 \right\}
+    \end{align*}
+\end{prob}
+\textbf{Solución:} Podemos notar inmediatamente que $x^2+1>0$. Por lo tanto podemos deshacernos de este término sin efectar el orden de la inecuación. Entonces, nos queda 
+
+\begin{align*}
+    \frac{1-2|x|}{x}
+\end{align*}
+El cual posee el único punto crítico $x=0$. Luego, analizamos los siguientes intervalos
+
+\begin{itemize}
+    \item $x \in (0, +\infty)$
+
+    \begin{align*}
+          \frac{1-2|x|}{x} \geq 0 \ &\Longleftrightarrow \ \frac{1-2x}{x}\geq 0 \\
+          &\Longleftrightarrow \ \frac{2x-1}{x}\leq 0 \\
+          &\Longleftrightarrow \ (2x-1)x\leq 0 , \quad x\neq 0\\
+    \end{align*}
+
+    \begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,0) $  & $(0,1/2]$ & $(1/2,+\infty)$ \\
+   \hline
+   $2x-1$ & $-$ &$-$ &  $+$ \\ \hline
+   $x$ & $-$ & $+$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle (2x-1)x $ & $+$ & $-$ & $+$ \\
+   \hline
+\end{tabular}
+\end{center}
+Por tanto la solución en este caso es 
+\begin{align*}
+    S_1= (0,1/2]\cap (0, +\infty) =(0,1/2]
+\end{align*}
+
+\item $x \in (-\infty,0)$
+
+ \begin{align*}
+          \frac{1-2|x|}{x} \geq 0 \ &\Longleftrightarrow \ \frac{1+2x}{x}\geq 0 \\
+\end{align*}
+
+    
+    \begin{center}
+    \rowcolors{2}{white}{gray!20!white}
+\begin{tabular}{|c|c|c|c|}
+\hline
+   & $(-\infty,-1/2) $  & $(-1/2,0]$ & $(0,+\infty)$ \\
+   \hline
+   $1+2x$ & $-$ &$+$ &  $+$ \\ \hline
+   $x$ & $-$ & $-$ & $+$ \\ \hline \hline
+\rule{0pt}{0pt} $\displaystyle (2x-1)x $ & $+$ & $-$ & $+$ \\
+   \hline
+\end{tabular}
+\end{center}
+\end{itemize}
+
+
+\begin{prob}{}{}
+Sean $a,b,c \in \mathbb{R}$. Pruebe que 
+
+\begin{align*}
+    \left|\sqrt{a^2+b^2}-\sqrt{a^2+c^2}\right| \leq |b-c|
+\end{align*}
+\end{prob}
+\textbf{Solución:} En efecto, utilzando el problema {\large Citar problema}, tenemos que 
+
+\begin{align*}
+    \left|\sqrt{a^2+b^2}-\sqrt{a^2+c^2}\right| &\leq   \left| \sqrt{a^2}+\sqrt{b^2}-\left(\sqrt{a^2}+\sqrt{c^2}\right)\right| \\
+    &\leq ||a|+|b|-(|a|+|c|)| \\
+    &\leq | |b|-|c|| \leq |b-c| && \textbf{(Corolario)}
+\end{align*}
+
+\begin{prob}{}{}
+Sea $f: \mathbb{R} \to \mathbb{R}$, una función definida por
+
+\begin{align*}
+    f(x)=\frac{2x^2+4x-1}{3x-1}
+\end{align*}
+Halle una constante $M$ tal que $|f(x)| \leq M$, para $x \in [1,2]$.
+\end{prob}
+\textbf{Solución:}
+Notemos primero que 
+
+\begin{align*}
+    |f(x)|= \frac{|2x^2+4x-1|}{|3x-1|}
+\end{align*}
+Dado que $x \in [1,2]$, entonces en particular $|x|\leq 2$. Entonces aplicando desigualdad triangular, tenemos que 
+\begin{align*}
+    |2x^2+4x-1|&\leq 2|x|^2+4|x|+1 \\
+    &\leq2\cdot 2^2+4\cdot 2 +1 = 17 
+\end{align*}
+Por otro lado, dado que   $x \in [1,2]$, entonces en particular $|x| \geq 1 $. Aplicando la desigualdad triangular inversa tenemos 
+\begin{align*}
+    |3x-1| \geq 3|x|-1\geq 2 \Longrightarrow \frac{1}{|3x-1|} \leq \frac{1}{2}
+\end{align*}
+Luego
+\begin{align*}
+     |f(x)|= \frac{|2x^2+4x-1|}{|3x-1|}\leq \frac{17}{2}
+\end{align*}
+Tomando $M=17/2$ se tiene lo pedido.
+
+\begin{prob}{}{}
+    Resuelva la inecuación 
+    \begin{align*}
+        \frac{|x-2|-|x+2|}{x^2-4} \geq 1
+    \end{align*}
+\end{prob}
+\textbf{Solución:} 
+Primero notamos que 
+\begin{align*}
+    x^2-4=0 &\Longleftrightarrow x^2 =4 \\
+    &\Longleftrightarrow (x=2) \vee (x=-2)
+\end{align*}
+Entonces, necesariamente $x\neq 2$ y $x\neq -2$. Por otro lado, tenemos que los puntos críticos son $2$ y $-2$. Así que analizamos los siguientes casos
+
+\begin{itemize}
+    \item $x \in (-\infty,-2)$ 
+
+    \begin{align*}
+          \frac{|x-2|-|x+2|}{x^2-4} \geq 1 &\Longleftrightarrow \frac{-(x-2)-(-(x+2))}{x^2-4} \geq 1 \\
+          &\Longleftrightarrow \frac{4}{x^2-1}-1 \geq 0 \\
+          &\Longleftrightarrow \frac{8-x^2}{x^2-4} \geq 0 \\
+          &\Longleftrightarrow \frac{x^2-8}{x^2-4} \leq 0
+    \end{align*}
+    Notamos que para $x \in (-\infty,-2)$, $x^2 -4 >0$. Así que solo depende del signo del numerador. 
+
+    \begin{align*}
+        x^2-8 \leq 0   &\Longleftrightarrow x^2\leq 8 \\
+          &\Longleftrightarrow |x| \leq 2\sqrt{2}\\
+            &\Longleftrightarrow -2\sqrt{2}\leq x \leq 2\sqrt{2}
+    \end{align*}
+    Por lo tanto la solución es 
+
+    \begin{align*}
+        S_1=(-\infty,-2) \cap [-2\sqrt{2},2\sqrt{2}=[-2\sqrt{2},-2)
+    \end{align*}
+
+    \item $x \in (-2,2)$
+\begin{align*}
+    \frac{|x-2|-|x+2|}{x^2-4} \geq 1 &\Longleftrightarrow \frac{-(x-2)-(x+2)}{x^2-4} \geq 1 \\
+     &\Longleftrightarrow  \frac{-2x}{x^2-4}-1\geq 0 \\
+      &\Longleftrightarrow \frac{4-2x-x^2}{x^2-4} \geq0 \\
+       &\Longleftrightarrow  \frac{x^2+2x-4}{x^2-4} \leq 0
+\end{align*}
+Para $x \in (-2,2)$, $x^2-4 <0$, entonces hallamos el intervalo donde $x^2+2x-4 \geq 0$. Hallamos las raíces, 
+
+\begin{align*}
+    x_1=-1-\sqrt{5}, \ x_2 =-1+\sqrt{5}
+\end{align*}
+Dado que $a=1>0$, posee el mismo signo, entonces la solución es 
+
+\begin{align*}
+    S_2 =(-2,2) \cap \left[(-\infty, -1-\sqrt{5}] \cup (-1+\sqrt{5},+\infty)\right]=[-1+\sqrt{5},2)
+\end{align*}
+
+\item $x \in (2,+\infty)$
+
+\begin{align*}
+    \frac{|x-2|-|x+2|}{x^2-4} \geq 1 &\Longleftrightarrow \frac{(x-2)-(x+2)}{x^2-4}\geq 1 \\
+    &\Longleftrightarrow \frac{-4}{x^2-4}-1 \geq 0 \\
+    &\Longleftrightarrow \frac{-x^2}{x^2-4} \geq 0 \\
+    &\Longleftrightarrow \frac{x^2}{x^2-4}\leq 0 
+\end{align*}
+    Dado que para $x \in (2,+\infty)$, $x^2-4 >0$, nos queda que $x^2 \leq 0 \Longrightarrow x \in \{0\}$. Por lo tanto 
+
+    \begin{align*}
+        S_3 = (2,+\infty) \cap \{0\} = \emptyset
+    \end{align*}
+\end{itemize}
+Entonces la solución final es 
+
+\begin{align*}
+    S=S_1\cup S_2 \cup S_3 = [-2\sqrt{2},-2) \cup [-1+\sqrt{5},2)
+\end{align*}
+
+\begin{prob}{}{}
+    Halle el conjunto solución $S$, para la inecuación
+
+    \begin{align*}
+        |x+2|<3
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+Aplicando las propieades del valor absoluto, tenemos que 
+\begin{align*}
+    |x+2|<3 &\Longleftrightarrow -3 < x+2 < 3 \\
+    &\Longleftrightarrow -5 <x < 1
+\end{align*}
+Por lo tanto el conjunto solución es 
+\begin{align*}
+    S = \{x \in \mathbb{R} : -5<x<1 \} = (-5,1)
+\end{align*}
+
+\begin{prob}{}{}
+    Halle el conjunto solución de la siguiente inecuación 
+\begin{align*}
+    |x+|x-3|| <10 
+\end{align*}
+\end{prob}
+\textbf{Solución:} Analizamos el punto crítico $x=3$. Entonces, analizamos los siguientes casos 
+\begin{itemize}
+    \item $x \in (-\infty,3)$
+    \begin{align*}
+         |x+|x-3|| <10 &\Longleftrightarrow |x+(-(x-3))|<10 \\
+          &\Longleftrightarrow |-3| <10 \\
+           &\Longleftrightarrow  3 <10
+    \end{align*}
+    En este caso, la solución es 
+    \begin{align*}
+        S_1 = (-\infty,3)\cap \mathbb{R}=(-\infty,3)
+    \end{align*}
+    \item  $x \in [3,\infty)$
+\begin{align*}
+     |x+|x-3|| <10 &\Longleftrightarrow |x+(x-3)| <10 \\
+     &\Longleftrightarrow |2x-3| < 10 \\
+     &\Longleftrightarrow -10 < 2x-3< 10 \\
+     &\Longleftrightarrow -7 < 2 x <13 \\
+     &\Longleftrightarrow -\frac{7}{2}<x <\frac{13}{2}
+\end{align*}
+Así la solución, en este caso es 
+\begin{align*}
+    S_2= [3,\infty) \cap \left(-\frac{7}{2},\frac{13}{2}\right)=\left[3, \frac{13}{2}\right)
+\end{align*}
+\end{itemize}
+Concluyendo que la solución general es 
+
+\begin{align*}
+    S=S_1 \cup S_2 = (-\infty,3) \cup \left[3, \frac{13}{2}\right)= \left(-\infty, \frac{13}{2}\right)
+\end{align*}
+\begin{prob}{}{}
+      Sean $x_1,x_2, \ldots, x_n \in \mathbb{R}$, entonces 
+\begin{align*}
+|x_1+x_2+\cdots+x_n| \leq |x_1|+|x_2|+\cdots |x_n|
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+Aplicaremos la desigualdad triangular para demostrar este problema. En efecto
+\begin{align*}
+    |x_1+x_2+\cdots+x_n|&=|(x_1+x_2+\cdots+x_{n-1})+x_n| \\
+    &\leq |(x_1+x_2+\cdots)+x_{n-1}|+ |x_n | \\
+    &\leq |x_1 +x_2+\cdots)|+|x_{n-1}|+|x_n| \\
+    & \ \ \vdots \\
+    &\leq |x_1|+|x_2|+\cdots + |x_{n-1}| +|x_n| 
+\end{align*}
+Esta propiedad, se puede demostrar tambíen utilizando el \textbf{método de inducción} que veremos mas adelante
+
+\begin{prob}{}{}
+Sean $x,y,z \in \mathbb{R}$. Pruebe que 
+
+\begin{align*}
+    |x|+|y|+|z|-|x+y|-|y+z|-|z+x|+|x+y+z| \geq 0
+\end{align*}
+    
+\end{prob}
+\end{document}
