@@ -1,0 +1,573 @@
+\documentclass[12pt]{book}
+\usepackage[spanish]{babel}
+\usepackage[top=3.5cm, bottom=3cm, left=2cm, right=2cm, headheight=2.5cm, footskip=1.5cm, marginparwidth=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{fancybox}
+\usepackage{lastpage}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{marginnote}
+\usepackage{cancel}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usetikzlibrary{patterns} 
+\tcbuselibrary{skins}
+\usetikzlibrary{calc,angles,quotes}
+\usepackage{tzplot}
+\usepackage{float}
+\usepackage{kinematikz}
+\usepackage{titlesec}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{plotmarks}
+\usepgfplotslibrary{polar}
+\tcbuselibrary{theorems}
+
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{gre}{RGB}{101, 191, 127}
+\definecolor{gree}{RGB}{7, 135, 44}
+\definecolor{safetyorange(blazeorange)}{rgb}{1.0, 0.4, 0.0}
+\definecolor{gold(web)(golden)}{rgb}{1.0, 0.84, 0.0}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}
+
+
+\newcommand{\ChapterStyle}[2]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Fondo decorativo
+    \fill[safetyorange(blazeorange)] (-3,0) rectangle (40,4); 
+    \draw[blue, line width=2mm] (-3,4) -- (40,4);
+    \draw[blue, line width=2mm] (-3,0) -- (40,0);
+    \fill[white] (15,2) circle (1.7);
+    \draw[line width=1mm] (15,2) circle (1.7)
+    \draw[line width=0.5mm] (15,2) circle (1.5)
+    \fill[kellygreen] (15,2) circle (1.5)
+    \node at (15,2) {\Huge\bfseries\sffamily\color{white}{\thechapter}}
+   \node[anchor=west] at (2,2) {\Huge\bfseries\sffamily\color{white}{#2}};
+  \end{tikzpicture}
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {%
+    \ChapterStyle{\thechapter}{} % Pasa el número del capítulo y el título al diseño
+  }
+
+
+\newcommand{\Estilo}{
+ \begin{tikzpicture}[remember picture, overlay]
+         \draw
+     (current page header area.south west) -- (current page header area.south east)
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=7cm]current page.south east) {\textbf{Ingeniería Matemática}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=16.1cm]current page.south east) {\textbf{Cálculo II}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \draw[safetyorange(blazeorange), line width=2mm]
+    (current page.south west) rectangle (current page.north west)
+\end{tikzpicture}
+
+}
+%Carga el estilo
+\fancypagestyle{Normal}{%
+  \fancyhead[L]{\emph{Departamento de Matemáticas}}
+  \fancyhead[R]{\emph{Univesidad de Santiago de Chile}}
+  
+  \fancyhead[C]{\Estilo}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+
+
+
+%Estilo de Pagina resumen
+\newcommand{\mypage}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        
+        \fill[fill=safetyorange(blazeorange)](current page.north west) rectangle ([yshift=-22mm]current page.north east) node[midway] {\Huge\bfseries\sffamily\color{white}{Resumen}};
+
+        
+    \end{tikzpicture}
+}%
+%Carga el estilo
+\fancypagestyle{Resumen}{%
+  \fancyhf{}
+  \fancyhead[C]{\mypage}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+\renewcommand{\footrulewidth}{0.5pt}
+
+ \NewTcbTheorem[number within=section]{mytheo}{My Theorem}%
+ {colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
+
+%Ejemplo
+\NewTcbTheorem[number within=section]{eje}{Ejemplo}
+{ blanker,breakable,left=5mm,
+ before skip=10pt,after skip=10pt,
+ borderline west={1mm}{0pt}{red}}
+
+%Problemas comunes
+\NewTcbTheorem[number within=section]{prob}{Problema}{colback=gray!15!white
+,title= Definition, attach boxed title to top left, fonttitle=\bfseries, sharp corners,boxrule=0pt,coltitle=black, boxed title style={colback=black!10}}{theo}
+
+ %Propuestos
+ \tcbset{ribbonbox/.style={enhanced,colback=gray!15!white, sharpish corners,  frame style={left color=red!75!black,
+ right color=blue!75!black}, overlay={\path[fill=blue!75!white,draw=blue,double=white!85!blue,
+ preaction={opacity=0.6,fill=blue!75!white},
+ line width=0.1mm,double distance=0.2mm,
+ pattern=fivepointed stars,pattern color=white!75!blue]
+ ([xshift=-0.2mm,yshift=-1.02cm]frame.north east)-- ++(-1,1)-- ++(-0.5,0)-- ++(1.5,-1.5)-- cycle;}}}
+
+ %DiseñoTCB
+\NewTcbTheorem[number within=section]{defi}{Definición}{colback=bleudefrance!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=bleudefrance,colbacktitle=bleudefrance, boxed title style={
+		frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+ \NewTcbTheorem[number within=section]{mytheo}{My Theorem}%
+ {colback=bleudefrance!10,enhanced, title=Definition, attach boxed title to top left={xshift=-4mm}, boxrule=0pt, after skip=1cm,right skip=0cm, breakable, fonttitle=\bfseries, toprule= 0pt, bottomrule=0pt, rightrule=0pt, leftrule=0pt, arc=0mm, skin=enhancedlast jigsaw, sharpcorners, colframe=bleudefrance, colbacktitle=bleudefrance, boxed title style={
+ frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\NewTcbTheorem[number within=section]{teo}{Teorema}{colback=cadmiumred!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=cadmiumred,colbacktitle=cadmiumred, boxed title style={
+		frame code={ 
+			\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+            
+\NewTcbTheorem[number within=section]{prop}{Proposición}{colback=gold(web)(golden)!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=gold(web)(golden),colbacktitle=gold(web)(golden), boxed title style={
+		frame code={ 
+			\fill[gold(web)(golden)](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,gold(web)(golden)]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,gold(web)(golden)]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[gold(web)(golden)!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+\NewTcbTheorem[number within=section]{coro}{Corolario}{colback=kellygreen!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=kellygreen,colbacktitle=kellygreen, boxed title style={
+		frame code={ 
+			\fill[kellygreen](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,kellygreen]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,kellygreen]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[kellygreen!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+ \pagestyle{Normal}
+ %Sangía
+\setlength{\parindent}{0pt}
+
+ 
+\begin{document}
+
+
+\chapter{Axiomas de Cuerpo}
+
+\begin{prob}
+\quad \quad
+Sean $\forall a,b \in \mathbb{R}$, $a,b\neq 0$. Demuestre que $(ab)^{-1}=b^{-1}a^{-1}$ 
+\end{prob}
+\textbf{Solución:}
+Para demostrar esta propiedad basta ver primero que $b^{-1}a^{-1}$ es el inverso multiplicativo de $ab$. En efecto:
+
+\begin{align*}
+    (ab)(b^{-1}a^{-1})&=a(bb^{-1})a^{-1} && \textbf{(Asociatividad de $\cdot$)} \\
+    &= a \cdot 1 \cdot a^{-1} && \textbf{(Inverso Multiplicativo)} \\
+    &= a \cdot a^{-1} && \textbf{(Neutro Multiplicativo)} \\
+    &= 1 && \textbf{(Inverso Multiplicativo)}
+\end{align*}
+
+Para concluir, utilizamos el teorema {\Large Agregar cita}, el cual nos dice que el inverso multiplicativo es único. Así $(ab)^{-1}=b^{-1} a^{-1}$
+
+\begin{prob}
+    \quad \quad
+Sean $a,b \in \mathbb{R}$, $a,b \neq 0$. Demuestre que $a^{-1}\cdot b= ( a \cdot b^{-1}\cdot)^{-1}$
+\end{prob}
+\textbf{Solución:}
+Tenemos que verificar que $( a \cdot b^{-1})$ es el inverso multiplicativo de $a^{-1}\cdot b$. Notemos que 
+
+\begin{align*}
+    (a^{-1}\cdot b) \cdot (a \cdot b^{-1}) &=   (a^{-1}\cdot b) \cdot ( b^{-1}\cdot a ) && \textbf{(Conmutatividad)} \\
+    &=  a^{-1} \cdot (b \cdot b^{-1}) \cdot a  && \textbf{(Asociatividad de $\cdot$)} \\
+    &=  a^{-1} \cdot 1 \cdot a && \textbf{(Inverso Multiplicativo)} \\
+    &= a^{-1} \cdot a && \textbf{(Neutro Multiplicativo)} \\
+    &= 1 && \textbf{(Inverso Multiplicativo)}
+\end{align*}
+
+Ahora dado que el inverso multiplicativo es único, entonces tenemos que $a^{-1}\cdot b= (a \cdot b^{-1})^{-1}$.
+
+\begin{prob}
+    \quad \quad 
+    Demuestre que $\forall a \in \mathbb{R}$ se tiene que $(-1)\cdot a = -a$
+\end{prob}
+\textbf{Solución:} 
+Tenemos que probar que $a$ es el inverso aditivo de $(-1) \cdot a$. Luego 
+\begin{align*}
+    a + (-1)\cdot a  &= a \cdot 1 + (-1)\cdot a && \textbf{(Neutro Multiplicativo)} \\
+    &= a \cdot (1+(-1)) && \textbf{(Distributividad)} \\
+    &= a \cdot (0) && \textbf{(Inverso Aditivo)} \\
+    &= 0 
+\end{align*}
+Utilizando el problema \ref{prob: 1.0.4} se tiene lo último
+
+\begin{prob}
+\quad \quad 
+    Sea $a \in \mathbb{R}$. Pruebe que $a \cdot 0 = 0$.
+\end{prob} \label{prob: 1.0.4}
+\textbf{Solución:}
+
+Notemos que 
+
+\begin{align*}
+   a \cdot 0 &= a \cdot (0 + 0 )  && \textbf{(Neutro de la Suma)} \\
+ a\cdot 0 &= a \cdot 0 + a \cdot 0 && \textbf{(Distributividad)} \\
+  a\cdot 0 + (-(a\cdot 0)) &= a\cdot 0 + a \cdot 0 + (-(a\cdot 0)) && \textbf{(Exist. Inverso)} \\
+  0&= a\cdot 0 + (  a \cdot 0 -(a\cdot 0) ) && \textbf{(Asociatividad)} \\
+  0&= a\cdot 0 && \textbf{(Inverso Aditivo)}
+\end{align*}
+
+\begin{prob}
+\quad \quad 
+    Demuestre que $\forall a, b \in \mathbb{R}$ se tiene que $-(a+b) = (-a) + (-b)$ .
+\end{prob}
+\textbf{Solución:} Notemos que
+
+\begin{align*}
+    (a+b)+ [(-a)+(-b)] &= a + [b+ (-a)] + (-b)   && \textbf{(Asociatividad)} \\
+    &= a + [(-a) + b ]+ (-b) && \textbf{(Conmutatividad)} \\
+    &= [a + (-a)]+ [b + (-b)] && \textbf{(Asociatividad)} \\
+    &= 0 + 0  && \textbf{(Inverso Aditivo)} \\
+    &=0 && \textbf{(Neutro Aditivo)}
+\end{align*}
+
+\begin{prob}
+\quad \quad 
+    Demuestre que $\forall a, b \in \mathbb{R}$ es tienen las siguientes propiedades 
+
+    \begin{itemize}
+        \item[\textbf{a)}] $-(-a)=a$
+        \item[\textbf{b)}] $(-a) \cdot b=-(ab)$ 
+        \item[\textbf{c)}] $a \cdot (-b) = -(ab)$
+        \item[\textbf{d)}] $(-a)(-b)=ab$
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] No es difícil notar que 
+    \begin{align*}
+        a+ (-a)&=0 \\
+        (-a)+a&=0
+    \end{align*}
+    Esto nos dice que $a$ es el inverso aditivo de $-a$. Por lo tanto, dado que el inverso aditivo es único, se tiene que $a = -(-a)$.
+      \item[\textbf{b)}] En efecto
+
+      \begin{align*}
+          (-a) \cdot b + a \cdot b&=((-a) + a ) \cdot b &&\textbf{(Distributividad)} \\
+          &= 0 \cdot b && \textbf{(Inverso Aditivo)} \\
+          &=0
+      \end{align*}
+\item[\textbf{c)}] Análogamente al ejercicio anterior 
+
+\begin{align*}
+    a \cdot (-b) + a\cdot b &= a \cdot (b + (-b)) && \textbf{(Distributividad)} \\
+    &=a \cdot 0 && \textbf{(Inverso Aditivo)} \\
+    &=0
+\end{align*}
+      \item[\textbf{d)}] Recordemos la propiedad $(-a)=(-1) \cdot a$. Entonces tenemos que 
+
+      \begin{align*}
+          (-a)(-b)&= [(-1)a][(-1)b]  \\
+          &= (-1)\cdot[a \cdot (-1)] \cdot b && \textbf{(Asociatividad)} \\
+          &=(-1) \cdot [(-1) \cdot a] \cdot b && \textbf{(Conmutatividad)} \\
+          &= [(-1)(-1)]\cdot [ab] && \textbf{(Asociatividad)} \\
+          &=1 \cdot ab 
+          &=ab
+      \end{align*}
+
+      {\Large} Aquí falta probar lo $(-1)(-1)=1$ para que esté listo.
+\end{itemize}
+\begin{prob}
+\quad \quad 
+    Demuestre que $\forall a, b \in \mathbb{R}$, $a,b \neq 0$ se tienen las siguientes propiedades
+
+    \begin{itemize}
+        \item[\textbf{a)}] $(a^{-1})^{-1}=a$
+        \item[\textbf{b)}] $a^{-1} \cdot b = ( a \cdot b^{-1})^{-1}$
+        \item[\textbf{c)}] $a \cdot b^{-1} = (a^{-1} \cdot b)^{-1}$ 
+        \item[\textbf{d)}] $(ab)^{-1}=a^{-1} \cdot b^{-1}$
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+
+\begin{itemize}
+    \item[\textbf{a)}]   No es difícil notar que 
+\begin{align*}
+    a \cdot a^{-1}&=1 \\
+    a^{-1} \cdot a&=1
+\end{align*}
+Esto quiere decir que $a^{-1}$ es el inverso multiplicativo de $a$. Ahora dado que el inverso multiplicativo es único, se tiene que  $(a^{-1})^{-1}=a$.
+\item[\textbf{b)}] Tenemos que verificar que $( a \cdot b^{-1})$ es el inverso multiplicativo de $a^{-1}\cdot b$. Notemos que 
+
+\begin{align*}
+    (a^{-1}\cdot b) \cdot (a \cdot b^{-1}) &=   (a^{-1}\cdot b) \cdot ( b^{-1}\cdot a ) && \textbf{(Conmutatividad)} \\
+    &=  a^{-1} \cdot (b \cdot b^{-1}) \cdot a  && \textbf{(Asociatividad de $\cdot$)} \\
+    &=  a^{-1} \cdot 1 \cdot a && \textbf{(Inverso Multiplicativo)} \\
+    &= a^{-1} \cdot a && \textbf{(Neutro Multiplicativo)} \\
+    &= 1 && \textbf{(Inverso Multiplicativo)}
+\end{align*}
+
+Ahora dado que el inverso multiplicativo es único, entonces tenemos que $a^{-1}\cdot b= (a \cdot b^{-1})^{-1}$.
+\item[\textbf{c)}] Análogamente al problema \textbf{b)} tenemos que 
+
+\begin{align*}
+    (a\cdot b^{-1}) \cdot (a^{-1}\cdot b) &= (a\cdot b^{-1}) \cdot (b \cdot a^{-1}) && \textbf{(Conmutatividad)} \\
+    &= a \cdot ( b^{-1} \cdot b) \cdot a^{-1} && \textbf{(Asociatividad)} \\
+    &= a \cdot 1 \cdot a^{-1} && \textbf{(Inverso Multiplicativo)} \\
+    &= a \cdot a^{-1} && \textbf{(Neutro Multiplicativo)} \\
+    &= 1 && \textbf{(Inverso Multiplicativo)}
+\end{align*}
+
+\item[\textbf{d)}] Para demostrar esta propiedad basta ver primero que $a^{-1}b^{-1}$ es el inverso multiplicativo de $ab$. En efecto:
+
+\begin{align*}
+    (ab)(a^{-1}b^{-1})&=(ab)(b^{-1}a^{-1}) && \textbf{(Conmutatividad)} \\
+    &=a(bb^{-1})a^{-1} && \textbf{(Asociatividad de $\cdot$)} \\
+    &= a \cdot 1 \cdot a^{-1} && \textbf{(Inverso Multiplicativo)} \\
+    &= a \cdot a^{-1} && \textbf{(Neutro Multiplicativo)} \\
+    &= 1 && \textbf{(Inverso Multiplicativo)}
+\end{align*}
+
+Para concluir, utilizamos el teorema {\Large Agregar cita}, el cual nos dice que el inverso multiplicativo es único. Así $(ab)^{-1}=a^{-1} b^{-1}$
+\end{itemize}
+\begin{prob}{}{}
+ Demuestre que para $\forall a,b \in \mathbb{R
+ }$, $a,b \neq 0$, se tiene que 
+\begin{align*}
+     -(a^{-1})=(-a)^{-1}
+\end{align*}
+\end{prob}
+\textbf{Solución:} No es difícil notar que existen dos vías para resolver este problema. Una es utilizando los inversos aditivos, y el otro, los inversos multiplicativos. En este caso, elegiremos la segunda vía. Notamos que 
+
+\begin{align*}
+    -(a^{-1})\cdot (-a)&=[(-1)a^{-1}] \cdot [(-1)a] && \\
+    &= [(-1)a^{-1}] \cdot [a \cdot (-1)] && \textbf{(Conmutatividad)} \\
+    &= (-1) \cdot [a^{-1} \cdot a] \cdot (-1) && \textbf{(Asociatividad)} \\
+    &= (-1) \cdot 1 \cdot (-1) && \textbf{(Inverso Multiplicativo)} \\
+    &=(-1)(-1) && \textbf{(Neutro Multiplicativo)} \\
+    &=1
+\end{align*}
+
+\begin{prob}{}{}
+    Sean $a,b,c \in \mathbb{R}$, $b,c\neq 0$. Pruebe que 
+    \begin{align*}
+        (ac^{-1}+b^{-1})[(bc)\cdot (ab+c)^{-1}]=1
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+
+Notemos que 
+\begin{align*}
+    (ac^{-1}+b^{-1})[(bc)\cdot (ab+c)^{-1}] &=  [(ac^{-1}+b^{-1})\cdot(bc)]\cdot (ab+c)^{-1} && \textbf{(Asociatividad)} \\
+    &=[(ac^{-1})(bc)+b^{-1}(bc)] \cdot (ab+c)^{-1} && \textbf{(Distributividad)} \\
+    &=[(ac^{-1})(cb)+b^{-1}(bc)] \cdot (ab+c)^{-1} && \textbf{(Distributividad)} \\
+    &=[a(c^{-1}c)b+(b^{-1}b)c] \cdot (ab+c)^{-1} && \textbf{(Asociatividad)} \\
+    &=[a \cdot 1 \cdot b + 1 \cdot c ] \cdot (ab+c)^{-1} && \textbf{(Inverso Multiplicativo)} \\
+    &=(ab+c) \cdot (ab+c)^{-1}   && \textbf{(Neutro Multiplicativo)} \\
+    &=1
+\end{align*}
+
+\begin{prob}
+    Sean $a,b \in \mathbb{R}$, $a,b \neq 0$. Demuestre que $(a+b)(ab)^{-1}=a^{-1}+b^{-1}$
+\end{prob}
+\textbf{Solución:}
+En efecto
+
+\begin{align*}
+    (a+b)(ab)^{-1}=a^{-1}+b^{-1}&=(a+b)(a^{-1}b^{-1}) && \textbf{Propiedad (*)} \\
+    &=a\cdot (a^{-1} b^{-1}) + b \cdot (a^{-1}b^{-1}) && \textbf{(Distributividad)} \\
+    &= (a a^{-1})b^{-1} +  b \cdot (a^{-1}b^{-1}) && \textbf{(Asociatividad)} \\
+    &=  (a a^{-1})b^{-1} +  b \cdot ( b^{-1}a^{-1}) && \textbf{(Conmutatividad)} \\
+    &=  (a a^{-1})b^{-1} +  (bb^{-1})a^{-1} && \textbf{(Asociatividad)} \\
+    &= 1\cdot b^{-1} +1 \cdot a^{-1} && \textbf{(Inverso Multiplicativo)} \\
+    &=b^{-1} +a^{-1} && \textbf{(Neutro Multiplicativo)} \\
+    &= a^{-1}+b^{-1} && \textbf{(Conmutatividad)} 
+\end{align*}
+
+\begin{prob}
+    \quad \quad
+    Utilizando la notación $a \cdot a = a^2$. Demuestre que $\forall a,b \in \mathbb{R}\setminus \{0\}$,
+    \begin{align*}
+        (a^{-1}+(-b)^{-1})\cdot (a^{-1}b)=(a^{-1})^2 b + (-a)^{-1}
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+
+ En efecto
+
+ \begin{align*}
+      (a^{-1}+(-b)^{-1})\cdot (a^{-1}b)&= a^{-1}(a^{-1}b)+(-b)^{-1}(a^{-1}b) && \textbf{(Distributividad)} \\
+      &= (a^{-1}a^{-1})b+(-b)^{-1}(a^{-1}b) && \textbf{(Asociatividad)} \\
+      &=(a^{-1}a^{-1})b+(-b)^{-1}(ba^{-1}) && \textbf{(Conmutatividad)} \\
+      &=(a^{-1}a^{-1})b+(-(b^{-1}b)a^{-1}) && \textbf{(Asociatividad)} \\
+      &=(a^{-1})^2b+ (-(a^{-1})) && \textbf{(Inverso Multiplicativo)} \\
+      &=(a^{-1})^2b+(-a)^{-1} && \textbf{(Problema 1.0.8)} \\
+ \end{align*}
+\begin{prob}
+     \quad \quad
+    Utilizando la notación $a \cdot a = a^2$. Demuestre que $\forall a,b \in \mathbb{R}\setminus \{0\}$, 
+    \begin{align*}
+        (a^2 + (-(b^{-1})^2))\cdot ((a^{-1})^2 b )= b + (-b)^{-1}(a^{-1})^2
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+En efecto, notemos que 
+
+\begin{align*}
+   (a^2 + (-(b^{-1})^2))\cdot ((a^{-1})^2 b )   &=a^2 ((a^{-1})^2 b ) + (-(b^{-1})^2 (a^{-1})^2 b ) && \textbf{(Distributividad)} \\
+   &=(a^2 (a^{-1})^2)b  + (-(b^{-1})^2 (a^{-1})^2 b ) && \textbf{(Asociatividad)} \\
+   &= b + (-(b^{-1})^2 (a^{-1})^2 b ) && \textbf{(Inverso Multiplicativo)} \\
+   &= b + (-(b^{-1})^2  b (a^{-1})^2  ) && \textbf{(Conmutatividad)} \\
+   &=b + (-(b^{-1}(a^{-1})^2  )) && \textbf{(Inverso Multiplicativo)} \\
+   &=b + (-(b^{-1}))(a^{-1})^2 && \textbf{(Asociatividad)} \\
+   &=b+ (-b)^{-1}(a^{-1})^2
+\end{align*}
+\begin{prob}
+\quad \quad
+    Sea $a \in \mathbb{R}$ arbitrario. Si $b \in \mathbb{R}$ es tal que $a+b=a$, entonces $b=0$
+\end{prob}
+\textbf{Solución:}
+Como $a \in \mathbb{R}$ por \textbf{(A4)} sabemos que existe su inverso aditivo $-a \in \mathbb{R}$, que cumple $a + (-a)=0$. Por lo tanto, sumemos en ambas partes de la igualdad $-a$. 
+
+\begin{align*}
+    (a+b)+(-a)&=a+(-a) \\
+    (b+a)+(-a)&=0  && \textbf{(Conmutatividad)} \\
+    b+ (a+(-a))&=0 && \textbf{(Asociatividad)} \\
+    b+0&=0 && \textbf{(Inverso Aditivo)} \\
+    b=0
+\end{align*}
+
+\begin{prob}
+\quad \quad
+    Sean $a,b,c \in \mathbb{R}$. Demuestre que se cumplen las siguentes propiedades:
+
+    \begin{itemize}
+        \item[\textbf{a)}] Si $a+b=a+c  \ \Longleftrightarrow\ b=c$
+        \item[\textbf{b)}] Si $ab =ac$ $\Longrightarrow$ $b=c$
+        \item[\textbf{c)}] Si $ab=0$ $\Longrightarrow$ $(a=0)$ $\vee$ $(b=0)$
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] Probemos de izquierda a derecha. Notemos que $a \in \mathbb{R}$, entonces existe el inverso aditivo $-a \in \mathbb{R}$ tal que $a+(-a)=0$ por \textbf{(A4)}. Luego aplicando ambos lados de la igualdad.
+
+    \begin{align*}
+        (-a)+(a+b)&=(-a)+(a+c) \\
+        ((-a)+a)+b&=((-a)+a)+c && \textbf{(Asociatividad)} \\
+        0+b&=0+c && \textbf{(Inverso Aditivo)} \\
+        b&=c && \textbf{(Neutro Aditivo)}
+    \end{align*}
+La otra implicancia es directa
+    
+    \item[\textbf{b)}] Dado que $a \neq 0$, entonces por \textbf{(A4)} sabemos que existe su inverso multiplicativo $a^{-1}$. Entonces multiplicando a ambos lados de la igualdad obtenemos
+
+    \begin{align*}
+        a^{-1}(ab)&=a^{-1}(ac) 
+        (a^{-1}a)b&=(a^{-1})ac &&  \textbf{(Asociatividad)} \\
+        1\cdot b &= 1 \cdot c && \textbf{(Inverso Multiplicativo)} \\
+        b&=c && \textbf{(Neutro Multiplicativo)}
+    \end{align*}
+    
+    \item[\textbf{c)}]  Supongamos que $a \neq 0$, ya que en el caso $a=0$, no hay nada que probar. Luego dado que $a,b \neq 0$, entonces existen los inversos multiplicativos $a^{-1}$ y $b^{-1}$. Análogamente a la parte \textbf{a)}, tenemos que
+
+    \begin{itemize}
+        \item[\textbf{Caso 1:}]   
+        \begin{align*}
+            a^{-1}(ab)=  a^{-1} \cdot 0 \quad \Longrightarrow \quad b=0
+        \end{align*}
+
+          \item[\textbf{Caso 2:}]
+
+            \begin{align*}
+            (ab)b^{-1}=0 \cdot b^{-1} \quad \Longrightarrow \quad a=0
+          \end{align*}
+    En cualquiera de los dos casos se cumple la proposición  $(a=0)$ $\vee$ $(b=0)$.
+    \end{itemize}    
+\end{itemize}
+
+
+
+
+
+\begin{prob}
+    Sean $a,b,c,d \in \mathbb{R}$, $b,d \neq 0$. Demuestre que se cumplenlas siguientes propiedades
+
+    \begin{itemize}
+        \item[\textbf{a)}] $ab^{-1} + cd^{-1}=(ad+cb)(bd)^{-1}$
+
+        \item[\textbf{b)}] $(ab^{-1})\cdot (cd^{-1})=(ac)\cdot (bd)^{-1}$
+
+        
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+
+\begin{itemize} 
+     \item[\textbf{a)}] Empezamos por la parte derecha de la igualdad
+
+     \begin{align*}
+         (ad+cb)(bd)^{-1}&=(ad+cb)(b^{-1}d^{-1}) && \textbf{(Problema 1.0.7, d))} \\
+         &=(ad+cb)(d^{-1}b^{-1}) && \textbf{(Conmutatividad)} \\
+        &=ad(d^{-1}b^{-1})+cb(d^{-1}b^{-1}) && \textbf{(Distributividad)} \\
+        &=a(dd^{-1})b^{-1}++cb(d^{-1}b^{-1}) && \textbf{(Asociatividad)} \\
+        &=a(dd^{-1})b^{-1}++cb(b^{-1}d^{-1}) && \textbf{(Conmutatividad)} \\
+        &=a(dd^{-1})b^{-1}++c(bb^{-1})d^{-1} && \textbf{(Asociatividad)} \\
+        &=a \cdot 1 \cdot b^{-1}+ c \cdot 1 \cdot d^{-1} && \textbf{(Inverso Multiplicativo)} \\
+        &=ab^{-1}+cd^{-1} && \textbf{(Neutro Multiplicativo)}
+     \end{align*}
+
+      \item[\textbf{b)}] En efecto 
+
+      \begin{align*}
+          (ab^{-1})\cdot (cd^{-1})&= a (b^{-1}c) d^{-1} && \textbf{(Asociatividad)} \\
+          &=a (c b^{-1})d^{-1} && \textbf{(Conmutatividad)} \\
+          &= (ac) \cdot (b^{-1}d^{-1}) && \textbf{(Asociatividad)}\\
+          &= (ac) \cdot (bd)^{-1} && \textbf{(Problema 1.0.7, d))}\\
+      \end{align*}
+\end{itemize}
+
+\begin{mytheo}
+    Hola
+\end{mytheo}
+
+\end{document}

@@ -1,0 +1,749 @@
+\documentclass[12pt]{book}
+\usepackage[spanish]{babel}
+\usepackage[top=3.5cm, bottom=3cm, left=2cm, right=2cm, headheight=2.5cm, footskip=1.5cm, marginparwidth=2cm]{geometry}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{fancybox}
+\usepackage{lastpage}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{marginnote}
+\usepackage{cancel}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usetikzlibrary{patterns} 
+\tcbuselibrary{skins}
+\usetikzlibrary{calc,angles,quotes}
+\usepackage{tzplot}
+\usepackage{float}
+\usepackage{kinematikz}
+\usepackage{titlesec}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{plotmarks}
+\usepgfplotslibrary{polar}
+\tcbuselibrary{theorems}
+
+
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{gre}{RGB}{101, 191, 127}
+\definecolor{gree}{RGB}{7, 135, 44}
+\definecolor{safetyorange(blazeorange)}{rgb}{1.0, 0.4, 0.0}
+\definecolor{gold(web)(golden)}{rgb}{1.0, 0.84, 0.0}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}
+\definecolor{internationalkleinblue}{rgb}{0.0, 0.18, 0.65}
+\definecolor{citrine}{rgb}{0.89, 0.82, 0.04}
+\arrayrulecolor{internationalkleinblue}
+
+
+\newcommand{\ChapterStyle}[2]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Fondo decorativo
+    \fill[safetyorange(blazeorange)] (-3,0) rectangle (40,4); 
+    \draw[blue, line width=2mm] (-3,4) -- (40,4);
+    \draw[blue, line width=2mm] (-3,0) -- (40,0);
+    \fill[white] (15,2) circle (1.7);
+    \draw[line width=1mm] (15,2) circle (1.7)
+    \draw[line width=0.5mm] (15,2) circle (1.5)
+    \fill[kellygreen] (15,2) circle (1.5)
+    \node at (15,2) {\Huge\bfseries\sffamily\color{white}{\thechapter}}
+   \node[anchor=west] at (2,2) {\Huge\bfseries\sffamily\color{white}{#2}};
+  \end{tikzpicture}
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {%
+    \ChapterStyle{\thechapter}{} % Pasa el número del capítulo y el título al diseño
+  }
+
+
+\newcommand{\Estilo}{
+ \begin{tikzpicture}[remember picture, overlay]
+         \draw
+     (current page header area.south west) -- (current page header area.south east)
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=7cm]current page.south east) {\textbf{Ingeniería Matemática}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=16.1cm]current page.south east) {\textbf{Cálculo II}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \draw[safetyorange(blazeorange), line width=2mm]
+    (current page.south west) rectangle (current page.north west)
+\end{tikzpicture}
+
+}
+%Carga el estilo
+\fancypagestyle{Normal}{%
+  \fancyhead[L]{\emph{Departamento de Matemáticas}}
+  \fancyhead[R]{\emph{Univesidad de Santiago de Chile}}
+  
+  \fancyhead[C]{\Estilo}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+
+
+
+%Estilo de Pagina resumen
+\newcommand{\mypage}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        
+        \fill[fill=safetyorange(blazeorange)](current page.north west) rectangle ([yshift=-22mm]current page.north east) node[midway] {\Huge\bfseries\sffamily\color{white}{Resumen}};
+
+        
+    \end{tikzpicture}
+}%
+%Carga el estilo
+\fancypagestyle{Resumen}{%
+  \fancyhf{}
+  \fancyhead[C]{\mypage}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+\renewcommand{\footrulewidth}{0.5pt}
+
+%Ejemplo
+\NewTcbTheorem[number within=section]{eje}{Ejemplo}
+{ blanker,breakable,left=5mm,
+ before skip=10pt,after skip=10pt,
+ borderline west={1mm}{0pt}{red}}
+
+%Problemas comunes
+\NewTcbTheorem[number within=section]{prob}{Problema}{colback=gray!15!white, enhanced
+,title= Definition, attach boxed title to top left={yshift=1mm}, fonttitle=\bfseries, sharp corners,boxrule=1pt,coltitle=black, boxed title style={size=Big,colback=black!10,boxrule=1.5pt}}{th}
+
+ %Propuestos
+ \tcbset{ribbonbox/.style={enhanced,colback=gray!15!white, sharpish corners,  frame style={left color=red!75!black,
+ right color=blue!75!black}, overlay={\path[fill=blue!75!white,draw=blue,double=white!85!blue,
+ preaction={opacity=0.6,fill=blue!75!white},
+ line width=0.1mm,double distance=0.2mm,
+ pattern=fivepointed stars,pattern color=white!75!blue]
+ ([xshift=-0.2mm,yshift=-1.02cm]frame.north east)-- ++(-1,1)-- ++(-0.5,0)-- ++(1.5,-1.5)-- cycle;}}}
+
+ %DiseñoTCB
+\NewTcbTheorem[number within=section]{defi}{Definición}{colback=bleudefrance!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=bleudefrance,colbacktitle=bleudefrance, boxed title style={
+		frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+ \NewTcbTheorem[number within=section]{mytheo}{My Theorem}%
+ {colback=bleudefrance!10,enhanced, title=Definition, attach boxed title to top left={xshift=-4mm}, boxrule=0pt, after skip=1cm,right skip=0cm, breakable, fonttitle=\bfseries, toprule= 0pt, bottomrule=0pt, rightrule=0pt, leftrule=0pt, arc=0mm, skin=enhancedlast jigsaw, sharpcorners, colframe=bleudefrance, colbacktitle=bleudefrance, boxed title style={
+ frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\NewTcbTheorem[number within=section]{teo}{Teorema}{colback=cadmiumred!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=cadmiumred,colbacktitle=cadmiumred, boxed title style={
+		frame code={ 
+			\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+            
+\NewTcbTheorem[number within=section]{prop}{Proposición}{colback=gold(web)(golden)!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=gold(web)(golden),colbacktitle=gold(web)(golden), boxed title style={
+		frame code={ 
+			\fill[gold(web)(golden)](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,gold(web)(golden)]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,gold(web)(golden)]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[gold(web)(golden)!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+\NewTcbTheorem[number within=section]{coro}{Corolario}{colback=kellygreen!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=kellygreen,colbacktitle=kellygreen, boxed title style={
+		frame code={ 
+			\fill[kellygreen](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,kellygreen]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,kellygreen]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[kellygreen!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+ \pagestyle{Normal}
+ %Sangía
+\setlength{\parindent}{0pt}
+
+ 
+\begin{document}
+
+
+\chapter{Axiomas de Orden}
+
+\begin{prob}{}{}
+   Sean $a,b \in \mathbb{R}$ y $n \in \mathbb{N}$. Demuestre que $(ab)^n=a^nb^n$
+\end{prob}
+\textbf{Solución:}
+Utilizaremos el hecho de que el producto en $\mathbb{R}$ es asociativo y conmutativo. Como la proposición depende de un $n \in \mathbb{N}$, procedemos por inducción.
+
+\begin{itemize}
+    \item \textbf{Caso Base:} Es claro que para $n=1$, $(ab)^1=ab$
+
+    \item \textbf{\textbf{Hipótesis Inductiva:}} Supongamos que la proposición para $n=k$, $k\geq 1$ fijo, es cierta.
+
+    \item \textbf{Tesis de Inducción:} Tenemos que probar que se cumple $(ab)^{k+1} = a^{k+1} b^{k+1}$.
+\end{itemize}
+En efecto,
+
+\begin{align*}
+    (ab)^{k+1}&=(ab)^k(ab) \\
+    &=a^{k}b^{k}(ab) && \textbf{(HI)} \\
+    &=a^{k}b^{k}(ba) \\
+    &=a^{k}(b^{k}b)a \\
+    &=a^{k}b^{k+1}a \\
+    &=a^kab^{k+1} \\
+    &=a^{k+1}b^{k+1}
+\end{align*}
+Por lo tanto $(ab)^n=a^nb^n, \ \forall n \in \mathbb{N}$.
+
+\begin{prob}{}{}
+\textbf{[Desigualdad de Bernoulli]} Pruebe que si $x>-1$, entonces 
+
+\begin{align*}
+  (1+x)^n\geq 1+nx, \ \forall n \in \mathbb{N}  
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$, es cierto que $(1+x)^1=1+x$. 
+
+    \item \textbf{Hipótesis Inductiva:} Supongamos que para $n=k$, $k\geq 1$ fijo que 
+
+    \begin{align*}
+        (1+x)^k \geq 1+kx
+    \end{align*}
+    es verdadera
+
+    \item \textbf{Tesis Inductiva:} Tenemos que probar que $(1+x)^{k+1} \geq 1+(k+1)x$
+\end{itemize}
+En efecto,
+\begin{align*}
+    (1+x)^{k+1}&=(1+x)^k(1+x) \\
+    &\geq(1+kx)(1+x) && \textbf{(HI)} \\
+    &=1+k+kx+kx^2 \\
+    &\geq 1+k+kx && \textbf{($kx^2 \geq 0$)} \\
+    &=1+(k+1)x
+\end{align*}
+Por lo tanto $ (1+x)^n\geq 1+nx, \ \forall n \in \mathbb{N}$
+
+\begin{prob}{}{}
+    Muestre que $\forall n \geq 1$, $n^3+2n=3$ es divisible por 3.
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$, $n^3 +2n =3$, que claramente es divisible por 3.
+
+    \item \textbf{Hipótesis Inductiva:} Supongamos que para $n=k$, $k\geq 1$ fijo que $\exists m \in \mathbb{Z}$, $k^3 +2k =3m$.
+
+    \item \textbf{Tesis Inductiva:} Tenemos que probar que $\exists l \in \mathbb{Z}$, tal que $(k+1)^3+2(k+1)=3l$
+\end{itemize}
+En efecto,
+
+\begin{align*}
+    (k+1)^3+2(k+1) &= k^3+3k^2+3k+1+2k+2 \\
+    &=(k^3+2k)+3(k^2+k+1) \\
+    &=3m + 3(k^2+k+1) && \textbf{(HI)}\\
+    &=3(\underbrace{m+k^2+k+1}_{\in \mathbb{Z}})
+\end{align*}
+Tomando $l=m+k^2+k+1 \in \mathbb{Z}$, se tiene que $  (k+1)^3+2(k+1)$ es divisible por 3.
+
+Así $\forall n \geq 1$, $n^3+2n=3$ es divisible por 3.
+
+\begin{prob}{}{}
+    Para $\forall n \geq1$, pruebe que $2^{2n}-1$ es divisible por 3.
+\end{prob}
+\textbf{Solución:} 
+\begin{itemize}
+    \item Para $n=1$, tenemos $2^{2\cdot 1}-1=3$, que claramente es divisible por 3.
+
+    \item Supongamos que para $n=k$, $k\geq 1$ fijo que $\exists m \in \mathbb{Z}$, tal que $2^{2k}-1 = 3m$
+
+    \item Tenemos que probar que $\exists l \in \mathbb{Z}$, tal que $2^{2(k+1)}-1=3l$
+\end{itemize}
+En efecto,
+
+\begin{align*}
+    2^{2(k+1)}-1&=2^{2k+2}-1 \\
+    &=4\cdot 2^{2k}-1 \\
+    &=4\cdot( 2^{2k}-1) +3 \\
+    &=  4\cdot 3m+3 \\
+    &=3(4m+1)
+\end{align*}
+Tomando $l=4m+1$, se tiene que $ 2^{2(k+1)}-1$, es divisible por 3. De esta manera 
+$\forall n \geq1$, $2^{2n}-1$ es divisible por 3.
+
+\begin{prob}{}{}
+Demuestre que $\forall n \in \mathbb{N}$, $11^{n+1}+12^{2n-1}$ es divisible por 19.
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$, $11^{1+1}+12^{2\cdot1-1}=11^2+12=121+12=19 \cdot 7$. Entonces es divisible por $19$.
+
+    \item \textbf{Hipótesis Inductiva} Supongamos que para $n=k$, $k\geq 1$ fijo, $\exists m \in \mathbb{Z}$, tal que $11^{k+1}+12^{2k-1}=19m$. Notemos que $11^{k+1}=19m-12^{2k-1} $
+
+    \item \textbf{Tesis Inductiva} Tenemos que probar que $\exists l \in \mathbb{Z}$, tal que $11^{(k+1)+1}+12^{2(k+1)-1}=19l$
+\end{itemize}
+En efecto,
+\begin{align*}
+    11^{(k+1)+1}+12^{2(k+1)-1}&=11\cdot 11^{k+1}+12^{2k+2-1} \\
+    &=11 \cdot(19m-12^{2k-1})+12^2 \cdot 12^{2k-1} \\
+    &= 11 \cdot 19m-11 \cdot 12^{2k-1}+144 \cdot 12^{2k-1} \\
+    &=11\cdot 19m+(144-11)\cdot 12^{2k-1} \\
+    &=11\cdot 19m+133\cdot 12^{2k-1} \\
+ &=11\cdot 19m+19\cdot7\cdot 12^{2k-1} \\
+    &= 19(11\cdot m+7\cdot 12^{2k-1}) \\
+\end{align*}
+Tomando $l=11\cdot m+7\cdot 12^{2k-1}$, se tiene lo pedido. De esta manera $\forall n \in \mathbb{N}$, $11^{n+1}+12^{2n-1}$ es divisible por 19.
+
+\begin{prob}{}{}
+Demuestre que $\forall n \geq 1$, $2^{n+2} + 3^{2n+1}$, es divisible por 7
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$, tenemos $2^{3}+3^3=35=7\cdot 5$. Por lo tanto es divisible por 7.
+
+     \item \textbf{Hipótesis Inductiva:} Supongamos que para $n=k$, $k\geq 1$ fijo, $\exists m \in \mathbb{Z}$, tal que $2^{k+2} + 3^{2k+1}=7m$ 
+
+     \item Tenemos que probar que $\exists l \in \mathbb{Z}$, tal que $2^{(k+1)+2} + 3^{2(k+1)+1}=7l$
+\end{itemize}
+Luego,
+\begin{align*}
+    2^{k+3}+3^{2k+3}&=2 \cdot 2^{k+1}+9 \cdot 3^{2k+1} \\
+    &=2\cdot (2^{k+1}+3^{2k+1})+7\cdot 3^{2k+1} \\
+    &=2\cdot 7m+7\cdot 3^{2k+1} && \textbf{(HI)} \\
+    &=7\cdot(2+3^{2k+1}) 
+\end{align*}
+Tomando $l=2+3^{2k+1}$, se tiene lo pedido. Por lo que $\forall n \geq 1$, $2^{n+2} + 3^{2n+1}$, es divisible por 7.
+
+\begin{prob}{}{}
+    Definimos la \emph{sucesión de Fibonacci} como 
+
+    \begin{align*}
+        F_{n+2}=F_n+F_{n+1}, \quad F_0=0, \ F_1=1
+    \end{align*}
+    Pruebe los siguientes enunciados 
+
+    \begin{itemize}
+        \item[\textbf{a)}] $F_{n+3}=F_n+2F_{n+1}$ 
+        \item[\textbf{b)}] $\forall n \geq 1$, $F_1 +F_3 + \cdots + F_{2n-1}=F_{2n}$
+        \item[\textbf{c)}] 
+        \item[\textbf{d)}] \textbf{[Identidad de Cassini]} $\forall n \geq 1$, $F_{n-1}F_{n+1}=F_n^2+(-1)^n$
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+Hay distintas maneras de probar estos enunciados. En este caso lo resolveremos utilizando inducción.
+\begin{itemize}
+   \item[\textbf{a)}] 
+
+   \begin{itemize}
+       \item \textbf{Caso Base:} Para $n=0$, $F_3=F_0+2F_1=0+2\cdot1=2$
+
+       \item \textbf{Hipótesis Inductiva:}  Supongamos que para $n=k$, $k\geq 0$ fijo, que $F_{k+3}=F_k+2F_{k+1}$ 
+
+       \item \textbf{Tesis Inductiva:} Tenemos que probar que $F_{k+4}=F_{k+1}+2F_{k+2}$
+   \end{itemize}
+Tomemos la parte derechade la igualdad, e intentemos llegar a la izquierda. 
+   \begin{align*}
+       F_{k+1}+2F_{k+2}&=F_{k+1}+2(F_{k}+F_{k+1}) \\
+       &=(F_{k+1}+F_k)+(F_k+2F_{k+1}) \\
+       &=F_{k+2}+(F_{k}+2F_{k+1}) \\
+       &=F_{k+2}+F_{k+3} && \textbf{(HI)} \\
+       &=F_{k+4}
+   \end{align*}
+   Por lo tanto se tiene $F_{n+3}=F_n+2F_{n+1}, \ \forall n\geq 0$
+   \item[\textbf{b)}]  
+
+   \begin{itemize}
+       \item \textbf{Caso Base:} Para $n=1$ se tiene que $F_1+F_{2\cdot 1-1}=2F_1=2\cdot 1=2=F_2 $
+   \end{itemize}
+
+   
+   \item[\textbf{c)}]
+   \item[\textbf{d)}]
+\end{itemize}
+
+\begin{prob}
+    \textbf{[Fórmula de Binet]} Muestre que $\forall n \geq 0$, se tiene que 
+    \begin{align*}
+        F_n=\frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2} \right)^n-\left(\frac{1-\sqrt{5}}{2} \right)^n \right]
+    \end{align*}
+    Donde $F_n$ es la \emph{sucesión de Fibonacci}.
+\end{prob}
+
+\begin{prob}{}{}
+    \textbf{[Identidad de Pascal]}
+    Definimos el coeficiente binomial como 
+    \begin{align*}
+        \binom{n}{k}=\frac{n!}{k!(n-k)!}, \quad n\geq k
+    \end{align*}
+    Pruebe que para $1 \leq k \leq n-1$, se tiene 
+    \begin{align*}
+         \binom{n}{k-1}+\binom{n}{k}=\binom{n+1}{k}
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+En efecto,
+
+\begin{align*}
+    \binom{n}{k-1}+\binom{n}{k}&=\frac{n!}{(k-1)!(n-k+1)!}+\frac{n!}{k!(n-k)!} \\
+    &=\frac{n!k+ n!(n-k+1)}{k!(n-k+1)!}\\
+    &=\frac{n!(n+1)}{k!(n+1-k)!} \\
+    &=\frac{(n+1)!}{k!(n+1-k)!} \\
+    &= \binom{n+1}{k}
+\end{align*}
+
+
+\begin{prob}{}{}
+\textbf{[Binomio de Newton]} Sean $x,y \in \mathbb{R}$. Demuestre que utilizando inducción que  $\forall n \in \mathbb{N}$ 
+
+\begin{align*}
+    (x+y)^n=\sum_{k=0}^n\binom{n}{k}x^ky^{n-k}
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$ se  tiene que $(x+y)=\binom{1}{0}x^0y^{1-0}+\binom{1}{1}x^1y^{1-1}=y+x$. Por lo tanto la fórmula es cierta 
+
+    \item \textbf{Hipótesis Inductiva:} Supongamos que la fómula: 
+    \begin{align*}
+    (x+y)^n=\sum_{k=0}^n\binom{n}{k}x^ky^{n-k}
+\end{align*}
+es cierta para $n\geq 1$.
+
+\item \textbf{Tesis Inductiva:} Tenemos que probar que 
+\begin{align*}
+    (x+y)^{n+1}=\sum_{k=0}^{n+1}\binom{n+1}{k}x^ky^{(n+1)-k}
+\end{align*}
+\end{itemize}
+En efecto,
+\begin{align*}
+    (x+y)^{n+1}=(x+y)(x+y)^n&=(x+y)\left[\sum_{k=0}^n\binom{n}{k}x^ky^{n-k}\right] \\
+    &=\sum_{k=0}^n\binom{n}{k}x^{k+1}y^{n-k}+\sum_{k=0}^n
+\binom{n}{k}x^ky^{n+1}-k \\
+&=\sum_{k=1}^{n+1}\binom{n}{k-1}x^ky^{n+1-k}+\sum_{k=0}^n\binom{n}{k}x^ky^{n+1-k} \\
+&=\sum_{k=1}^n\binom{n}{k-1}x^ky^{n+1-k}+ +\sum_{k=0}^n\binom{n}{k}x^ky^{n+1-k}+ \overbrace{\binom{n}{n}x^{n+1}+y^{n+1}}^{\text{Soltar término $n+1$}}\\
+&=x^{n+1}+\sum_{k=1}^{n}\left[\binom{n}{k-1}+\binom{n}{k}\right]x^ky^{n+1-k}+y^{n+1} \\
+&=x^{n+1}+\sum_{k=1}^{n}\binom{n+1}{k}x^ky^{n+1-k}+y^{n+1} \\
+&= \sum_{k=0}^{n+1}\binom{n+1}{k}x^{k}y^{n+1-k}
+\end{align*} 
+
+\begin{prob}{}{}
+Pruebe que $\forall x \in \mathbb{R}\setminus\{1\}$ se tiene 
+\begin{align*}
+    \prod_{k=0}^n(1+x^{2^k})=(1+x)(1+x^2)\cdots(1+x^{2^n})=\frac{1-x^{2^{n+1}}}{1-x}
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=0$ es claro que 
+
+    \begin{align*}
+        (1+x)=\frac{1-x^{2}}{1-x}=\frac{(1+x)(1-x)}{1-x}=(1+x)
+    \end{align*}
+Por lo tanto se tiene.
+    \item \textbf{Hipótesis Inductiva:} Supongamos que la formula es cierta para $n=k$, $k\geq 0 $ fijo. 
+
+    \begin{align*}
+        (1+x)(1+x^2)\cdots(1+x^{2^k})=\frac{1-x^{2^{k+1}}}{1-x}
+    \end{align*}
+
+    \item \textbf{Tesis Inductiva:} Tenemos que probar que 
+
+    \begin{align*}
+         (1+x)(1+x^2)\cdots(1+x^{2^{k+1}})=\frac{1-x^{2^{k+2}}}{1-x}
+    \end{align*}
+\end{itemize}
+En efecto, notemos que 
+
+\begin{align*}
+     (1+x)(1+x^2)\cdots(1+x^{2^{k+1}})&=(1+x)(1+x^2)\cdots(1+x^{2^{k}})(1+x^{2^{k+1}}) \\
+     &=\left(\frac{1-x^{2^{k+1}}}{1-x}\right)(1+x^{2^{k+1}}) \\
+     &=\frac{1-\left(x^{2^{k+1}}\right)^2}{1-x} \\
+     &=\frac{1-x^{2^{k+2}}}{1-x}
+\end{align*}
+Así, $\forall n \geq 0 $ se tiene que $\displaystyle \prod_{k=0}^n(1+x^{2^k})=\frac{1-x^{2^{n+1}}}{1-x}$, $ x \in \mathbb{R}\setminus\{1\}$
+
+\begin{prob}{}{}
+Demuestre que $\forall n \geq 1 $, se tiene que 
+
+\begin{align*}
+    1+3+5+\cdots + (2n-1)=n^2
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$ es directo que $2\cdot1-1=1=1^2$. 
+
+    \item \textbf{Hipótesis Inductiva:} Para $n=k$, con $k\geq 1$ fijo, supongamos que 
+
+    \begin{align*}
+         1+3+5+\cdots + (2k-1)=k^2
+    \end{align*}
+
+    \item \textbf{Tesis Inductiva:} Tenemos que probar que
+
+    \begin{align*}
+         1+3+5+\cdots + (2(k+1)-1)=(k+1)^2
+    \end{align*}
+\end{itemize}
+Notemos que 
+
+\begin{align*}
+    ( 1+3+5+\cdots + (2k-1))+(2(k+1)-1)&=k^2+2(k+1)-1 &&\textbf{(HI)}\\
+    &=k^2+2k+1 \\
+    &=(k+1)^2
+\end{align*}
+Así que se tiene $\forall n \geq 1, \  1+3+5+\cdots + (2n-1)=n^2$
+\begin{prob}{}{}
+Demuestre que $\forall n \geq 1 $
+
+\begin{align*}
+    1^2+2^2+3^2+ \cdots +n^2=\frac{n(n+1)(2n+1)}{6}
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$ tenemos $1^2=\frac{1\cdot 2\cdot 3}{6}$.
+
+    \item \textbf{Hipótesis Inductiva:} Supongamos que para $n=k$, con $k\geq 1$ fijo, se cumple la fórmula
+
+    \begin{align*}
+        1^2+2^2+3^2+ \cdots +k^2=\frac{k(k+1)(2k+1)}{6}
+    \end{align*}
+
+    \item \textbf{Tesis Inductiva:} Tenemos que probar que 
+
+     \begin{align*}
+        1^2+2^2+3^2+ \cdots +(k+1)^2=\frac{(k+1)(k+2)(2(k+1)+1)}{6}
+    \end{align*}
+\end{itemize}
+Tomemos la parte izquierda de la igualdad. 
+
+\begin{align*}
+    (1^2+2^2+3^2+ \cdots +k^2)+(k+1)^2&=\frac{k(k+1)(2k+1)}{6}+ (k+1)^2 \\
+    &=\frac{(k+1)(2k^2+7k+6)}{6} \\
+    &=\frac{(k+1)((k+1)+1)(2(k+1)+1)}{6}
+    \end{align*}
+    Así la fórmula es cierta $\forall n \geq 1$
+
+\begin{prob}{}{}
+Demuestre que $\forall n \geq 1$ se tiene la fórmula
+
+\begin{align*}
+    1^3+2^3+3^3+\cdots+ n^3=(1+2+3+\cdots+n)^2
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$, $1^3=1^2$
+
+    \item \textbf{Hipótesis Inductiva:} Para $n=k$, con $k\geq 1$, supongamos que se cumple la fórmula
+
+\begin{align*}
+    1^3+2^3+3^3+\cdots +k^3=(1+2+3+\cdots+k)^2
+\end{align*}
+
+\item \textbf{Tesis Inductiva:} Tenemos que probar
+\begin{align*}
+    1^3+2^3+3^3+\cdots (k+1)^3=(1+2+3+\cdots+k+1)^2
+\end{align*}
+\end{itemize}
+Tomemos el lado izquierdo de la igualdad y lleguemos al lado derecho. En efecto,
+
+\begin{align*}
+     1^3+2^3+3^3+\cdots +(k+1)^3&=  (1^3+2^3+3^3+\cdots k^3) +(k+1)^3 \\
+     &= (1+2+3+\cdots+k)^2+(k+1)^3 && \textbf{(HI)} \\
+     &= \frac{k^2(k+1)^2}{4}+(k+1)^3 \\
+     &=\frac{(k+1)^2(k^2+4k+4)}{4} \\
+     &=\frac{(k+1)^2(k+2)^2}{4} \\
+     &=\left[\frac{(k+1)((k+1)+1)}{2}\right]^2 \\
+     &=(1+2+3\cdots + k +(k+1))^2
+\end{align*}
+Entonces $\forall n \geq 1$, $ 1^3+2^3+3^3+\cdots+ n^3=(1+2+3+\cdots+n)^2$
+\begin{prob}{}{}
+\textbf{[Suma de Gauss]} Demuestre por inducción la fórmula 
+\begin{align*}
+    1+2+3+\cdots + n = \frac{n(n+1)}{2}
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$ tenemos 
+
+    \begin{align*}
+        1=\frac{1\cdot2}{2}=1
+    \end{align*}
+    Por lo tanto la fórmula es cierta para $n=1$
+
+    \item \textbf{Hipótesis Inductiva:} Supongamos que para $n=k$, $k\geq 1$ fijo, la fórmula 
+
+    \begin{align*}
+    1+2+3+\cdots + k = \frac{k(k+1)}{2}
+    \end{align*}
+Es cierta.
+    \item \textbf{Tesis Inductiva:} Tenemos que probar que 
+    \begin{align*}
+        1+2+3+\cdots+ k+1=\frac{(k+1)(k+2)}{2}
+    \end{align*}
+\end{itemize}
+En efecto,
+\begin{align*}
+         (1+2+3+\cdots+k)+(k+1)&=\frac{k(k+1)}{2}+(k+1) \\
+         &=\frac{(k+1)(k+2)}{2} \\
+         &=\frac{(k+1)((k+1)+1)}{2}
+\end{align*}
+Es decir, la fórmula es válida para $n+1$. Por lo tanto, $\forall n \geq 1$, $ 1+2+3+\cdots + n = \frac{n(n+1)}{2}$.
+
+\begin{prob}{}{}
+Demostrar por inducción que si $u_n$ es una sucesión definida por 
+
+\begin{align*}
+    u_n=3u_{n-1}-2u_{n-2}, \quad u_1=3, \ u_2=5, \quad \forall n \geq 3
+\end{align*}
+entonces, $u_n=2^n+1$, $\forall n \in \mathbb{N}$
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$, claramente $u_1=2^1+1=3$. Por lo tanto la fórmula es cierta.
+
+    \item \textbf{Hipótesis Inductiva:} Supongamos que para $n=k$, con $k\geq 1 $ fijo, se cumple 
+
+    \begin{align*}
+           u_k=3u_{k-1}-2u_{k-2}
+    \end{align*}
+
+    \item \textbf{Tesis Inductiva:} Tenemos que probar que 
+
+    \begin{align*}
+        u_{k+1}=3u_{k}-2u_{k-1}, 
+    \end{align*}
+\end{itemize}
+En efecto, utilizando la fórmula dada en el enunciado tenemos que 
+
+\begin{align*}
+    u_{k+1}&=3(2^k+1)-2(2^{k-1}+1) \\
+    &=3\cdot 2^k-2^k+1 \\
+    &=2\cdot 2^n+1 \\
+    &=2^{n+1}+1
+\end{align*}
+
+\begin{prob}{}{}
+Demuestre por inducción la \textbf{suma geométrica}, dada por la fórmula
+
+\begin{align*}
+    1+r+r^2+\cdots+r^n=\frac{1-r^{n+1}}{1-r}
+\end{align*}    
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item \textbf{Caso Base:} Para $n=1$ es claro que 
+
+    \begin{align*}
+        1+r=\frac{1-r^2}{1-r}=\frac{(1-r)(1+r)}{1-r}=1+r
+    \end{align*}
+    Por lo tanto la fórmula se cumple para $n=1$.
+
+    \item \textbf{Hipótesis Inductiva:} Supongamos que para $n=k$, $k \geq 1$ fijo, que se cumple la fórmula 
+
+    \begin{align*}
+         1+r+r^2+\cdots+r^k=\frac{1-r^{k+1}}{1-r}
+    \end{align*}
+
+    \item \textbf{Tesis Inductiva:} Tenemos que probar 
+    \begin{align*}
+    1+r+r^2+\cdots+r^{k+1}=\frac{1-r^{k+2}}{1-r}
+\end{align*}
+\end{itemize}
+En efecto,
+\begin{align*}
+     1+r+r^2+\cdots+r^{k+1}&= (1+r+r^2+\cdots+r^k)+r^{k+1} \\
+     &= \frac{1-r^{k+1}}{1-r}+r^{k+1} \\
+     &=\frac{1-r^{k+1}+r^{k+1}-r^{k+2}}{1-r}\\
+     &=\frac{1-r^{(k+1)+1}}{1-r}
+\end{align*}
+Por lo tanto la fórmula es válida para $n+1$.
+\begin{prob}{}{}
+\textbf{[Torres de Hanói]} En 1883 
+\emph{Édouard Lucas} matemático francés, invento un juego matemático llamado la \textbf{Torre de Hanói}, el cual consiste en $n$ discos perforados con radios crecientes puestos en 3 varillas. El juego posee ciertas reglas: únicamente se puede colocar un disco más grando encima de un disco más pequeño. El juego se gana cuando se traslada la torre a otra varilla. Definimos el número total mínimo de movimientos necesarios para mover la torre, denotado por $a_n$. Muestre con la información anterior que 
+
+\begin{itemize}
+    \item[\textbf{a)}] La recurrecia $a_n$ viene dado por 
+\begin{align*}
+    \begin{cases}
+        a_n=2a_{n-1}+1, \ si \ n\geq 1 \\
+        a_0=0
+    \end{cases}
+\end{align*}
+    \item[\textbf{b)}] Utilizando el \textbf{Principio de Inducción} muestre que 
+    \begin{align*}
+        a_n=2^n-1
+    \end{align*}
+\end{itemize}
+\end{prob}
+\textbf{Solución:}
+
+\begin{itemize}
+    \item[\textbf{a)}] Para mover $n$ discos primero debemos mover los $n-1$ discos anteriores. Por lo tanto, realizamos los $n-1$ movimientos de los discos a la segunda varilla, es decir $a_{n-1}$. Posteriormente, el disco más grande ( el disco $n$) se mueve a la tercera varilla; esto implica un movimiento. Finalmente se trasladan los $n-1$ discos de la varilla, lo que cuesta $a_{n-1}$ movimientos.
+
+Así el número mínimo es 
+
+\begin{align*}
+    a_n=a_{n-1}+1+a_{n-1}=2a_{n-1}+1
+\end{align*}
+\item[\textbf{b)}] Utilicemos inducción
+
+\begin{itemize}
+    \item \textbf{Caso Base:} Es claro para $n=0$, $a_0=2^0-1=0$, así que se cumple la fórmula
+
+    \item \textbf{Hipótesis Inductiva:} Supongamos para $n=k$, $k\geq 0$ fijo, que se cumple la fórmula 
+\begin{align*}
+    \begin{cases}
+        a_k=2a_{k-1}+1, \ si \ k\geq 1 \\
+        a_0=0
+    \end{cases}
+\end{align*}
+    \item \textbf{Tesis Inductiva:} Tenemos que probar 
+\begin{align*}
+     \begin{cases}
+        a_{k+1}=2a_{k}+1, \ si \ k\geq 1 \\
+        a_0=0
+    \end{cases}
+\end{align*}
+\end{itemize}
+En efecto,
+\begin{align*}
+    a_{k+1}=2(2^{k}-1)+1=2\cdot 2^k-2+1=2^{k+1}-1
+\end{align*}
+Así, por principio de inducción se tiene lo pedido.
+\end{itemize}
+\end{document}

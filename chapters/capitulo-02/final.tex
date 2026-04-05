@@ -1,7 +1,21 @@
-% Capítulo 2 — Versión final
-% Este archivo es el que se incluye en el libro.
-% Fusionar aquí los borradores de nicolas/ e ignacio/.
+% Migrado desde imports/Libro_Cálculo_Funciones_y_Sucesiones/main.tex.
+% Este wrapper incorpora solo el cuerpo del documento legacy dentro del libro principal.
+\begingroup
+\let\frontmatter\relax
+\let\mainmatter\relax
+\let\tableofcontents\relax
+\let\legacysetcounter\setcounter
+\renewcommand{\setcounter}[2]{%
+  \def\legacycountername{#1}%
+  \def\legacychapter{chapter}%
+  \ifx\legacycountername\legacychapter\else\legacysetcounter{#1}{#2}\fi
+}
+\input{imports/Libro_Cálculo_Funciones_y_Sucesiones/main}
+\endgroup
 
-\chapter{La Derivada}
-
-% Contenido pendiente.
+% Migrado desde imports/Ejercicios_Sucesiones/main.tex.
+% El archivo legacy trae un \chapter no consistente con la estructura actual, por eso se normaliza a sección.
+\begingroup
+\renewcommand{\chapter}[1]{\section*{Ejercicios migrados de sucesiones}}
+\input{imports/Ejercicios_Sucesiones/main}
+\endgroup

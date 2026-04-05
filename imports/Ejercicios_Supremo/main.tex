@@ -1,0 +1,746 @@
+\documentclass[12pt]{book}
+\usepackage[spanish]{babel}
+\usepackage[top=3.5cm, bottom=3cm, left=2cm, right=2cm, headheight=2.5cm, footskip=1.5cm, marginparwidth=2cm]{geometry}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{fancybox}
+\usepackage{lastpage}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{marginnote}
+\usepackage{cancel}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usetikzlibrary{patterns} 
+\tcbuselibrary{skins}
+\usetikzlibrary{calc,angles,quotes}
+\usepackage{tzplot}
+\usepackage{float}
+\usepackage{kinematikz}
+\usepackage{titlesec}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{plotmarks}
+\usepgfplotslibrary{polar}
+\tcbuselibrary{theorems}
+
+
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{gre}{RGB}{101, 191, 127}
+\definecolor{gree}{RGB}{7, 135, 44}
+\definecolor{safetyorange(blazeorange)}{rgb}{1.0, 0.4, 0.0}
+\definecolor{gold(web)(golden)}{rgb}{1.0, 0.84, 0.0}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}
+\definecolor{internationalkleinblue}{rgb}{0.0, 0.18, 0.65}
+\definecolor{citrine}{rgb}{0.89, 0.82, 0.04}
+\arrayrulecolor{internationalkleinblue}
+
+
+\newcommand{\ChapterStyle}[2]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Fondo decorativo
+    \fill[safetyorange(blazeorange)] (-3,0) rectangle (40,4); 
+    \draw[blue, line width=2mm] (-3,4) -- (40,4);
+    \draw[blue, line width=2mm] (-3,0) -- (40,0);
+    \fill[white] (15,2) circle (1.7);
+    \draw[line width=1mm] (15,2) circle (1.7)
+    \draw[line width=0.5mm] (15,2) circle (1.5)
+    \fill[kellygreen] (15,2) circle (1.5)
+    \node at (15,2) {\Huge\bfseries\sffamily\color{white}{\thechapter}}
+   \node[anchor=west] at (2,2) {\Huge\bfseries\sffamily\color{white}{#2}};
+  \end{tikzpicture}
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {%
+    \ChapterStyle{\thechapter}{} % Pasa el número del capítulo y el título al diseño
+  }
+
+
+\newcommand{\Estilo}{
+ \begin{tikzpicture}[remember picture, overlay]
+         \draw
+     (current page header area.south west) -- (current page header area.south east)
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=7cm]current page.south east) {\textbf{Ingeniería Matemática}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=16.1cm]current page.south east) {\textbf{Cálculo II}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \draw[safetyorange(blazeorange), line width=2mm]
+    (current page.south west) rectangle (current page.north west)
+\end{tikzpicture}
+
+}
+%Carga el estilo
+\fancypagestyle{Normal}{%
+  \fancyhead[L]{\emph{Departamento de Matemáticas}}
+  \fancyhead[R]{\emph{Univesidad de Santiago de Chile}}
+  
+  \fancyhead[C]{\Estilo}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+
+
+
+%Estilo de Pagina resumen
+\newcommand{\mypage}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        
+        \fill[fill=safetyorange(blazeorange)](current page.north west) rectangle ([yshift=-22mm]current page.north east) node[midway] {\Huge\bfseries\sffamily\color{white}{Resumen}};
+
+        
+    \end{tikzpicture}
+}%
+%Carga el estilo
+\fancypagestyle{Resumen}{%
+  \fancyhf{}
+  \fancyhead[C]{\mypage}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+\renewcommand{\footrulewidth}{0.5pt}
+
+%Ejemplo
+\NewTcbTheorem[number within=section]{eje}{Ejemplo}
+{ blanker,breakable,left=5mm,
+ before skip=10pt,after skip=10pt,
+ borderline west={1mm}{0pt}{red}}
+
+%Problemas comunes
+\NewTcbTheorem[number within=section]{prob}{Problema}{colback=gray!15!white, enhanced
+,title= Definition, attach boxed title to top left={yshift=1mm}, fonttitle=\bfseries, sharp corners,boxrule=1pt,coltitle=black, boxed title style={size=Big,colback=black!10,boxrule=1.5pt}}{th}
+
+ %Propuestos
+ \tcbset{ribbonbox/.style={enhanced,colback=gray!15!white, sharpish corners,  frame style={left color=red!75!black,
+ right color=blue!75!black}, overlay={\path[fill=blue!75!white,draw=blue,double=white!85!blue,
+ preaction={opacity=0.6,fill=blue!75!white},
+ line width=0.1mm,double distance=0.2mm,
+ pattern=fivepointed stars,pattern color=white!75!blue]
+ ([xshift=-0.2mm,yshift=-1.02cm]frame.north east)-- ++(-1,1)-- ++(-0.5,0)-- ++(1.5,-1.5)-- cycle;}}}
+
+ %DiseñoTCB
+\NewTcbTheorem[number within=section]{defi}{Definición}{colback=bleudefrance!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=bleudefrance,colbacktitle=bleudefrance, boxed title style={
+		frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+ \NewTcbTheorem[number within=section]{mytheo}{My Theorem}%
+ {colback=bleudefrance!10,enhanced, title=Definition, attach boxed title to top left={xshift=-4mm}, boxrule=0pt, after skip=1cm,right skip=0cm, breakable, fonttitle=\bfseries, toprule= 0pt, bottomrule=0pt, rightrule=0pt, leftrule=0pt, arc=0mm, skin=enhancedlast jigsaw, sharpcorners, colframe=bleudefrance, colbacktitle=bleudefrance, boxed title style={
+ frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\NewTcbTheorem[number within=section]{teo}{Teorema}{colback=cadmiumred!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=cadmiumred,colbacktitle=cadmiumred, boxed title style={
+		frame code={ 
+			\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+            
+\NewTcbTheorem[number within=section]{prop}{Proposición}{colback=gold(web)(golden)!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=gold(web)(golden),colbacktitle=gold(web)(golden), boxed title style={
+		frame code={ 
+			\fill[gold(web)(golden)](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,gold(web)(golden)]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,gold(web)(golden)]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[gold(web)(golden)!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+\NewTcbTheorem[number within=section]{coro}{Corolario}{colback=kellygreen!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=kellygreen,colbacktitle=kellygreen, boxed title style={
+		frame code={ 
+			\fill[kellygreen](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,kellygreen]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,kellygreen]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[kellygreen!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+ \pagestyle{Normal}
+ %Sangía
+\setlength{\parindent}{0pt}
+
+ 
+\begin{document}
+
+
+\chapter{Axiomas de Orden}
+
+\begin{prob}{}{}
+    Sea $S \subseteq R$ un conjunto acotado y no vacío. Definimos 
+\begin{align*}
+    \alpha S=\{\alpha S : s \in S \}
+\end{align*}
+Pruebe que si $\alpha, \beta \in \mathbb
+R$, y $\alpha>0$ y $\beta <0$ entonces
+\begin{itemize}
+    \item[\textbf{a)}] $\inf(\alpha S)=\alpha\inf(S)$ 
+    \item[\textbf{b)}]  $\sup(\alpha S)=\alpha\sup(S)$
+    \item[\textbf{c)}] $\inf(\beta S )=\beta \sup(S)$
+    \item[\textbf{d)}] $\sup(\beta S)=\beta\inf(S)$
+\end{itemize}
+\end{prob}
+\textbf{Solución:}
+
+\begin{itemize}
+    \item[\textbf{a)}] Sea $s \in S$, entonces $\inf(S)\leq s$ por la definición de ínfimo. Si multiplicamos por $\alpha >0$ tenemos que 
+$\alpha\inf(S)=\alpha s$, $\forall s \in S$. Por lo tanto $\exists x \in \alpha S$ tal que $x=\alpha s$. Así $\alpha \inf(S)\leq x$ $\forall x \in S$. Esto prueba que $\alpha \inf(S)$ es una cota inferior de $\alpha S$, por lo que se obtiene
+\begin{align*}
+    \alpha \inf(S) \leq \inf(\alpha S)
+\end{align*}
+
+Para la otra parte de la desigualdad, notemos que $\inf(\alpha S) \leq \alpha s$ $ \forall s \in S$. Así obtenemos que 
+
+\begin{align*}
+    \frac{1}{\alpha}\inf(\alpha S)\leq s, \ \forall s \in S
+\end{align*}
+Esto prueba que $\inf(\alpha S)/a$ es una cota inferior de $S$, por tanto 
+\begin{align*}
+    \inf(\alpha S )\leq \alpha \inf(S)
+\end{align*}
+Por la antisimétria de la desigualdad tenemos que $\inf(\alpha S)=\alpha\inf(S)$
+\item[\textbf{b)}] Sea $s \in S$ entonces por definición de supremo, tenemos que $s \leq \sup(S)$. Si multiplicamos la desigualdad por $\alpha>0$ tenemos que $\alpha s \leq \alpha \sup(S)$ $\forall s \in S$. Por lo tanto $\exists x \in \alpha S$ tal que $x=\alpha s$. De este modo, $x \leq \alpha \sup(S)$ $\forall x\in \alpha S$. Esto prueba que $\alpha \sup(S)$ es una cota superior de $\alpha S$. Así 
+\begin{align*}
+    \sup(\alpha S) \leq \alpha \sup(S)
+\end{align*}
+
+Por otro lado, tomemos $x \in \alpha S$, entonces por definición de supremo $x \leq \sup(\alpha S)$ $\forall x \in \alpha S$. Luego $\alpha s\leq \sup(\alpha S)$ $\forall s \in S$, esto implica que $s \leq \sup(\alpha S)/\alpha$ $\forall s \in S$. En consecuencia, $\sup(\alpha S)/\alpha$ es una cota superior de $S$. Así 
+\begin{align*}
+    \alpha\sup(S) \leq \sup(\alpha S)
+\end{align*}
+Utilizando la antisimetría de la desigualdad, obtenemos que $\sup(\alpha S)=\alpha\sup(S)$.
+
+\item[\textbf{c)}] Sea $s \in S$ entonces por definición de supremo, tenemos que $s \leq \sup(S)$ $ \forall s \in S$. Si multiplicamos por $\beta <0$ entonces $\beta \sup(S) \leq \beta s$. Por lo tanto $\exists x \in \beta S$ tal que $x=\beta S$, así $\beta \sup(S) \leq x$ $\forall x \in \beta S$. Esto prueba que $\beta \sup(S)$ es una cota inferior de $\beta S$. Así
+\begin{align*}
+    \beta\sup(S)\leq \inf(\beta S)
+\end{align*}
+
+Para el otro lado de la desigualdad, tomemos $x \in \beta S$, por definición de ínfimo tenemos que $\inf(\beta S)\leq x$. Luego $\inf(\beta S) \leq \beta s$ $\forall s \in S$. Recordando que $\beta <0$ tenemos que $s\leq \inf(\beta S) / \beta$ $\forall s \in S$, esto quiere decir que $\inf(\beta S) / \beta$ es una cota superior de $S$. Por tanto 
+\begin{align*}
+    \inf(\beta S) \leq \beta \sup(S)
+\end{align*}
+Utilizando la antisimetría de la desigualdad, obtenemos que $\inf(\beta S)=\beta \sup(S)$
+
+\item[\textbf{d)}] Sea $s \in S$. Entonces por definición de ínfimo $\inf(S)\leq s$ $\forall s \in S$. Si multiplicamos por $\beta <0$ tenemos que $\beta s \leq \beta \inf (S)$ $\forall s \in S$. Por tanto $\exists x \in \beta S$ tal que $x=\beta s$. De este modo $x \leq \beta \inf(S)$ $\forall x \in \beta S$. Esto pruba que $\beta \inf(S)$ es una cota superior de $\beta S$. Así
+\begin{align*}
+    \sup(\beta S)\leq \beta \inf(S)
+\end{align*}
+
+Por otro lado, sea $x \in \beta S$. Por definición de supremo $x\leq \sup(\beta S)$ $\forall x \in \beta S$. Luego como $x \in \beta s$, entonces $x=\beta s$. De este modo $\beta s \leq \sup(\beta S)$. Si dividimos por $\beta <0$, nos queda que $\sup(\beta S)/\beta \leq s$ $\forall s \in S$. Esto prueba que $\sup(\beta S)/\beta$ es una cota inferior de $S$. Así
+\begin{align*}
+    \frac{\sup(\beta S)}{\beta} \leq \inf(S) \Longrightarrow \beta \inf(S) \leq \sup(\beta S)
+\end{align*}
+Utilizando al antisimetría de la desigualdad, concluimos que $\sup(\beta S)= \beta \inf(S)$
+
+\end{itemize}
+
+\begin{prob}{}{}
+ Sean $A,B \subseteq \mathbb{R}$ tal que $A,B\neq \emptyset$ y $A \subseteq B$, entonces
+        \begin{equation*}
+            \inf(B)\leq \inf(A)\leq \sup(A)\leq \sup(B)
+        \end{equation*}
+\end{prob}
+\textbf{Solución:} \\
+
+Dado que $A$ y $B$ son conjunto acotados y no vacíos, por \textbf{Axioma del Supremo}, existen  \\
+ $\inf(A), \ \inf(B), \ \sup(A), \ \sup(B)$. Entonces probemos una parte de la igualdad. \\
+
+
+Sea $x \in A$, como $A \subseteq B$ entonces $x \in B$, por lo que se tiene  $x\leq \sup(B)$, esto prueba que $\sup(B)$ es una cota superior del conjunto $A$. Entonces $\sup(A) \leq \sup(B)$, ya que $\sup(A)$ es la cota superior más pequeña del conjunto $A$. \\
+
+
+    Por otro lado, sea $x \in A$, como $A \subseteq B$ entonces $x\in B$ por lo que se tiene $\inf(B) \leq x$, esto prueba que $\inf(B)$ es una cota inferior del conjunto $A$, entonces $\inf(B)\leq\inf(A)$, ya que $\inf(A)$ es la cota superior más grande del conjunto $A$. \\
+
+    Las otras desigualdades vienen por definición, entonces concluimos que 
+    \begin{equation*}
+         \inf(B)\leq \inf(A)\leq \sup(A)\leq \sup(B)
+    \end{equation*}
+
+
+\begin{prob}{}{}
+    Sean $A,B \subseteq \mathbb{R}$, con $A,B\neq \emptyset$ y acotados. Pruebe que 
+\begin{itemize}
+    \item[\textbf{a)}] $\sup(A\cup B)= \max\{\sup(A),\sup(B)\}$
+    \item[\textbf{b)}] $\inf(A \cup B)=\min\{\inf(A),\inf(B)\}$
+\end{itemize}
+\end{prob}
+\textbf{Solución:}
+
+\begin{itemize}
+    \item[\textbf{a)}] Primero notamos que $A \cup B \neq \emptyset$ dado que $A,B \neq \emptyset$, y además $A \cup B$ es acotado. Por lo tanto la existencia de $\sup(A\cup B)$, $\sup(A)$, $\sup(B)$ vienen dados por el \textbf{Axioma del Supremo}. Luego, sea $x \in A\cup B$. Tenemos dos casos:
+
+\begin{itemize}
+    \item Si $x \in A$ entonces $x \leq \sup(A) \leq \max\{\sup(A),\sup(B)\}$
+    \item Si $x \in B$ entonces $x \leq \sup(B) \leq \max\{ \sup(A),\sup(B)\}$
+\end{itemize}
+En cualquier caso se cumple que $\max\{\sup(A),\sup(B)\}$ es una cota superior
+ de $A\cup B$. Por lo tanto se cumple que 
+\begin{align*}
+    \sup(A \cup B) \leq \max\{ \sup(A),\sup(B)\}
+\end{align*}
+Dado que $\sup(A\cup B)$ es la menor de las cotas superiores.
+
+Por otro lado, recordemos que $A \subseteq A  \cup B$ y $B \subseteq A\cup B$. Esto implica por problema {\Large Citar Problema} 
+\begin{align*}
+    \sup(A)\leq \sup(A\cup B) \ \text{y} \ \sup(B) \leq \sup(A \cup B)
+\end{align*}
+Entonces, es claro que 
+\begin{align*}
+    \max\{\sup(A),\sup(B)\} \leq \sup(A\cup B)
+\end{align*}
+Por antisimetría de la desigualdad, tenemo que $\sup(A\cup B) = \max\{\sup(A),\sup(B)\}$
+
+\item[\textbf{b)}] Primero notamos que $A \cup B \neq \emptyset$ dado que $A,B \neq \emptyset$, y además $A \cup B$ es acotado. Por lo tanto la existencia de $\inf(A\cup B)$, $\inf(A)$, $\inf(B)$ vienen dados por el \textbf{Corolario Citar}. Luego, sea $x \in A\cup B$. Tenemos dos casos:
+\begin{itemize}
+    \item Si $x \in A$ entonces $\min\{\inf(A),\inf(B)\} \leq \inf(A) \leq x$
+    \item Si $x \in B$ entonces $\min\{\inf(A),\inf(B)\} \leq \inf(B) \leq x$
+\end{itemize}
+En cualquiera de los dos casos se cumple que $\min\{\inf(A),\inf(B)\}$ es una cota inferior de $A\cup B$. De esta manera 
+\begin{align*}
+    \min\{\inf(A),\inf(B)\} \leq \inf(A\cup B)
+\end{align*}
+Dado que $ \inf(A\cup B)$ es la mayor de las cotas inferiores.
+
+Por otro lado, utilizando que  $A \subseteq A  \cup B$ y $B \subseteq A\cup B$, entonces 
+\begin{align*}
+    \inf(A \cup B) \leq \inf(A) \ \text{y} \ \inf(A\cup B) \leq \inf(B)
+\end{align*}
+Así, tenemos que 
+\begin{align*}
+    \min\{\inf(A),\inf(B)\} \leq \inf(A\cup B)
+\end{align*}
+Por antisimetría de la desigualdad, concluimos que $\inf(A\cup B)=\min\{\inf(A),\inf(B)\}$
+\end{itemize}
+\begin{prob}{}{}
+    Sean $A,B \subseteq \mathbb{R}$, acotados superiormente con $A \cap B \neq \emptyset$. Demuestre que 
+    \begin{align*}
+        \sup(A \cap B) \leq \min\{\sup(A), \sup (B)\}
+    \end{align*}
+    Y de un contraejemplo de por qué no se tiene la igualdad.
+\end{prob}
+\textbf{Solución:} En efecto, recordemos que $A \cap B \subseteq A$ y $A \cap B \subseteq B$. Entonces, utilizando el \textbf{problema Citar}
+\begin{align*}
+    \sup(A\cap B) \leq \sup(A) \ \text{y}\ \sup(A\cap B) \leq B
+\end{align*}
+Entonces $\sup(A \cap B)$ está acotado superiormente por $\sup(A)$ y $\sup(B)$, lo que implica que 
+\begin{align*}
+    \sup(A \cap B) \leq \min\{ \sup(A),\sup(B)\}
+\end{align*}
+Un contraejemplo posible es 
+\begin{align*}
+    A= \{1,2\} \quad \text{y} \quad B =\{1,3\} 
+\end{align*}
+Luego
+\begin{align*}
+    \sup(A)=2, \ \sup(B)=3 \\
+    \Longrightarrow \min\{\sup(A),\sup(B)\}=2
+\end{align*}
+Por otro lado,
+\begin{align*}
+    A\cap B= \{1\} \Longrightarrow \sup(A\cap B) =1
+\end{align*}
+Entonces es claro que 
+\begin{align*}
+    \sup(A\cap B) \neq \min\{\sup(A),\sup(B)\}
+\end{align*}
+
+\begin{prob}{}{}
+    Sea $\{ A_i\}_{i \in \Lambda}$ una familia de subconjuntos no vacíos y acotados superiormente. Definimos $\alpha_i=\sup(A_i)$ para $i \in \Lambda$. Supongamos que $\{\alpha_i : i \in \Lambda \}$ está acotado superiormente. Demuestre que 
+\begin{align*}
+    \sup\left(\bigcup_{i\in \Lambda} A_i \right) = \sup\{\alpha_i :i \in \Lambda \}
+\end{align*}
+\end{prob}
+\textbf{Solución:}
+Sea $x \in \bigcup_{i\in \Lambda} A_i$ entonces $\exists k$ tal que $x \in A_k$. Por lo tanto
+\begin{align*}
+    x \leq \alpha_k \leq \sup\{a_i : i \in \Lambda \} 
+\end{align*}
+Esto prueba que $\sup\{\alpha_i : i \in \Lambda \}$ es una cota superior del conjunto $\bigcup_{i\in \Lambda} A_i$. En consecuencia:
+\begin{align*}
+      \sup\left(\bigcup_{i\in \Lambda} A_i \right) \leq \sup\{\alpha_i :i \in \Lambda \}
+\end{align*}
+
+Por otro lado, sea $k \in \Lambda$ entonces es evidente que $A_k \subseteq \bigcup_{i\in \Lambda} A_i$. Entonces 
+\begin{align*}
+    \sup(A_k) &\leq \sup\left( \bigcup_{i\in \Lambda} A_i\right) \\
+\Longrightarrow    \alpha_k &\leq \sup\left( \bigcup_{i\in \Lambda} A_i\right)
+\end{align*}
+Esto prueba que $\sup\left( \bigcup_{i\in \Lambda} A_i\right)$ es una cota superior del conjunto $\{a_i : i \in \Lambda \}$ por tanto 
+\begin{align*}
+    \sup\{a_i : i \in \Lambda\} \leq \sup\left( \bigcup_{i\in \Lambda} A_i\right)
+\end{align*}
+Utilizando la antisimetría de la desigualdad, conlcluimos que 
+\begin{align*}
+    \sup\left( \bigcup_{i\in \Lambda} A_i\right)= \sup\{a_i : i \in \Lambda\} 
+\end{align*}
+\begin{prob}{}{}
+    Definimos el conjunto 
+    \begin{align*}
+        \mathcal{I} = \left\{ \frac{m}{n}+\frac{4n}{m}: n, m \in \mathbb{R} \right\} 
+    \end{align*}
+    Halle $\inf(\mathcal{I})$
+\end{prob}
+\textbf{Solución:} Utilizaremos la desigualda \textbf{AM-GM}. En efecto,
+\begin{align*}
+    \frac{m}{n}+\frac{4n}{m}\geq 2\sqrt{\frac{m}{n}\cdot \frac{4n}{m}} = 2 \sqrt{4}=4
+\end{align*}
+Notemos que si $m=2$ y $n=1$ entonces 
+\begin{align*}
+     \frac{m}{n}+\frac{4n}{m}=4
+\end{align*}
+Por tanto $\inf(\mathcal{I})=\min(\mathcal{I})=4$.
+\begin{prob}{}{}
+    Sea 
+    \begin{align*}
+        \mathcal{A}=\left\{1- \frac{(-1)^n}{n}: n \in \mathbb{N} \right\}
+    \end{align*}
+    Halle $\sup(\mathcal{A})$ y $\inf(\mathcal{A})$
+\end{prob}
+\textbf{Solución:}
+Notemos que 
+\begin{align*}
+    1-\frac{(-1)^n}{n}\leq 1+1=2
+\end{align*}
+Luego $\sup(\mathcal{I})=2$. Por otro lado,
+\begin{align*}
+    0=1-1 \leq 1-\frac{(-1)^n}{n}
+\end{align*}
+Así $\inf(\mathcal{I})=0$
+
+\begin{prob}{}{}
+    Sea $A \subseteq \mathbb{R}$ un conjunto no vacío y $f:\mathbb{R} \to \mathbb{R}$ una función decreciente. Demuestre que el conjunto imagen
+    \begin{align*}
+        f(A)= \{ y \in \mathbb{R} : \exists x \in A, \ f(x)=y \}
+    \end{align*}
+    Posee supremo e ínfimo. Además cumplen las desigualdades:
+    \begin{align*}
+        f(\sup(A))\leq \inf(f(A)) \leq \sup(f(A)) \leq f(\inf(A))
+    \end{align*}
+\end{prob}
+\textbf{Solución:}
+Primero veamos qué significa ser una función decreciente. 
+
+\begin{itemize}
+    \item $f$ es decreciente si $x< y$ $\Longrightarrow$ $f(y) \leq f(x) $
+\end{itemize}
+Ahora con este recuerdo, veamos que $f(A)$ es no vacío. Notamos que $A\neq \emptyset$, y $f$ está bien definida en todo $\mathbb{R}$, entonces si $x \in A$ luego $f(x)=y \in f(A)$. Por lo tanto $f(A) \neq \emptyset$. \\
+
+Falta probar que $f(A)$ es acotado. Notemos que si $A\neq \emptyset$ y acotado. Entonces por \textbf{Axioma del Supremo} sabemos que existen $\sup(A)$ y $\inf(A)$. Además cumplen que 
+\begin{align*}
+    \forall x \in A \quad \inf(A)\leq x \leq \sup(A)
+\end{align*}
+Entonces ocupando el hecho de que $f$ es una función decreciente, obtenemos que 
+
+\begin{itemize}
+    \item $ \text{Si} \ \inf(A) \leq x \Longrightarrow f(x) \leq f(\inf(A)) \quad \forall x \in A$
+
+\item $\text{Si} \ x \leq \sup(A) \Longrightarrow f(\sup(A)) \leq f(x) \quad \forall x \in A$
+\end{itemize}
+Esto implica que 
+\begin{align*}
+    f(\sup(A)) \leq f(x) \leq f(\inf(A)) \quad \forall x \in A
+\end{align*}
+Es decir $f(A)$ es un conjunto acotado. Entonces por axioma del supremo existen $\sup(f(A))$ e $\inf(f(A))$. \\
+
+Falta probar la desigualdad enunciada. En efecto, notemos que tenemos dos proposiciones
+\begin{align*}
+    f(\sup(A)) \leq f(x) \leq f(\inf(A)) \quad \forall x \in A
+\end{align*}
+\begin{align*}
+   \quad \inf(f(A)) \leq y \leq \sup(f(A))  \quad  \ \quad \forall y \in f(A)
+\end{align*}
+Como $\sup(f(A))$ es la menor de las cotas superiores, entonces 
+\begin{align*}
+    \sup(f(A)) \leq f(\inf(A))
+\end{align*}
+Análogamente, como $\inf(f(A))$ es la mayor de las cotas inferiores, tenemos que 
+\begin{align*}
+    f(\sup(A)) \leq \inf(f(A))
+\end{align*}
+Por último, la desigualdad $\inf(f(A)) \leq \sup(f(A))$ viene por las mismas definiciones de supremo e ínfimo. Por lo tanto, concluimos que
+\begin{align*}
+    f(\sup(A))\leq \inf(f(A)) \leq \sup(f(A)) \leq f(\inf(A))
+\end{align*}
+\begin{prob}{}{}
+    Dado $A \subseteq \mathbb{R}$, $A \neq \emptyset$ y $c \in \mathbb{R}$ definimos el conjunto 
+    \begin{align*}
+        c+A=\{c+x : x \in A\}
+    \end{align*}
+    Demuestre que si $A$ es acotado superiormente, entonces $c+ A$ es acotado superiormente y 
+\begin{itemize}
+    \item[\textbf{a)}] $\sup(c+A)=a+\sup(A)$
+    \item[\textbf{b)}] $\inf(a+A)=a+\inf(A)$
+\end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] Dado que $A\neq \emptyset$ y acotado superiormente, entonces por \textbf{Axioma del Supremo}, existe $\sup(A)$. Ahora sea $x \in A$, por definición de supremo, se cumple que $x \leq \sup(A)$. Si sumamos $c \in \mathbb{R}$ en ambos lados de la desigualdad tenemos que $c+x \leq c + \sup(A)$. Esto quiere decir que $c + \sup(A)$ es una cota superior del conjunto $c+ A$, probando que es acotado superiormente. Así
+\begin{align*}
+    \sup(c+A)\leq c+\sup(A)
+\end{align*}
+Dado que $\sup(c+A)$ es la menor de las cotas superiores.
+
+Por otro lado, ya probamos que $c+A$ es acotado superiormente, además es evidente que es no vacío. Por lo tanto existe $\sup(c+A)$. Ahora sea $y \in c+A$, entonces  $y=c+x$ por definición de supremo, $c+x \leq \sup(c+A)$ $\forall x \in A$ $\Longrightarrow$ $x\leq \sup(c+A)-c$ $\forall x \in A$. Esto prueba que $\sup(c+A)-c$ es una cota superior del conjunto $A$. Así
+\begin{align*}
+    c+\sup(A)\leq \sup(c+A)
+\end{align*}
+Utilizando la antisimetría de la desigualdad, obtenemos que $\sup(c+A)=c+\sup(A)$
+
+\item[\textbf{b)}] Por \textbf{Ejercio akdakwda} tenemos que $\inf(A)=-\sup(-A)$, entonces utilizando esta idea, desarrollamos lo siguiente:
+\begin{align*}
+    \inf(a+A)&=-\sup(-(a+A)) \\
+    &=-\sup(-a+(-A)) \\
+    &=-(-a+\sup(-A)) && \textbf{(Parte a))}\\
+    &=a-\sup(-A) \\
+    &=a+\inf(A)
+\end{align*}
+\end{itemize}
+\begin{prob}{}{}
+Definimos el conjunto
+ \begin{align*}
+        S=\left\{x  \in \mathbb{R} : \frac{|x-2|-|x+2|}{x^2-4} \geq 1 \right\}
+    \end{align*}
+    Determine si es que existe $\sup(S)$, $\max(S)$, $\inf(S)$, $\min(S)$.
+\end{prob}
+\textbf{Solución:}
+Por \hyperref[th:prob1.6.7]{\textbf{Problema 1.6.7}} sabemos que el conjunto se solución se puede escribir como:
+\begin{align*}
+    S =  [-2\sqrt{2},-2) \cup [-1+\sqrt{5},2)
+\end{align*}
+Por lo tanto
+\begin{itemize}
+    \item $\sup(A)=2$
+    \item $\max(A)= \nexists$
+    \item $\inf(A)=-2\sqrt{2}$
+    \item $\min(A)=-2\sqrt{2}$
+\end{itemize}
+\begin{prob}{}{}
+    Considere el siguiente conjunto 
+
+\begin{align*}
+    \mathcal{S}= \left\{ x \in \mathbb{R} : \frac{|x-1|-2}{|x+5|-1} \leq 0\right\}
+\end{align*}
+Determine si es que existe $\sup(\mathcal{S})$, $\max(\mathcal{S})$, $\inf(\mathcal{S})$, $\min(\mathcal{S})$.
+\end{prob}
+\textbf{Solución:}
+Por \hyperref[th:prob1.6.10]{\textbf{Problema 1.6.10}} podemos reescribir el conjunto $\mathcal{S}$ como unión de intervalos. En efecto,
+\begin{align*}
+    \mathcal{S}=(-6,-4) \cup [-1,3]
+\end{align*}
+Entonces 
+\begin{itemize}
+    \item $\sup(\mathcal{S})=3$
+    \item $\max(\mathcal{S})=3$ 
+    \item $\inf(\mathcal{S})=-6$
+    \item $\min(\mathcal{S})=\nexists$
+\end{itemize}
+\begin{prob}{}{}
+    Para el conjunto 
+    \begin{align*}
+ \mathcal{S}=\left\{x \in \mathbb{R}:   \frac{||x|-|x-2||}{x^2-1}\leq2 \right\}
+\end{align*}
+Determine si es que existe $\sup(\mathcal{S})$, $\max(\mathcal{S})$, $\inf(\mathcal{S})$, $\min(\mathcal{S})$.
+\end{prob}
+\textbf{Solución:} Por \hyperref[th:prob1.6.11]{\textbf{Problema 1.6.11}} tenemos que $\mathcal{S}$ se puede escribir como:
+\begin{align*}
+    \mathcal{S}=(-\infty,-\sqrt{2}) \cup (-1,1) \cup (\sqrt{2},+\infty)
+\end{align*}
+Notamos que $\mathcal{S}$ no es un conjunto acotado ni superiormente, ni inferiormente. Por lo tanto no existe ningún valor solicitado.
+\begin{prob}{}{}
+Definimos el conjunto 
+\begin{align*}
+    A=\left\{ \frac{n}{\sqrt{n+1}} :n \in \mathbb{N}\right\}
+\end{align*}
+Determine si $A$ es un conjunto acotado, y calcule $\sup(A)$, $\inf(A)$ en el caso que existan.
+\end{prob}
+\textbf{Solución:}
+Primero notemos que los elementos de $A$ son todos positivos, por lo tanto es claro que $A$ es acotado inferiormente por $0$. Analicemos primero el ínfimo. Definimos $a_n$ como:
+\begin{align*}
+    a_n=\frac{n}{\sqrt{n+1}}=\sqrt{\frac{n^2}{n+1}}
+\end{align*}
+No es difícil ver que entre más grande es $n$ $a_n$ es también más grande. Por lo tanto el elemento más pequeño debe ser $a_1$. Luego
+\begin{align*}
+    a_n=\sqrt{\frac{n^2}{n+1}} \geq \sqrt{\frac{1}{2}} &\Longleftrightarrow \frac{n^2}{n+1} \geq \frac{1}{2} \\
+    &\Longleftrightarrow 2n^2-n-1 \geq 0 \\
+    &\Longleftrightarrow(2n+1)(n-1) \geq 0
+\end{align*}
+Lo cual es cierto para $n\geq 1$. Esto implica que 
+\begin{align*}
+    a_1=\frac{1}{\sqrt{2}}=\frac{\sqrt{2}}{2}
+\end{align*}
+Es el mínimo de $A$. Así $\inf(A)=\min(A)=\sqrt{2}/2$.
+
+Ahora analicemos si es acotado superiormente. Supongamos que $\exists M >0$ tal que 
+\begin{align*}
+    \frac{n}{\sqrt{n+1}} \leq M \quad \forall n \in \mathbb{N}
+\end{align*}
+Tomando cuadrados a ambos lados, esto implica que
+\begin{align*}
+      \frac{n}{\sqrt{n+1}} \leq M &\Longrightarrow \frac{n^2}{\sqrt{n+1}} \leq M^2 \\
+      &\Longrightarrow n^2-M^2n-M^2\leq 0 \\
+      &\Longrightarrow n \leq \frac{1}{2}(M^2+M \sqrt{M^2+4})
+\end{align*}
+Pero por \hyperref[th:teo1.9.1]{\textbf{Teorema 1.9.1}} sabemos que $\mathbb{N}$ no es acotado superiormente. Lo cual es una contradicción con el teorema. Así, $A$ no es un conjunto acotado superiormente, y en particular no posee $\sup(A)$ y $\max(A)$.
+\begin{prob}{}{}
+    Considere el conjunto:
+\begin{align*}
+    A=\left\{\frac{n}{n+1} : n \in \mathbb{N} \right\}
+\end{align*}
+\begin{itemize}
+    \item[\textbf{a)}] Determine el conjunto de cotas inferiores
+     \item[\textbf{b)}] Halle si es que existen $\min(A)$, $\inf(A)$.
+     \item[\textbf{c)}] Demuestre, utilizando la propiedad arquimediana que $\sup(A)$.
+\end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] Notemos que $\forall n \in \mathbb{N}$, $n \geq 0$, y tambíen  $\forall n \in \mathbb{N}$, $n+1 > 0$. Esto quiere decir que su cuociente, tambíen debe ser un número positivo. Luego 
+    \begin{align*}
+        \frac{n}{n+1} \geq 0 \quad \forall n \in \mathbb{N}
+    \end{align*}
+    Por lo tanto el conjunto de las cotas inferiores de $A$ es $C_{\sup}=(-\infty, 0]$
+    \item[\textbf{b)}] Dado que $A$ es un conjunto acotado inferiormente, entonces posee ínfimo. Dado que $0$ es la mayor de las cotas inferiores y además se cumple que para $n=0$
+    \begin{align*}
+        \frac{n}{n+1}=0, \quad \text{para $n=0$}
+    \end{align*}
+    Tenemos que $0 \in A$. Esto implica que $\inf(A)=\min(A)=0$
+    \item[\textbf{c)}] Veamos primero que $A$ es un conjunto acotado superiormente. En efecto, notemos que $\forall n \in \mathbb{N}$, $n\leq n+1$  $\Longrightarrow$ $\displaystyle \frac{n}{n+1} \leq 1$. Por lo que $1$ es cota superior de $A$.
+
+Por \hyperref[th:teo1.8.1]{\textbf{Teorema 1.8.1}}, para que $\sup(A)=1$, basta verificar que 
+\begin{align*}
+    \forall\varepsilon>0, \ \exists n \in \mathbb{N}, \ 1-\varepsilon<\frac{n}{n+1}
+\end{align*}
+En efecto, notemos que la expresión es equivalente a
+\begin{align*}
+   \forall\varepsilon>0, \ \exists n \in \mathbb{N}, \  \frac{1}{n+1}< \varepsilon
+\end{align*}
+Además siempre se cumple que 
+\begin{align*}
+    \frac{1}{n+1}\leq \frac{1}{n}  \quad \forall n \in \mathbb{N}
+\end{align*}
+    Por otro lado, por la propiedad arquimediana sabemos que $\forall \varepsilon >0$, $\exists N \in \mathbb{N}$, $\displaystyle \frac{1}{n_0}<\varepsilon$
+    Entonces tomando $n=n_0$, tenemos que 
+    \begin{align*}
+        \frac{1}{n+1}\leq\frac{1}{n_0}<\varepsilon
+    \end{align*}
+    Entonces $\sup(A)=1$
+\end{itemize}
+\begin{prob}{}{}
+    Consideramos el conjunto
+    \begin{align*}
+        M=\left\{ 1-\frac{1}{n}+(-1)^n\frac{1}{n^2} : n \in \mathbb{N}\setminus\{0 \}\right\}
+    \end{align*}
+    \begin{itemize}
+        \item[\textbf{a)}] Determine el conjunto de cotas superiores
+        \item[\textbf{b)}] Utilizando el \hyperref[th:teo1.8.1]{\textbf{Teorema 1.8.1}} demuestre que $\sup(M)=1$
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] Notemos que $\forall n \in \mathbb{N}$, $-\frac{1}{n} < 0$ y  $\forall n \in \mathbb{N}$, $-\frac{1}{n^2} < 0$. Luego
+    \begin{align*}
+       1-\frac{1}{n}+(-1)^n\frac{1}{n^2} \leq 1 \Longleftrightarrow -\frac{1}{n}+(-1)^n\frac{1}{n^2} \leq 0 \quad \forall n \in \mathbb{N}
+    \end{align*}
+    Como la expresión corresponde únicamente a términos negativos, entonces la desigualdad se cumple $\forall n \in \mathbb{N}$. Esto prueba que $C_{\sup}=[1, +\infty)$
+    \item[\textbf{b)}] Tenemos que probar que 
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists n\in \mathbb{N}, \ 1-\varepsilon< 1- \frac{1}{n}+(-1)^n \frac{1}{n^2}
+    \end{align*}
+    Notemos que esta expresión es equivalente a 
+    \begin{align*}
+     \forall \varepsilon>0, \ \exists n\in \mathbb{N}, \   \frac{1}{n}-(-1)^n \frac{1}{n^2}<\varepsilon
+    \end{align*}
+    Luego, sabemos que 
+    \begin{align*}
+         \frac{1}{n}-(-1)^n \frac{1}{n^2} \leq \frac{1}{n}+\frac{1}{n} =\frac{2}{n}
+    \end{align*}
+    Utilizando la propiedad arquimediana sabemos que $\forall \varepsilon>0$, $\exists n_0 \in \mathbb{N}$, $ \displaystyle\frac{1}{n_0}< \varepsilon$
+    Entonces tomando $n_0=\lceil \frac{2}{\varepsilon}\rceil$, tenemos que
+    \begin{align*}
+        \frac{2}{n_0} <\varepsilon
+    \end{align*}
+Así, $\sup(M)=1$
+\end{itemize}
+\begin{prob}{}{}
+    Considere los conjuntos 
+    \begin{align*}
+        A&=\left\{ \frac{1}{5n+1} : n \in \mathbb{N}\right\} \\
+        B&= \bigcup_{n \in \mathbb{N}\setminus \{0\}} \left[\frac{1}{5n+1}, \frac{1}{5n} \right]
+    \end{align*}
+    \begin{itemize}
+        \item[\textbf{a)}] Demuestre que $\inf(A)=0$
+        \item[\textbf{b)}] Determine si es que existen $\sup(B)$, $\max(B)$, $\inf(B)$, $\min(B)$.
+    \end{itemize}
+\end{prob}
+\textbf{Solución:}
+\begin{itemize}
+    \item[\textbf{a)}] Para probar que $\inf(A)=0$, procederemos por contradicción. Si suponemos que no es cierto que $\inf(A)=0$, entonces 
+    \begin{align*}
+        \exists \varepsilon >0, \ \forall n \in \mathbb{N}, \ \varepsilon \leq \frac{1}{5n+1}
+    \end{align*}
+    Ahora, dado que $n < 5n+1$ $\forall n \in \mathbb{N}$, entonces la proposición es equivalente a
+    \begin{align*}
+       \exists \varepsilon >0, \    \forall n \in \mathbb{N}, \ \varepsilon \leq \frac{1}{5n+1} < \frac{1}{n}
+    \end{align*}
+    Por otro lado, utilizando la propiedad arquimediana $\forall \varepsilon >0$, $\exists n_0 \in \mathbb{N}$ tal que $ \displaystyle\frac{1}{n_0} <\varepsilon$. Esto garantiza que 
+    \begin{align*}
+        \frac{1}{5n_0 +1 } <\frac{1}{n_0} < \varepsilon
+    \end{align*}
+    Lo cual es una contradicción. Por lo tanto $\inf(A)=0$.
+    
+
+    \item[\textbf{b)}] Analicemos lo que nos dice la notación.
+    \begin{align*}
+        B&= \bigcup_{n \in \mathbb{N}\setminus \{0\}} \left[\frac{1}{5n+1}, \frac{1}{5n} \right]= \left[\frac{1}{6}, \frac{1}{5} \right] \cup  \left[\frac{1}{13}, \frac{1}{12} \right] \cup  \cdots  \cup \left[\frac{1}{5n+1}, \frac{1}{5n} \right]
+    \end{align*}
+    Esto nos dice que el conjunto $B$ es la unión de intervalos  cerrados y acotados de forma decreciente. Por lo tanto, el primer término de la sucesión debe ser el elemento más grande. Así $1/5 \in B$ $\Longrightarrow$ $\sup(A)=\max(A)=1/5$. 
+
+     
+    Por otro lado, por parte \textbf{a)} $\inf(B)=0$ y $\min(B)= \nexists$.
+\end{itemize}
+\begin{prob}{}{}
+    Sea $A \subseteq \mathbb{R}$, $A\neq \emptyset$ tal que $\sup(A)=\inf(A)$. Demuestre que $A$ solo posee un único elemento.
+\end{prob}
+\textbf{Solución:}
+Sea $x \in A$, entonces por definición de supremo e ínfimo, tenemos que 
+\begin{align*}
+    \inf(A) \leq x \leq \sup(A) \\
+    \sup(A) \leq x \leq \sup(A) && \textbf{($\sup(A)= \inf(A)$)}
+\end{align*}
+Por lo tanto $x= \sup(A)$. Entonces concluimos $A=\{x\}$.
+
+
+\end{document}

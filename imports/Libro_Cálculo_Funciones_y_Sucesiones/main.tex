@@ -1,0 +1,1291 @@
+\documentclass[12pt]{book}
+\usepackage[spanish]{babel}
+\usepackage[top=3.5cm, bottom=3cm, left=2cm, right=2cm, headheight=2.5cm, footskip=1.5cm, marginparwidth=2cm]{geometry}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mdframed}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage{fancybox}
+\usepackage{lastpage}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{marginnote}
+\usepackage{cancel}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usetikzlibrary{patterns} 
+\tcbuselibrary{skins}
+\usetikzlibrary{calc,angles,quotes}
+\usepackage{float}
+\usepackage{kinematikz}
+\usepackage{titlesec}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{plotmarks}
+\usepgfplotslibrary{polar}
+\tcbuselibrary{theorems}
+\pgfplotsset{width=7cm,compat=1.3}
+
+\arrayrulecolor{internationalkleinblue}
+
+
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{gre}{RGB}{101, 191, 127}
+\definecolor{gree}{RGB}{7, 135, 44}
+\definecolor{safetyorange(blazeorange)}{rgb}{1.0, 0.4, 0.0}
+\definecolor{gold(web)(golden)}{rgb}{1.0, 0.84, 0.0}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}
+\definecolor{internationalkleinblue}{rgb}{0.0, 0.18, 0.65}
+\definecolor{citrine}{rgb}{0.89, 0.82, 0.04}
+\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
+
+\makeatletter
+\renewcommand{\chapter}[1]{%
+  \ifnum\value{chapter}>0  % Evitar agregar el índice como capítulo
+    \addcontentsline{toc}{chapter}{\thechapter\quad #1}  
+  \fi
+  \stepcounter{chapter} % Incrementar el número del capítulo
+  \clearpage
+  \thispagestyle{empty} % Página sin encabezado ni pie de página
+  
+  \begin{tikzpicture}[remember picture, overlay]
+    % Fondo decorativo
+    \fill[safetyorange(blazeorange)] (-3,-2) rectangle (40,2); 
+    \draw[internationalkleinblue, line width=2mm,yshift=0.3cm] (-3,2) -- (40,2);
+    \draw[internationalkleinblue, line width=2mm,yshift=-0.3cm] (-3,-2) -- (40,-2);
+    
+    % Círculo con el número del capítulo
+    \fill[white] (15,0) circle (1.7);
+    \draw[line width=1mm] (15,0) circle (1.7);
+    \draw[line width=0.5mm] (15,0) circle (1.5);
+    \fill[bleudefrance] (15,0) circle (1.5);
+    
+    % Líneas decorativas
+    \draw[safetyorange(blazeorange), line width=2mm] (current page.south west) -- (-2,-11);
+    \draw[internationalkleinblue, line width=2mm] (-2,-2.3)--(-2,-12);
+    \draw[internationalkleinblue, line width=2mm] (-2,2.3) -- (current page.north west);
+    
+    % Número del capítulo
+    \node at (15,0) {\Huge\bfseries\sffamily\color{white}{\thechapter}};
+    % Título del capítulo
+    \node[anchor=west] at (2,0) {\Huge\bfseries\sffamily\color{white}{#1}};
+  \end{tikzpicture}
+  
+  \vspace{3cm} % Espaciado debajo del diseño
+}
+\makeatother
+
+
+
+
+
+\newcommand{\Estilo}{
+ \begin{tikzpicture}[remember picture, overlay]
+         \draw
+     (current page header area.south west) -- (current page header area.south east)
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=7cm]current page.south east) {\textbf{Ingeniería Matemática}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=16.1cm]current page.south east) {\textbf{Cálculo I}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \draw[safetyorange(blazeorange), line width=2mm]
+    (current page.south west) rectangle (current page.north west)
+\end{tikzpicture}
+
+}
+%Carga el estilo
+\fancypagestyle{Normal}{%
+  \fancyhead[L]{\emph{Departamento de Matemáticas}}
+  \fancyhead[R]{\emph{Universidad de Santiago de Chile}}
+  
+  \fancyhead[C]{\Estilo}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+
+
+
+%Estilo de Pagina resumen
+\newcommand{\mypage}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        
+        \fill[fill=safetyorange(blazeorange)(blazeorange)](current page.north west) rectangle ([yshift=-22mm]current page.north east) node[midway] {\Huge\bfseries\sffamily\color{white}{Resumen}};
+
+        
+    \end{tikzpicture}
+}%
+%Carga el estilo
+\fancypagestyle{Resumen}{%
+  \fancyhf{}
+  \fancyhead[C]{\mypage}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+\renewcommand{\footrulewidth}{0.5pt}
+
+
+% Definir un nuevo entorno para proof en español
+\renewenvironment{proof}[1][\textit{Demostración}]{%
+  \par\noindent{\bfseries #1.}\enspace}{\hfill$\blacksquare$\par}
+
+%Axiomas
+\newtcbtheorem{axio}{Axioma}{colback=cadmiumred!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=cadmiumred,colbacktitle=cadmiumred, boxed title style={
+		frame code={ 
+			\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+            
+%Ejemplo
+\NewTcbTheorem[number within=section]{eje}{Ejemplo}
+{left=5mm,colback=buff!25!white,colframe=yellow!90!black,sharp corners,enhanced,boxrule=0pt, title= Definition, attach boxed title to top left={yshift=1mm},fonttitle=\bfseries,coltitle=black,
+ before skip=10pt,after skip=10pt,boxed title style={colback=buff!90!white,boxrule=1.5pt},
+ borderline west={1mm}{0pt}{buff!60!black}}{th}
+
+%Problemas comunes
+\newtcbtheorem[number within=section]{prob}{Problema}{colback=gray!15!white, enhanced
+,title= Definition, attach boxed title to top left={yshift=1mm}, fonttitle=\bfseries, sharp corners,boxrule=1pt,coltitle=black, boxed title style={colback=black!10,boxrule=1.5pt}}{th}
+
+ %Propuestos
+ \tcbset{ribbonbox/.style={enhanced,colback=gray!15!white, sharpish corners,  frame style={left color=red!75!black,
+ right color=blue!75!black}, overlay={\path[fill=blue!75!white,draw=blue,double=white!85!blue,
+ preaction={opacity=0.6,fill=blue!75!white},
+ line width=0.1mm,double distance=0.2mm,
+ pattern=fivepointed stars,pattern color=white!75!blue]
+ ([xshift=-0.2mm,yshift=-1.02cm]frame.north east)-- ++(-1,1)-- ++(-0.5,0)-- ++(1.5,-1.5)-- cycle;}}}
+
+ %DiseñoTCB
+\newtcbtheorem[number within=section]{defi}{Definición}{colback=bleudefrance!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=bleudefrance,colbacktitle=bleudefrance, boxed title style={
+		frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\newtcbtheorem[number within=section]{teo}{Teorema}{colback=cadmiumred!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=cadmiumred,colbacktitle=cadmiumred, boxed title style={
+		frame code={ 
+			\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+            
+\newtcbtheorem[number within=section]{prop}{Proposición}{colback=gold(web)(golden)!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=gold(web)(golden),colbacktitle=gold(web)(golden), boxed title style={
+		frame code={ 
+			\fill[gold(web)(golden)](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,gold(web)(golden)]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,gold(web)(golden)]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[gold(web)(golden)!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+\newtcbtheorem[number within=section]{coro}{Corolario}{colback=kellygreen!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=kellygreen,colbacktitle=kellygreen, boxed title style={
+		frame code={ 
+			\fill[kellygreen](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,kellygreen]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,kellygreen]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[kellygreen!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+ \pagestyle{Normal}
+ %Sangía
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\frontmatter % Sección sin numeración para el índice
+\tableofcontents
+
+
+\mainmatter % Activa la numeración de capítulos
+\setcounter{chapter}{0} % Asegurar que el primer capítulo sea "Capítulo 1"
+
+
+
+\chapter{Funciones}
+
+\section{Elementos Principales}
+En este capítulo procederemos a establecer el concepto matemático de \textbf{función}. Las funciones son una correspondencia entre los elementos de dos conjuntos $A$ y $B$ no vacíos de naturaleza arbitraria. Esta asignación da a cada $x \in A$ un único elemento en $y \in B$. Para referirnos a esta correspondencia haremos uso de la notación:
+
+\begin{align*}
+    f: A &\longrightarrow B \\
+    x & \longmapsto y =f(x)
+\end{align*}
+
+Donde $x$ la llamaremos \textbf{variable independiente} e $y$ la \textbf{variable dependiente}.
+\begin{defi}{(Dominio)}{}
+Llamaremos \textbf{dominio} de la función $f$ al mayor subconjunto de $\mathbb{R}$ donde $f(x)$ existe. 
+\begin{align*}
+    \text{Dom}(f)=\{ x \in \mathbb{R} : y =f(x) \in \mathbb{R} \}
+\end{align*}
+\end{defi}
+
+\textbf{Observación:} Por simplicidad denotaremos Dom$(f)$=$D$
+
+\begin{eje}{}{}
+    \begin{itemize}
+        \item $f(x)= x^2$ $\Longrightarrow$ $\text{Dom}(f)=\mathbb{R}$
+
+        \item $f(x)=\displaystyle \frac{x^2}{x^2-1}$ $\Longrightarrow$ $\text{Dom}(f)=\mathbb{R} \setminus\{-1,1\}$
+
+        \item $f(x)= \sqrt{4-x}$ $\Longrightarrow$ $\text{Dom}(f)=(-\infty , 4]$
+    \end{itemize}
+\end{eje}
+
+\begin{defi}{(Recorrido)}{}
+Sea $f : D \subseteq \mathbb{R} \longrightarrow \mathbb{R}$.
+    Llamaremos \textbf{recorrido} o \textbf{conjunto imagen} de la función $f$ al mayor conjunto de todas las imagenes. 
+\begin{align*}
+    f(D) =\text{Rec}(f)=\{ y \in \mathbb{R} : \exists x \in D, \ y=f(x) \}
+\end{align*}
+\end{defi}
+
+\begin{eje}{}{}
+    \begin{itemize}
+        \item  $f(x)=2x+1$ $\Longrightarrow$ $\text{Rec}(f)=\mathbb{R}$
+
+        \item $f(x)=x^2$ $\Longrightarrow$ $\text{Rec}(f)=[0, +\infty)$
+
+        \item $f(x)= \sin(x)$ $\Longrightarrow$ $\text{Rec}(f)=[-1,1]$
+    \end{itemize}
+\end{eje}
+
+\begin{defi}{(Gráfico)}{}
+Sea $f : D \subseteq \mathbb{R} \longrightarrow \mathbb{R}$.
+Llamaremos \textbf{Gráfico} o \textbf{Grafo} de una función $f$ al conjunto de puntos en el plano definido por:
+\begin{align*}
+    \text{Graf}(f)=\{(x,y) \in \mathbb{R}^2 : x \in D, \ y=f(x) \}
+\end{align*}
+\end{defi}
+
+\begin{defi}{}{}
+    Se dice que dos funciones $f$ y $g$ son iguales sí y solo sí se cumplen las siguientes condiciones:
+\begin{itemize}
+    \item $\text{Dom}(f)=\text{Dom}(g)=D$.
+    \item $f(x)=g(x)$ $\forall x \in D$.
+\end{itemize}
+\end{defi}
+
+\begin{eje}{}{}
+    \begin{itemize}
+        \item $f(x)= \sqrt{x-1}$ y $g=\sqrt{|x-1|}$ no son iguales, ya que  $\text{Dom}(f)=[1, + \infty)$ y $\text{Dom}(g)=\mathbb{R}$.
+
+        \item $f(x)=\sqrt{(x-1)(x+3)}$ y $g(x)= \sqrt{x-1}\sqrt{x+3}$ no son iguales porque  $\text{Dom}(f)=(-\infty, -3] \cup [1, + \infty)$ y $\text{Dom}(g)=[1,+ \infty)$.
+    \end{itemize}
+\end{eje}
+
+\begin{defi}{}{}
+  \begin{itemize}
+      \item   Una función se dice \textbf{par} si $f(-x)=f(x)$ $\forall x \in \text{Dom}(f)$.
+
+      \item Una función se dice \textbf{impar} si $f(-x)=-f(x)$ $\forall x \in \text{Dom}(f)$.
+  \end{itemize}
+\end{defi}
+
+\begin{eje}{}{}
+    \begin{itemize}
+        \item La función $f(x)=x^2$ es una función par.
+
+        \item La función $g(x)=x^3$ es una función impar.
+    \end{itemize}
+\end{eje}
+
+\begin{prop}{}{}
+    \begin{itemize}
+        \item Si $f$ es una función \textbf{par} entonces
+        \begin{align*}
+            (x,y) \in \text{Graf}(f) \Longrightarrow (-x,y) \in  \text{Graf}(f)
+        \end{align*}
+        Es decir, el gráfico de la función $f$ es simétrico con respecto al eje $OY$.
+
+        \item Si $f$ es una función \textbf{impar} entonces
+        \begin{align*}
+            (x,y) \in \text{Graf}(f) \Longrightarrow (-x,-y) \in  \text{Graf}(f)
+        \end{align*}
+        Es decir, el gráfico de la función $f$ es simétrico con respecto al origen $0$ del eje cartesiano.
+    \end{itemize}
+\end{prop}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis x line=center, 
+                axis y line=center, 
+                xlabel=$x$, 
+                ylabel=$y$,
+                legend pos=outer north east
+            ]
+                \addplot[blue,domain=-2:2,smooth] {x^2};
+                \legend{$f(x)=x^2$}
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Gráfico de una función par.}
+    \end{subfigure}
+\hspace{0.5cm}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis x line=center, 
+                axis y line=center, 
+                xlabel=$x$, 
+                ylabel=$y$,
+                legend pos=outer north east
+            ]
+                \addplot[red,domain=-2:2,smooth] {x^3};
+                \legend{$f(x)=x^3$}
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Gráfico de una función impar.}
+    \end{subfigure}
+    \caption{Comparación entre las simetrías entre una función par y una impar.}
+\end{figure}
+
+\section{Monotonía de Funciones}
+
+\begin{defi}{}{}
+    Sea $f : D \subseteq \mathbb{R} \to \mathbb{R}$, diremos que :
+    \begin{itemize}
+        \item $f$ es creciente en $I \subseteq D$ $\Longleftrightarrow$ $\forall x_1, x_2 \in I$, $x_1 < x_2$ $\Longrightarrow$ $f(x_1)\leq f(x_2)$
+
+        \item $f$ es decreciente en $I \subseteq D$ $\Longleftrightarrow$ $\forall x_1, x_2 \in I$, $x_1 < x_2$ $\Longrightarrow$ $f(x_1)\geq f(x_2)$
+    \end{itemize}
+    Diremos que $f$ es monótona si es creciente o decreciente.
+\end{defi}
+\textbf{Observación:} Diremos que $f$ es estrictamente decreciente o estrictamente creciente si las desigualdades se cumplen de manera estricta.
+
+\section{Funciones Acotadas}
+
+\begin{defi}{(Función Acotada)}{}
+    Sea $f: D \subseteq \mathbb{R} \to \mathbb{R}$
+\begin{itemize}
+    \item $f$ es acotada inferiormente sí y solo sí $\exists m\in \mathbb{R}$ tal que $\forall x \in D$ , $m \leq f(x)$
+    \item $f$ es acotada superiormente sí y solo sí $\exists M \in \mathbb{R}$, tal que $\forall x  \in D$, $f(x) \leq M$.
+
+      \item $f$ es acotada $\Longleftrightarrow$ $\exists m , M \in \mathbb{R}$, $\forall x \in D$, $m \leq f(x) \leq M$.
+    
+\end{itemize}
+\end{defi}
+
+\begin{eje}{}{}
+    \begin{itemize}
+
+    \item $f(x)=\sqrt{x}$ es una función acotada inferiormente por $m=0$, pero no es acotada superiormente.
+
+    \item $f(x)=\arctan(x)$ es una función acotada, ya que \  $\displaystyle -\frac{\pi}{2}\leq f(x) \leq \frac{\pi}{2}$.
+        \item $f(x)=\displaystyle \frac{1}{x^2+1}$ es una función acotada, ya que $0\leq f(x)\leq 1$.
+    \end{itemize}
+\end{eje}
+
+Con la definición anterior, podemos compactar las definiciones utilizando el valor absoluto.
+
+\begin{prop}{}{}
+Sea $f: D \subseteq \mathbb{R} \to \mathbb{R}$, entonces
+    \begin{align*}
+       f \ \text{es acotada} \ \Longleftrightarrow \ \exists M \in \mathbb{R}^+, \  \forall x \in D, \ |f(x)|\leq M
+    \end{align*}
+\end{prop}
+
+\section{Máximos y Mínimos de Funciones}
+
+\begin{defi}{}{}
+    Sea $f : D \subseteq \mathbb{R} \to \mathbb{R}$, y $I \subseteq D$ tal que $x_0 \in I$. Diremos que $f$ tiene:
+    \begin{itemize}
+        \item Un \textbf{cero} en $x_0$ si $f(x_0)=0$
+
+        \item Un \textbf{máximo} en $x_0$ si $\forall x \in I$, $f(x)\leq f(x_0)$
+
+        \item Un \textbf{mínimo} en $x_0$ si $\forall x \in I$, $f(x_0)\leq f(x)$
+
+        \item Un \textbf{extremo} en $x_0$ si $f(x)$ tiene ya sea un máximo o un minimo. 
+    \end{itemize}
+\end{defi}
+
+\textbf{Observación:} Si $f$ es acotada y $I \subseteq D$, entonces se pueden hallar los valores:
+
+\begin{align*}
+    \min_{x \in I}f(x)&=\min\{f(x) : x \in I \} \\
+    \max_{x \in I}f(x)&= \max\{f(x) : x \in I\}
+\end{align*}
+
+\section{Funciones Periódicas}
+\begin{defi}{(Función Periódica)}{}
+    Sea $f : D \subseteq \mathbb{R} \to \mathbb{R}$. Diremos que $f$ es \textbf{períodica} sí y solo sí existe un $T \in \mathbb{R}^+$ tal que:
+\begin{align*}
+    \forall x \in D, \ f(x+T) = f(x)
+\end{align*}
+Al valor real $T$, le llamaremos periodo de la función $f$.
+\end{defi}
+\begin{eje}{}{}
+    \begin{itemize}
+        \item $f(x)=\sin(x)$ es una función periódica de periodo $T=2\pi$
+
+        \item $f(x)=\tan(x)$ es una función periódica de periodo $T=\pi$
+    \end{itemize}
+\end{eje}
+\section{Operaciónes de Funciones}
+
+
+En esta sección introduciremos la notación $D_f$ y $D_g$ para mencionar los dominios de las funciones $f$ y $g$ respectivamente. Sea $\lambda \in \mathbb{R}$ un numero real fijo. Definimos las álgebras de funciones como:
+
+\begin{defi}{(Álgebra de Funciones)}{}
+    \begin{enumerate}
+        \item \textbf{Función Suma}
+\begin{align*}
+    f+g : D_f \cap D_g  \to \mathbb{R}, \ \forall x \in  D_f \cap D_g, \ (f+g)(x)=f(x)+g(x)
+\end{align*}
+
+        \item \textbf{Función Resta}
+\begin{align*}
+    f-g : D_f \cap D_g \to \mathbb{R}, \ \forall x \in  D_f \cap D_g, \ (f-g)(x)=f(x)-g(x)
+\end{align*}
+
+\item \textbf{Función Escalar}
+\begin{align*}
+    \lambda f : D_f \to \mathbb{R} , \forall x \in  D_f,  \ (\lambda f )(x)=\lambda f(x)
+\end{align*}
+
+\item \textbf{Función Producto}
+\begin{align*}
+    f \cdot g : D_f \cap D_g \to \mathbb{R}, \ \forall x \in  D_f \cap D_g, \ (f\cdot g)(x)=f(x)\cdot g(x)
+\end{align*}
+\item \textbf{Función División}
+\begin{align*}
+    \frac{f}{g} : D \to \mathbb{R}, \ \forall x \in D, \ \left( \frac{f}{g}\right)(x)=\frac{f(x)}{g(x)}
+\end{align*}
+Donde $D= D_f \cap D_g  \setminus \{ x \in D_g : g(x)=0 \} $
+
+\item \textbf{Función Máximo}
+\begin{align*}
+\max\{f,g\}(x) : D_f \cap D_g \to \mathbb{R},  \ \forall x \in  D_f \cap D_g, \  \max\{f,g\}(x)= \max\{f(x),g(x)\}
+\end{align*}
+\item \textbf{Función Mínimo}
+\begin{align*}
+\min\{f,g\}(x) : D_f \cap D_g \to \mathbb{R},  \ \forall x \in  D_f \cap D_g, \  \min\{f,g\}(x)= \min\{f(x),g(x)\}
+\end{align*}
+    \end{enumerate}
+\end{defi}
+\textbf{Observación:} Recuerde las propiedades del máximo y mínimo.
+
+\begin{align*}
+    \max\{f(x),g(x)\}&= \frac{f(x)+g(x)+|f(x)-g(x)|}{2} \\
+    \min\{f(x),g(x)\}&= \frac{f(x)+g(x)-|f(x)-g(x)|}{2}
+\end{align*}
+
+\section{Composición de Funciones}
+
+Utilizando las propiedades básicas entre el álgebra de funciones podemos generar nuevas funciones. Sin embargo, faltan herramientas necesarias para determinar el comportamiento de todas las funciones. Para ello, introduciremos el concepto de \textbf{composición de funciones}.
+
+\begin{defi}{}{}
+    Sean $f: A \longrightarrow B$ y $g : B \longrightarrow C$ funciones. Definimos la \textbf{composición} de $g$ con $f$ como la función
+\begin{align*}
+        g \circ f : \text{Dom}(f \circ g)  \subseteq A\longrightarrow C, \ (g \circ f)(x)=g(f(x))
+\end{align*}
+Donde $\text{Dom}(f \circ g)= \{ x \in \text{Dom}(f) : f(x) \in \text{Dom}(g)\}$.
+\end{defi}
+
+\section{Funciones Inyectivas, Sobreyectivas y Biyectivas}
+
+Los conceptos que se presentarán a continuación son de suma importancia, ya que desempeñan un papel clave en muchas áreas de la matemática y sus aplicaciones. Estos elementos nos permitirán dominar las bases del cálculo, facilitando posteriormente estudios más avanzados.
+\begin{defi}{(Función Inyectiva)}{}
+    Sea $f : X \longrightarrow Y$ una función. Diremos que $f$ es \textbf{inyectiva} si:
+    \begin{align*}
+        \forall x_1 , x_2 \in X,  \ f(x_1)=f(x_2) \Longrightarrow x_1 = x_2
+    \end{align*}
+    O equivalentemente,
+    \begin{align*}
+          \forall x_1 , x_2 \in X,  \ x_1\neq x_2 \Longrightarrow f(x_1)\neq f(x_2) 
+    \end{align*}
+\end{defi}
+\textbf{Nota:} Para probar que una función \textbf{no} es inyectiva basta hallar dos elementos $x_1, \  x_2 \in X$ con $x_1 \neq x_2$ tal que $f(x_1)=f(x_2)$.
+\begin{eje}{}{}
+    \begin{itemize}
+        \item Probemos que las funciones lineales son inyectivas. En efecto sea $f(x)=ax+b$, $a \neq 0$. Con $a,b \in \mathbb{R}$ arbitrarios. Sean $x_1, x_2 \in \mathbb{R}$ arbitrarios, entonces
+    \begin{align*}
+        f(x_1)=f(x_2) &\Longleftrightarrow ax_1+b=ax_2+b \\
+         &\Longleftrightarrow ax_1=ax_2 \\
+          &\Longleftrightarrow x_1 = x_2 && (a\neq 0)
+    \end{align*}
+    Esto prueba que $f$ es inyectiva.
+
+    \item Un ejemplo de una función que no es inyectiva es $g(x)=x^2$. Basta tomar $x_1 = -1$ y $x_2=1$. Por lo que se tiene $f(x_1)=f(x_2)=1$.
+    \end{itemize}
+\end{eje}
+
+\begin{defi}{(Sobreyectividad)}{}
+    Sea $f : X \longrightarrow Y$. Diremos que $f$ es \textbf{sobreyectiva} si:
+    \begin{align*}
+        \forall y \in Y, \ \exists x \in X, \ y=f(x).
+    \end{align*}
+\end{defi}
+
+\textbf{Nota:} Para probar que una función \textbf{no} es sobreyectiva basta hallar un elemento $y \in Y$ tal que $\nexists x \in X$ tal que $y=f(x)$.
+
+\begin{eje}{}{}
+    \begin{itemize}
+        \item La función $f : \mathbb{R} \to \mathbb{R}$ tal que $f(x)=x^2$ \textbf{no} es sobreyectiva, ya que el elemento $y=-1$ no tiene ningún $x \in X$ tal que $y=f(x)$.
+
+        \item La función $g: \mathbb{R} \to \mathbb{R}^+$ dada por $g(x)=x^2$ \textbf{sí} es sobreyectiva. Es importante para el lector reconocer el conjunto en el que se está trabajando.
+    \end{itemize}
+\end{eje}
+
+\begin{defi}{(Biyectividad)}{}
+Sea $f : X \longrightarrow Y $. Diremos que $f$ es \textbf{biyectiva} si es inyectiva y sobreyectiva a la vez.
+\end{defi}
+
+\begin{prop}{}{}
+  \hspace{4cm}  $ f : X \longrightarrow Y \ \text{es biyectiva} \ \Longleftrightarrow \forall y \in Y, \exists! x \in X, \ y=f(x).$
+\end{prop}
+
+\begin{prop}{(Composición de Funciones Inyectivas y Sobreyectivas)}{}
+    Sea $f : A \longrightarrow B$ y $g : B \longrightarrow C$, funciones. Entonces se tiene:
+    \begin{itemize}
+        \item Si $f$ y $g$ son inyectivas $\Longrightarrow$ $g \circ f$ es inyectiva
+
+        \item Si $f$ y $g$ son sobreyectivas $\Longrightarrow$ $g \circ f$ es sobreyectiva.
+
+        \item Si $f$ y $g$ son biyectivas $\Longrightarrow$ $g \circ f$ es biyectiva.
+    \end{itemize}
+\end{prop}
+La demostración de esta proposición es innecesaria. Lo importante es que el lector sepa utilizarlo a conveniencia en los contextos que sea necesario.
+
+\section{Funcion Inversa}
+\begin{defi}{(Función Inversa)}{}
+    Sea $f : X \longrightarrow Y$ biyectiva. Definimos la función inversa de $f$ denotada por $f^{-1} : Y \longrightarrow X$, como 
+    \begin{align*}
+        \forall x \in X , \forall y \in Y, \ f^{-1}(y)=x \Longleftrightarrow y =f(x).
+    \end{align*}
+\end{defi}
+
+\begin{prop}{}{}
+    Sea $f : X \longrightarrow Y$ una función biyectiva. Entonces $f^{-1}$ cumple que:
+    \begin{itemize}
+        \item $\forall x \in X, \ f^{-1}(f(x))=x$ 
+        \item $\forall y \in Y, \ f(f^{-1}(y))=y$.
+    \end{itemize}
+\end{prop}
+\begin{proof}
+    Probaremos el primer punto, el segundo es análogo.
+    \begin{align*}
+        f^{-1}(f(x))&= f^{-1}(y) && \textbf{($y=f(x)$)} \\
+        &=x && \textbf{($f^{-1}(y)=x$)}
+    \end{align*}
+\end{proof}
+
+\begin{eje}{}{}
+    Hallemos $f^{-1}$ donde $f(x)=ax +b$. Ya probamos que esta función es inyectiva, queda al lector probar que es sobreyectiva. Entonces
+\begin{align*}
+    y=ax+b &\Longleftrightarrow x = \frac{y-b}{a} \\
+    &\Longleftrightarrow f^{-1}(x)= \frac{x-b}{a}
+\end{align*}
+No es difícil probar que 
+ \begin{align*}
+        f^{-1}(f(x))&= f^{-1}(y) && \textbf{($y=f(x)$)} \\
+        &=x && \textbf{($f^{-1}(y)=x$)}
+    \end{align*}
+\end{eje}
+
+\textbf{Observación:} El gráfico de una función $y=f(x)$ y de su función inversa $f^{-1}(y)=x$ son simétricos con respecto a la recta $y=x$, ya que
+\begin{align*}
+    (x,y)\in \text{Graf($f$)} \Longleftrightarrow y=f(x) \Longleftrightarrow f^{-1}(y)=x \Longleftrightarrow (y,x) \in \text{Graf}(f^{-1})
+\end{align*}
+
+\section{Conjunto Imagen y Preimagen}
+\begin{defi}{}{}
+    Sea $f : X \longrightarrow Y$ y $A\subseteq X$. Definimos el \textbf{Conjunto Imagen} de $A$ bajo $f$ como:
+\begin{align*}
+    f(A)= \{ f(x) : x \in A \}
+\end{align*}
+\end{defi}
+\textbf{Observación:} Notemos que si $y \in f(A) \Longleftrightarrow \exists x \in A, \ f(x)=y$. Además siempre se cumple que $f(A) \subseteq Y$.
+
+\begin{prop}{}{}
+\hspace{4.5cm} $f : A \longrightarrow B \quad  \text{es sobreyectiva} \quad \Longleftrightarrow f(A) = B$
+\end{prop}
+\begin{proof}
+    En efecto, 
+    \begin{align*}
+        f(A)= B &\Longleftrightarrow B  \subseteq f(A) \\
+        &\Longleftrightarrow \forall y \in B, \ y \in f(A) \\
+        &\Longleftrightarrow \forall y \in B, \exists x \in A, \ y =f(x) \\
+        &\Longleftrightarrow f \ \text{ es sobreyectiva}
+    \end{align*}
+\end{proof}
+\begin{prop}{}{}
+    Sean $f : X \longrightarrow Y$ y $A, B \subseteq X$. Entonces se cumplen las siguientes propiedades
+    \begin{enumerate}
+        \item Si $A \subseteq B$, entonces $f(A) \subseteq f(B)$
+
+        \item $f(A \cup B) = f(A) \cup f(B)$ 
+
+        \item $f(A \cap B) \subseteq f(A) \cap f(B)$ 
+
+        \item $f(A) \setminus f(B) \subseteq f(A\setminus B)$
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item Sea $y \in f(A)$, entonces $\exists x \in A$, tal que  $y=f(x)$. Dado que $A \subseteq B$, entonces $\exists x \in B$, tal que  $y=f(x)$. Así $y \in f(B)$. Es decir $f(A) \subseteq f(B)$.
+
+        \item En efecto
+\begin{itemize}
+    \item[$(\subseteq)$] 
+    \begin{align*}
+y \in f(A \cup B) &\Longleftrightarrow \exists x \in A \cup B, \ y=f(x) \\
+&\Longrightarrow (\exists x \in A, \ y=f(x)) \vee ( \exists x \in B, \ y =f(x))  \\
+&\Longleftrightarrow ( y \in f(A)) \vee ( y \in f(B)) \\
+&\Longleftrightarrow y \in f(A) \cup f(B)
+    \end{align*}
+
+    \item[$(\supseteq)$]
+
+    Como $A \subseteq A \cup B$, por item anterior $f(A) \subseteq f(A \cup B)$. Análogamente, $B \subseteq A \cup B$ $\Longrightarrow$ $f(B) \subseteq f(A \cup B)$. De esta manera 
+    \begin{align*}
+        f(A) \cup f(B) \subseteq f(A \cup B)
+    \end{align*}
+\end{itemize}
+
+        \item En efecto,
+        \begin{align*}
+            y \in f(A \cap B) &\Longleftrightarrow \exists x \in A \cap B, \ y =f(x) \\
+           &\Longrightarrow (\exists x \in A , \ y =f(x)  ) \wedge ( \exists x \in B, \ y=f(x) ) \\
+           &\Longleftrightarrow (y \in f(A) ) \wedge (y \in f(B)) \\
+           &\Longleftrightarrow y \in f(A) \cap f(B)
+        \end{align*}
+        \item Ejercicio.
+    \end{enumerate}
+\end{proof}
+
+\begin{defi}{}{}
+    Sea $f : X \longrightarrow Y$ y $B \subseteq Y$. Definimos el \textbf{Conjunto Preimagen} de $B$ bajo $f$ como:
+    \begin{align*}
+        f^{-1}(B)=\{ x \in X : f(x) \in B \}
+    \end{align*}
+\end{defi}
+\textbf{Observación:} Si $x \in f^{-1}(B)$ $\Longleftrightarrow$ $ f(x) \in B$.
+
+\begin{prop}{}{}
+    Sean $f: X \longrightarrow Y$ y $A, B \subseteq Y$. Entonces se cumplen las siguientes propiedades.
+    \begin{enumerate}
+        \item Si $A \subseteq B$, entonces $f^{-1}(A) \subseteq f^{-1}(B)$
+
+        \item $f^{-1}( A \cup B) = f^{-1}(A) \cup f^{-1}(B)$
+\item $f^{-1}(A \cap B) = f^{-1}(A) \cap f^{-1}(B)$
+
+\item $f^{-1}(A) \setminus f^{-1}(B) = f^{-1}(A \setminus B)$
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+\item 
+\begin{align*}
+    x \in f^{-1}(A) &\Longleftrightarrow f(x) \in A \\
+    &\Longrightarrow f(x) \in B &&\textbf{(
+    $A \subseteq B$
+    )} \\
+    &\Longleftrightarrow x \in f^{-1}(B)
+\end{align*}
+        \item  
+        \begin{itemize}
+        \item[$(\subseteq)$]
+        \begin{align*}
+            x \in f^{-1} ( A \cup B) &\Longleftrightarrow f(x) \in A \cup B \\
+            &\Longleftrightarrow (f(x) \in A) \vee (f(x) \in B) \\
+            &\Longleftrightarrow (x \in f^{-1}(A)) \vee (x \in f^{-1}(B)) \\
+            &\Longrightarrow x \in f^{-1}(A) \cup f^{-1}(B)
+    \end{align*}
+    \item[$(\supseteq)$] Como $A\subseteq A \cup B$ $\Longrightarrow$ $f^{-1}(A) \subseteq f^{-1}(A\cup B)$. Por otro lado $B \subseteq A \cup B$. Así $f^{-1}(B) \subseteq f^{-1}(A\cup B)$. Entonces $f^{-1}(A)\cup f^{-1}(B) \subseteq f^{-1}(A\cup B)$.
+    \end{itemize}
+
+    \item 
+    \begin{itemize}
+        \item[$(\supseteq)$]
+        \begin{align*}
+           x \in f^{-1}(A) \cap f^{-1}(B) &\Longleftrightarrow (x \in f^{-1}(A)) \wedge (x \in f^{-1}(B)) \\
+           &\Longleftrightarrow (f(x) \in A) \wedge ( f(x) \in B) \\
+           &\Longrightarrow f(x) \in A \cap B \\
+           &\Longleftrightarrow x \in f^{-1}(A \cap B)
+        \end{align*}
+
+        \item[$(\subseteq)$] Como $A\cap B \subseteq A$ entonces $f^{-1}(A \cap B) \subseteq f^{-1}(A)$. Análogamente, como $A\cap B \subseteq B$, $f^{-1}(A \cap B) \subseteq f^{-1}(B)$. Luego $f^{-1}(A \cap B) \subseteq f^{-1}(A) \cap f^{-1}(B)$.
+        \end{itemize}
+        \item Ejercicio.
+    \end{enumerate}
+\end{proof}
+
+\textbf{Observación:} No es difícil ver que las propiedades de la preimagen de un conjunto son más fuertes que las propieades del conjunto imagen. Esto en un futuro nos ayudará a definir por ejemplo la continuidad en espacios métricos o en espacios topológicos.
+
+
+\chapter{Sucesiones}
+
+\section{Elementos Básicos}
+En muchos contexto matemáticos es natural encontrarse con listas ordenadas de números que se extienden hacia el infinito. En el ánalsis matemático denotaremos a estas listas \textbf{sucesiones}, que constituyen una herramienta fundamental para el desarrollo del cálculo. \\
+
+Una sucesión de números reales, es en esencia, una función cuyo dominio es el conjunto de los números naturales con recorrido en el conjunto de los números reales. Es decir, a cáda $n \in \mathbb{N}$ se le asigna un número real, que lo denotaremos por $a_n$.\\
+\begin{defi}{}{}
+    Una \textbf{sucesión de número reales} es una función:
+    \begin{align*}
+        a:\  &\mathbb{N} \longrightarrow \mathbb{R} \\
+        &n \longmapsto a(n)=a_n
+    \end{align*}
+\end{defi}
+\textbf{Observación:} 
+\begin{itemize}
+    \item En lugar de escribir 
+\begin{align*}
+     a:\  &\mathbb{N} \longrightarrow \mathbb{R} \\
+        &n \longmapsto a(n)=a_n
+\end{align*}
+haremos uso de algunas de las siguientes notaciones: $(a_n)$, $\{a_n\}$, $(a_n)_{n \in \mathbb{N}}$, $\{a_n\}_{n \in \mathbb{N}}$, $(a_n)_{n=0}^\infty$, $\{a_n\}_{n=0}^\infty$
+
+\item Se acepta una cantidad finita de términos de la sucesión que no estén definidos, para funciones que no posean exactamente el dominio de $\mathbb{N}$.
+
+\item La imagen de $n \in \mathbb{N}$, es decir, $a_n$ se le llama término $n$-ésimo de la sucesión.
+\end{itemize}
+
+\begin{eje}{}{}
+    \begin{itemize}
+        \item $a_n= \displaystyle \frac{1}{n}$
+
+        \item $a_n= \displaystyle \frac{\cos(n!\pi)}{\sqrt{n^2}}$
+
+        \item $a_n= \displaystyle \frac{1}{\sqrt{n-2}}$, $a_0 = \nexists$, $a_1 = \nexists$, $a_2=\nexists$, $a_3=1$, $\ldots$
+
+        \item $a_n= \sqrt{(-1)^n}$. Notamos que 
+        \begin{align*}
+            (a_n)=(1,\nexists, 1 , \nexists, 1, \nexists, \ldots )
+        \end{align*}
+        Esta sucesión no está definida en los términos $a_{2n+1}$, es decir, para los valores de $n$ impar. Dado que es una cantidad infinita de términos, $a_n$ no puede ser una sucesión.
+    \end{itemize}
+\end{eje}
+\section{Sucesiones Convergentes}
+Uno de los conceptos principales del estudio de las sucesiones corresponde al de \textbf{convergencia}. Naturalmente esta idea nace del análsis de la distancia entre los términos de la sucesión a partir de cierto instante $n_0 \in \mathbb{N}$. A medida que $n$ va creciendo sus términos se irán a acercando a un número real fijo, al cúal llamaremos \textbf{límite de la sucesión}. Por ejemplo si tomamos
+\begin{align*}
+    (a_n)=\frac{1}{n}=\left(1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \ldots  \right)
+\end{align*}
+A medida que $n \to +\infty$ los términos de la sucesión $a_n \to 0$. En este caso diremos que la sucesión $a_n$ converge a $0$.
+\begin{defi}{(Convergencia)}{}
+    Diremos que la sucesión $(a_n)$ \textbf{converge} a $L$ si :
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ \forall n\geq n_0 , \ |a_n - \ell| < \varepsilon 
+    \end{align*}
+    En este caso escribiremos $\displaystyle \lim_{n \to \infty}=\ell$ o $a_n \to \ell$.
+\end{defi}
+\textbf{Observación:} Esta definición nos quiere decir que la \textbf{distancia} entre los términos de la sucesión $(a_n)$ a partir del instante $n_0$ se pueden encerrar en un intervalo abierto $a_n \in (L-\varepsilon, L+ \varepsilon)$, $\varepsilon >0$. Por lo tanto, nos interesa los valores $n$-ésimos mayores que el instante $n_0$.
+
+\begin{eje}{}{}
+    \begin{itemize}
+        \item Probemos que $\displaystyle \lim_{n \to \infty} \frac{1}{n}=0$. Sea $\varepsilon >0$. Por propiedad arquimediana $\exists n_0 \in N$ tal que $\displaystyle \frac{1}{n_0} < \varepsilon$. Por lo tanto, $\forall n \geq n_0$
+    \begin{align*}
+        |a_n-0|=\left|\frac{1}{n}-0 \right|= \frac{1}{n}\leq\frac{1}{n_0}<\varepsilon
+    \end{align*}
+    Esto prueba que $\displaystyle \lim_{n \to \infty} \frac{1}{n}=0$ o $a_n \to 0$.
+
+    \item Probemos que $\displaystyle \lim_{n \to \infty} \frac{2n+3}{n+5}=2$. Tenemos que probar que,
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ \forall n\geq n_0 , \ \left| \frac{2n+3}{n+5}- 2\right| < \varepsilon 
+    \end{align*}
+    Desarrollemos el valor absoluto
+    \begin{align*}
+         \left| \frac{2n+3}{n+5}- 2\right|&=  \left| \frac{2n+3-2(n+5)}{n+5}\right| \\
+         &= \left| \frac{2n+3-2n-10}{n+5}\right| \\
+         &= \left| \frac{-7}{n+5}\right| \\\
+         &=\frac{7}{n+5} \\
+         &\leq \frac{7}{n}
+    \end{align*}
+    Entonces basta demostrar que 
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ \forall n\geq n_0 , \ \frac{7}{n} < \varepsilon 
+    \end{align*}
+    Entonces
+    \begin{align*}
+        \frac{7}{n}< \varepsilon \Longrightarrow n>\frac{7}{\varepsilon}
+    \end{align*}
+    Entonces tomando $n_0 =\displaystyle \left\lceil \frac{7}{\varepsilon}\right \rceil $ se tiene lo pedido.
+    \end{itemize}
+\end{eje}
+
+\begin{eje}{}{}
+    Probemos que $\displaystyle \lim_{n \to \infty} \frac{1}{n^2+1}=0$. En efecto, tenemos que probar que 
+     \begin{align*}
+        \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ \forall n\geq n_0 , \ \left| \frac{1}{n^2+1}- 0\right| < \varepsilon 
+    \end{align*}
+    Luego,
+    \begin{align*}
+         \left| \frac{1}{n^2+1}- 0\right|&= \frac{1}{n^2+1} \\
+         &\leq \frac{1}{n^2} \\
+         &\leq \frac{1}{n} < \varepsilon && \textbf{(Propiedad Arquimediana)}
+    \end{align*}
+    Entonces $\displaystyle \lim_{n \to \infty} \frac{1}{n^2+1}=0$.
+\end{eje}
+
+\begin{teo}{}{}
+    Sea $(a_n)$ una sucesión tal que $a_n \to \ell_1$ y $a_n \to \ell_2$. Entonces $\ell_1=\ell_2$. Es decir, el límite de una sucesión convergente es \textbf{único}.
+\end{teo}
+\begin{proof}
+    Dado que $a_n \longrightarrow L_1$, entonces 
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ \forall n\geq n_0 , \ |a_n - \ell| < \frac{\varepsilon}{2} 
+    \end{align*}
+    Análogamente tenemos $a_n \longrightarrow L_2$, entonces
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists n_0^{\prime} \in \mathbb{N}, \ \forall n\geq n_0^{\prime} , \ |a_n - \ell| < \frac{\varepsilon}{2}
+    \end{align*}
+    Sea $N=\max\{n_0,n_0^{\prime}\}$, entonces $\forall  n \geq N$, sucede que $n \geq n_0$ y $n\geq n_0^{\prime}$. Por lo tanto
+    \begin{align*}
+        0\leq |\ell_1-\ell_2|&=|\ell_1 -a_n+a_n - \ell_2| \\
+        &\leq |a_n-\ell_1| + |a_n - \ell_2| \\
+        &\leq  \frac{\varepsilon}{2}+\frac{\varepsilon}{2} \\
+        &= \varepsilon
+    \end{align*}
+    Como esto se cumple $\forall \varepsilon >0$, entonces $|\ell_1-\ell_2|=0$ $\Longrightarrow$ $\ell_1=\ell_2$.
+\end{proof}
+
+\begin{defi}{(Sucesión Acotada)}{}
+    Sea $(a_n)$ una sucesión. Diremos que $(a_n)$ es una \textbf{sucesión acotada} si 
+    \begin{align*}
+        \exists M >0, \ \forall n \in \mathbb{N}, \ |a_n| \leq M
+    \end{align*}
+\end{defi}
+
+\begin{prop}{}{conv.acotada}
+Sea $(a_n)$ una sucesión convergente, entonces $(a_n)$ es acotada.
+\end{prop}
+\begin{proof}
+    Sea $a_n \to a$. Entonces en particular para $\varepsilon=1$, $\exists n_0 \in \mathbb{N}$, tal que $|a_n-a|<1$ $\forall n \geq n_0$. Definimos $M= \max \{ |a_1| , |a_2|, \ldots ,|a_{n_0}|, |a|+1\}$. Entonces $|a_n| \leq M$ $\forall n \in \mathbb{N}$, es decir, $(a_n)$ es acotada.
+\end{proof}
+
+\begin{prop}{}{}
+    Sean $(a_n)$ y $(b_n)$ sucesiones tales que $a_n \to a$ y $b_n \to b$, entonces
+    \begin{enumerate}
+        \item $a_n+b_n \to a +b $.
+        \item $\lambda a_n \to \lambda a$, $\lambda \in \mathbb{R}\setminus \{0\}$.
+        \item  $a_n b_n \to ab$
+        \item Si $a \neq 0$, entonces $\exists n_0 \in N$, tal que $a_n\neq 0$ $\forall n \geq n_0$ y $\displaystyle \frac{1}{a_n} \to \frac{1}{a}$.
+        \item $|a_n| \to |a|$ 
+        \item Si $a_n \geq 0$ $\forall n \in \mathbb{N}$, entonces $a \geq 0$ y $a_n^{1/k} \to a^{1/k}$ $\forall k \in \mathbb{N}$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item   Sea $\varepsilon >0$. entonces $\exists n_1, n_2 \in \mathbb{N}$ tal que 
+    \begin{align*}
+        |a_n-a| < \frac{\varepsilon}{2}\quad \forall n \geq n_1 \quad \text{y} \quad |b_n-b|< \frac{\varepsilon}{2} \quad \forall n \geq n_2
+    \end{align*}
+    Luego, tomando $n_0=\max\{n_1,n_2\}$. Entonces $\forall n \geq n_0$
+        \begin{align*}
+            |a_n+b_n-(a+b)| \leq |a_n - a | + |b_n-b| < \frac{\varepsilon}{2}+ \frac{\varepsilon}{2} = \varepsilon
+        \end{align*}
+        \item Dado que $a_n \to a$ entonces
+        \begin{align*}
+            \forall \varepsilon >0, \ \exists n_0 \in \mathbb{N}, \ \forall n \geq n_0, \ |a_n-a| < \frac{\varepsilon}{|\lambda|}
+        \end{align*}
+        Entonces
+        \begin{align*}
+            |\lambda a_n - \lambda a| &= |\lambda||a_n-a| < |\lambda | \cdot \frac{\varepsilon}{|\lambda|} = \varepsilon
+        \end{align*}
+
+        \item Por \hyperref[th:conv.acotada]{\textbf{Ver Proposición}} tenemos que $|a_n| \leq M$ $\forall n  \in \mathbb{N}$. Sea $n_0 = \max\{n_1,n_2\}$. Entonces $\forall n \geq n_0$.
+        \begin{align*}
+            |a_n b_n - ab|  &= | a_n(b_n-b)+(a_n-a)b| \\
+            &\leq |a_n||b_n-b|+|a_n-a||b| \\
+            &\leq M \varepsilon + \varepsilon |b|= (M+|b|) \varepsilon
+        \end{align*}
+
+        \item Dado que $|a| >0$, entonces $\exists n_2 \in \mathbb{N}$ tal que $|a_n-a|<|a|/2$ $\forall n \geq n_2$. Entonces $|a_n|\geq |a|-|a-a_n| > |a|/2$ $\forall n \geq n_2$. Sea $n_0 = \max\{ n_1,n_2\}$. Dado que $a_n\neq 0$ tenemos 
+        \begin{align*}
+            \left| \frac{1}{a_n}-\frac{1}{a}\right|=\frac{|a-a_n|}{|a_n||a|}< \frac{2}{|a|^2}\cdot \varepsilon 
+        \end{align*}
+
+        \item Dado que $||a_n|-|a|| \leq |a_n-a |$ $\forall n \in \mathbb{N}$ se sigue que $|a_n| \to |a|$.
+
+        \item Ejercicio.
+    \end{enumerate}
+\end{proof}
+
+\begin{teo}{(Teorema del Sandwich)}{}
+    Sean $(a_n)$, $(b_n)$, $(c_n)$ tres secuencias reales, tales que
+    \begin{align*}
+        a_n \leq c_n \leq b_n, \quad \forall n \in \mathbb{N}
+    \end{align*}
+    Si $a_n \to c$ y $b_n \to c$, entonces $c_n \to c$.
+\end{teo}
+\begin{proof}
+    Sea $\varepsilon>0$. Dado que $a_n \to c$, entonces $\exists n_1 \in \mathbb{N}$ tal que $a_n-c>-\varepsilon$ $\forall n \geq n_1$. Análogamente, dado que $b_n \to c$ entonces $\exists n_2 \in \mathbb{N}$ tal que $b_n-c < \varepsilon$ $\forall n \geq n_2$. Sea $n_0=\max\{n_1,n_2\}$. Entonces
+    \begin{align*}
+       -\varepsilon<a_n-c \leq c_n - c \leq b_n -c < \varepsilon \quad \forall n \geq n_0 
+    \end{align*}
+    Entonces, utilizando las propiedades del valor absoluto
+    \begin{align*}
+        |c_n-c| < \varepsilon \quad \forall n \geq n_0
+    \end{align*}
+    Entonces $c_n \to c$.
+\end{proof}
+\begin{coro}{}{}
+    A
+\end{coro}
+\begin{eje}{}{}
+    Probemos utilizando el \textbf{Teorema del Sandwich} que 
+    \begin{align*}
+        \lim_{n \to \infty} \frac{a^n}{n!}=0, \quad a\in \mathbb{R}
+    \end{align*}
+    Elijamos un $m\in\mathbb{N}$ tal que $|a|< m$. Entonces $\forall n \geq m $
+    \begin{align*}
+        0\leq \left|\frac{a^n}{n!} \right|=\frac{|a|^n}{m}\left( \prod_{j={m+1}}^n\frac{1}{j}\right) \leq \frac{|a|^n}{m!}\left( \frac{1}{m^{n-m}}\right)= \frac{m^m}{m!}\left( \frac{|a|}{m}\right)^n
+    \end{align*}
+    Dado que $m$ es constante y $(|a|/m)^n \to 0$. Por \textbf{Teorema del Sandwich} tenemos que 
+    \begin{align*}
+        \lim_{n \to \infty} \frac{a^n}{n!}=0, \quad a\in \mathbb{R}
+    \end{align*}
+\end{eje}
+\section{Sucesiones Monótonas}
+Ya introducimos previamente en el capítulo de funciones la idea de creciemiento y decrecimiento de una función. Ahora desarollaremos esta idea para las sucesiones.
+
+\begin{defi}{}{}
+    Sea $(a_n)$ una sucesión de números reales, diremos que
+    \begin{itemize}
+        \item $(a_n)$ es \textbf{creciente} si $a_n \leq a_{n+1}$ $\forall n \in \mathbb{N}$
+        \item $(a_n)$ es \textbf{decreciente} si $a_{n+1}\leq a_n$ $\forall n \in \mathbb{N}$.
+    \end{itemize}
+\end{defi}
+\textbf{Observación:} Si las desigualdades anteriores se cumplen de manera estricta, diremos que son estrictamente creciente o estrictamente decreciente.
+\begin{eje}{}{}
+    \begin{itemize}
+        \item $a_n= n^2$ es una sucesión creciente.
+        \item $a_n= \frac{1}{n^2}$ es una sucesión decreciente.
+        \item $a_n=(-1)^n$ no es creciente, ni decreciente.
+    \end{itemize}
+\end{eje}
+
+\begin{teo}{(Convergencia Monótona)}{}
+    Sea $(a_n)$ una sucesión de números reales \textbf{acotada}. Entonces se cumple lo siguiente:
+    \begin{itemize}
+        \item Si $(a_n)$ es \textbf{creciente}, entonces $\displaystyle \lim_{n \to \infty} a_n= \sup \{ a_n : n \in \mathbb{N}\}$
+        \item Si $(a_n)$ es \textbf{decreciente}, entonces $\displaystyle \lim_{n \to \infty} a_n = \inf\{a_n: n \in \mathbb{N}\}$
+    \end{itemize}
+\end{teo}
+\begin{proof}
+    Probaremos únicamente el primer punto, el segundo es totalmente análogo. \\
+
+    Dado que $(a_n)$ es acotada, entonces $\exists M >0$ tal que $|a_n| \leq M$ $\forall n \in \mathbb{N}$. Esto es equivalente a decir
+    \begin{align*}
+        |a_n| \leq M \Longleftrightarrow -M \leq a_n \leq M \quad \forall n \in \mathbb{N}
+    \end{align*}
+Esto nos dice que el conjunto $\{a_n : n \in \mathbb{N}\}$ es acotado. En particular, es acotado superiormente. Por lo tanto, existe $\alpha=\sup\{a_n : n \in \mathbb{N}\}$. \\
+
+Sea $\varepsilon>0$, utilizando el \hyperref[th:teo1.8.1]{ \textbf{Teorema 1.8.1}} tenemos que $\exists N \in \mathbb{N}$ tal que $\alpha - \varepsilon < a_N$. Así $\forall n \geq N$, se tiene que $\alpha- \varepsilon< a_N\leq a_n \leq \alpha$. Por tanto
+\begin{align*}
+\Longleftrightarrow    \alpha-\varepsilon &< a_n \leq \alpha \\
+\Longrightarrow\quad     -\varepsilon&< a_n - \alpha \leq 0 < \varepsilon \\
+ \Longleftrightarrow  \quad    -\varepsilon&<a_n-\alpha<\varepsilon \\
+ \Longleftrightarrow \quad\quad \ \  &\quad  |a_n-\alpha|<\varepsilon
+\end{align*}
+    Por lo tanto $\displaystyle \lim_{n \to \infty}a_n=\alpha=\sup\{a_n : n \in \mathbb{N}\}$.
+\end{proof}
+\begin{coro}{}{}
+    Toda sucesión acotada y monótona es convergente.
+\end{coro}
+\begin{proof}
+    Directo del teorema anterior.
+\end{proof}
+\begin{eje}{}{}
+    Consideremos la secuencia $(a_n)$ dada por 
+    \begin{align*}
+        a_n= \sum_{k=1}^n \frac{1}{k!}=1+ \frac{1}{1!}+ \frac{1}{2!}+ \cdots + \frac{1}{n!} \quad \forall n \in \mathbb{N}
+    \end{align*}
+    Claramente $a_n \leq a_{n+1}$ $\forall n \in \mathbb{N}$. Y para todo $n \in \mathbb{N}$ se cumple que
+    \begin{align*}
+        a_n \leq 1+ 1 + \frac{1}{2}+\frac{1}{2^2}+ \cdots + \frac{1}{2^{n-1}}=1+2\left(1-\frac{1}{2^n} \right) < 3
+    \end{align*}
+    Entonces $(a_n)$ es acotada superiormente por 3. Entonces por el corolario anterior $(a_n)$ es convergente, ¿pero a qué converge?
+\end{eje}
+\begin{defi}{(Número de Euler)}{}
+    Definimos el \textbf{número} $e$ o número de euler como el límite de la sucesión
+    \begin{align*}
+        e=\lim_{n \to \infty}\left( 1+\frac{1}{n}\right)^n
+    \end{align*}
+\end{defi}
+\begin{teo}{(Intervalos Anidados)}{}
+    Sea $I_n =[a_n,b_n]$ una secuencia no vacía de intervalos cerrados y acotados  en $\mathbb{R}$ tal que $I_{n+1} \subseteq I_n$ $\forall n \in \mathbb{N}$, entonces
+    \begin{align*}
+        \bigcap_{n=1}^\infty I_n \neq \emptyset
+    \end{align*}
+    Además si $\displaystyle \lim_{n \to \infty}( b_n -a_n)=0$. Entonces existe $ x \in \mathbb{R}$ tal que
+    \begin{align*}
+        \bigcap_{n=1}^\infty I_n = \{x \}
+    \end{align*}
+\end{teo}
+\begin{proof}
+    Sea $I_n= [a_n,b_n]$. Dado que $I_{n+1} \subseteq I_n$ entonces 
+    \begin{align*}
+        a_n \leq a_{n+1}\leq b_{n+1}\leq b_n \quad \forall n \in \mathbb{N}
+    \end{align*}
+    Con esta cadena de desigualdades podemos concluir que $(a_n)$ es una sucesión creciente, y por otro lado, $(b_n)$ es una sucesión decreciente. Ahora dado que $I_n$ es una secuencia de intervalos \textbf{acotados}, entonces por \textbf{Axioma del Supremo}, existe $a=\sup\{a_n:n \in \mathbb{N}\}$ y $b=\inf\{b_n : n \in \mathbb{N}\}$. Utilizando el \textbf{Teorema de Convergencia Monótona} concluimos que
+    \begin{align*}
+        \lim_{n \to \infty}a_n = a =\sup\{a_n:n \in \mathbb{N}\} \quad \text{y} \quad \lim_{n \to \infty}b_n=b =\inf\{b_n : n \in \mathbb{N}\}
+    \end{align*}
+    Y satisfacen que $a\leq b$. Entonces es claro que
+    \begin{align*}
+        \bigcap_{n=1}^\infty I_n=[a,b] \neq \emptyset
+    \end{align*}
+    Con esto probamos la primera parte. Ahora sea $x \in I_n$, entonce
+    \begin{align*}
+        a_n \leq x \leq b_n \quad \forall n \in \mathbb{N}
+    \end{align*}
+    Ahora dado que $\displaystyle \lim_{n \to \infty}( b_n -a_n)=0$, por \textbf{Teorema del Sandwich} tenemos que $a=x=b$. Por tanto
+    \begin{align*}
+        \bigcap_{n=1}^\infty I_n =\{x \}
+    \end{align*}
+\end{proof}
+\begin{eje}{}{}
+    Es preciso mencionar las importancias de las hipótesis que requiere el teorema: los intervalos deben ser \textbf{cerrados} y \textbf{acotados}.
+    \begin{itemize}
+        \item Notemos que $\displaystyle \bigcap_{n=1}^\infty [n, \infty)= \emptyset$
+        \item Notemos que $\displaystyle \bigcap_{n=1}^\infty (0,1/n]= \emptyset$
+    \end{itemize}
+\end{eje}
+\section{Subsucesiones}
+En esta sección introduciremos la noción de una subsucesión de una secuencia de números reales. La idea fundamental que subyace a este concepto es la selección específica de términos de la sucesión para crear una nueva sucesión. Esta herramienta es importante para introducir el \textbf{Teorema de Bolzano-Weierstrass}, que establece una cantidad significante de resultados.
+\begin{defi}{}{}
+    Si $(a_n)$ es una secuencia y $(n_k)$ es una secuencia de números naturales que satisfacen 
+    \begin{align*}
+        n_1 < n_2 < n_3 < \cdots 
+    \end{align*}
+    Entonces $(a_{n_k})$ es llamado una subsucesión de $(a_n)$.
+\end{defi}
+\begin{eje}{}{}
+    \begin{itemize}
+        \item $(a_{2n})$ es una subsucesión de $(a_n)$.
+        \item $(a_1,a_5,a_3,a_9,\ldots )$ no es una subsucesión de $(a_n)$ ya que los términos no satisfacen la desigualdad estricta.
+        \item Si $a_n= \displaystyle \frac{1}{n}$, entonces $a_{2n}=\displaystyle \frac{1}{2n}$ y $\displaystyle a_{2n+1}=\frac{1}{2n+1}$ son subsucesiones de $(a_n)$.
+
+        \item Si $a_n=(-1)^n$, entonces $a_{2n}=1$ y $a_{2n+1}=-1$ son subsucesiones de $(a_n)$.
+    \end{itemize}
+\end{eje}
+\begin{prop}{}{}
+    Si $a_n \to a$ y $(a_{n_k})$ es una subsucesión de $(a_n)$, entonces $a_{n_k} \to a$.
+\end{prop}
+\begin{proof}
+    Sea $\varepsilon>0$, dado que $a_n \to a$, entonces existe $n_0 \in \mathbb{N}$, tal que $\forall n \geq n_0$ se tiene $|a_n-a|<\varepsilon$. Como $(a_{n_k})$ es una subsucesión de $(a_n)$, entonces los índices satisfacen
+    \begin{align*}
+        n_1<n_2< \cdots < n_k < \ldots 
+    \end{align*}
+    Por tanto, debe existir un $m_0 \in \mathbb{N}$ tal que $\forall k \geq m_0$, entonces $|a_{n_k}-a|<\varepsilon$. Luego $a_{n_k} \to a$.
+\end{proof}
+\begin{eje}{}{}
+    Utilicemos la sucesión $a_n= \displaystyle \frac{1}{n}$. Sabemos que $\displaystyle\lim_{n \to \infty} \frac{1}{n}=0$ entonces las subsucesiones $a_{2n}=\displaystyle \frac{1}{2n}$, $\displaystyle a_{2n+1}=\frac{1}{2n+1}$ satisfacen que 
+    \begin{align*}
+        \lim_{n \to \infty} \frac{1}{2n}=0 \quad \text{y} \quad         \lim_{n \to \infty} \frac{1}{2n+1}=0
+    \end{align*}
+    Por la proposición anterior.
+\end{eje}
+
+\begin{teo}{}{}
+    Toda secuencia $(a_n)$ de números reales posee una subsecuencia monótona.
+\end{teo}
+\begin{proof}
+    Sea $(a_n)$ una secuencia en $\mathbb{R}$. Consideramos los "picos" de $(a_n)$. Estos son los términos que son más grandes que todos los términos siguientes. Sea $\mathcal{P}$ el conjunto de todos los números naturales $n$, tales que $a_n$ es un "pico". Esto es 
+    \begin{align*}
+        \mathcal{P}= \{ n \in \mathbb{N} : a_n > a_m \ \forall m >n \}
+    \end{align*}
+    Primero supongamos que $\mathcal{P}$ es un conjunto finito. Entonces $\exists n_1 \in \mathbb{N}$ tal que $n_1 >n$ $\forall n \in \mathcal{P}$. Dado que $n_1 \notin \mathcal{P}$, entonces $\exists n_2 \in \mathbb{N}$ tal que $n_2 >n_1$ y $a_{n_1} \leq a_{n_2}$. Nuevamente, dado que $n_2 \notin \mathcal{P}$, $\exists n_3 \in \mathbb{N}$ tal que $n_3>n_2$ y $a_{n_2}\leq a_{n_3}$. En general podemos elegir un $n_k$ para $k \in \mathbb{N}$, de manera que $n_k \notin \mathcal{P}$, y luego existe un $n_{k+1} \in \mathbb{N}$ tal que $n_{k+1} > n_{k}$ y $a_{n_k} \leq a_{n_k+1}$. De este modo obtenemos una subsucesión monotona creciente $(a_{n_k})$ de $(a_n)$.\\
+
+    Ahora veamos en donde $\mathcal{P}$ es un conjunto infinito. Si enumeramos $\mathcal{P}$ como $n_1, n_2, \ldots$ donde $n_1 < n_2 < \cdots $, entonces dado que $n_k \in \mathcal{P}$ para cada $k \in \mathbb{N}$ obtenemos $a_{n_k} > a_m$ $\forall n > n_k$. En particular, tomando $m=n_{k+1}$, obtenemos $a_{n_k} > a_{n_k+1}$ para cada $k \in \mathbb{N}$. Por lo tanto, obtenemos una subsucesión monotona decreciente $(a_{n_k})$ de $(a_n)$.
+ \end{proof}
+
+ \begin{teo}{(Bolzano-Weierstrass)}{}
+     Toda sucesión acotada en $\mathbb{R}$, posee al menos una subsucesión convergente. 
+ \end{teo}
+ \begin{proof}
+     Sea $(a_n)$ una sucesión acotada en $\mathbb{R}$. Por la proposición anterior sabemos que $(a_n)$ posee una subsucesión $(a_{n_k})$ monótona. Dado que $(a_n)$ es acotada, entonces su subsucesión $(a_{n_k})$ también lo es. Por último utilizando el \textbf{Teorema de Convergencia Monótona} concluimos que $(a_{n_k})$ converge.
+ \end{proof}
+
+ \begin{prop}{}{}
+    Sea $(a_n)$ una sucesión y sea $L \in \mathbb{R}$. Entonces
+     \begin{align*}
+         a_n \to \ell \Longleftrightarrow \text{Todas las subsucesiones de } \ (a_n) \ \text{convergen a } \ \ell
+     \end{align*}
+ \end{prop}
+ \begin{proof}
+     \begin{itemize}
+         \item[$(\Longrightarrow)$] Supongamos que $a_n \to L$, y sea $(a_{n_k})$ una subsucesión. Por definición de convergencia, 
+         \begin{align*}
+             \forall \varepsilon>0, \exists n_0 \in \mathbb{N}, \ \forall n \geq n_0, \ |a_n - \ell| < \varepsilon
+         \end{align*}
+         Como $(n_k)$ es una sucesión estrictamente creciente de términos positivos, existe $k_0 \in \mathbb{N}$ tal que 
+         \begin{align*}
+             n_k \geq n_0 \quad \forall k \geq k_0
+         \end{align*}
+         Entonces $\forall k \geq k_0$, se tiene:
+         \begin{align*}
+             |a_{n_k}-\ell| < \varepsilon
+         \end{align*}
+         Es decir $a_{n_k} \to L$.
+
+        \item[$(\Longleftarrow)$] Procedamos por contradicción. Supongamos que $a_n \not\to L$. Entonces 
+        \begin{align*}
+            \exists \varepsilon_0 >0, \ \forall n_0 \in \mathbb{N}, \ \exists n \geq n_0, \ |a_n - \ell| \geq \varepsilon_0
+        \end{align*}
+Entonces podemos construir una subsucesión $(a_{n_k})$ así:
+\begin{itemize}
+    \item Tomamos $n_1$ tal que $|a_{n_1}-\ell| \geq \varepsilon_0$
+
+    \item Luego, dado $n_k$ tomamos $n_{k+1} > n_k$ tal que $|a_{n_{k+1}}-\ell | \geq \varepsilon_0$
+\end{itemize}
+Pero esto decie que $a_{n_k} \not\to \ell$ contradiciendo la hipótesis. Entonces concluimos que $a_n \to \ell$.
+     \end{itemize}
+ \end{proof}
+
+ \section{Sucesiones de Cauchy}
+
+ \begin{defi}{(Sucesión de Cauchy)}{}
+     Sea $(a_n)$ una sucesión en $\mathbb{R}$. Diremos que $(a_n)$ es una \textbf{Sucesión de Cauchy} si:
+     \begin{align*}
+         \forall \varepsilon>0, \ \exists n_0 , \ \forall n,m \geq n_0, \ |a_n - a_m| < \varepsilon
+     \end{align*}
+ \end{defi}
+
+ \begin{eje}{}{}
+     Sea $x_n=\displaystyle \frac{1}{n}$. Probemos que $x_n$ es una sucesión de cauchy. Sea $\varepsilon>0$, entonces por propiedad arquimediana sabemos que 
+     \begin{align*}
+        \exists n_0 \in \mathbb{N}, \  \frac{1}{n_0}< \frac{\varepsilon}{2}
+     \end{align*}
+     Por tanto si $\forall n, m \geq n_0$ tenemos 
+     \begin{align*}
+         |x_n-x_m| = \left| \frac{1}{n}- \frac{1}{m}\right|\leq \frac{1}{n}+\frac{1}{m} \leq \frac{1}{n_0}+ \frac{1}{n_0}=\frac{2}{n_0}<\varepsilon\\
+     \end{align*}
+ \end{eje}
+\begin{eje}{}{}
+    Probemos que la secuencia $x_n= (1+(-1)^n)$ \textbf{no} es una sucesión de cauchy. La negación de la definición de una sucesión de cauchy es 
+    \begin{align*}
+        \exists \varepsilon>0, \  \forall n_0 \in \mathbb{N}, \ \exists n,m \geq n_0, \ |x_n -x_m| \geq \varepsilon   \end{align*}
+        Notemos que los terminos $x_n=2$ y $x_{n+1}=0$. Si tomamos $\varepsilon=2$, podemos elegir un $n \geq n_0$ y $m=n+1$ para obtener
+        \begin{align*}
+            |x_n - x_{n+1}|=2=\varepsilon
+        \end{align*}
+        Esto prueba que $(x_n)$ \textbf{no} es una sucesión de cauchy.
+\end{eje}
+\begin{prop}{}{}
+    Sea $(a_n)$ una sucesión en $\mathbb{R}$. Si $(a_n)$ es \textbf{convergente}, entonces $(a_n)$ es una \textbf{Sucesión de Cauchy}.
+\end{prop}
+\begin{proof}
+    Supongamos que $a_n \to \ell$. Por tanto 
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ \forall n\geq n_0, \ |a_n- \ell | < \frac{\varepsilon}{2}
+    \end{align*}
+    Por tanto si $n,m\geq n_0$ tenemos que 
+    \begin{align*}
+        |a_n-a_m| \leq |a_n - \ell | + |\ell - a_m| < \frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon
+    \end{align*}
+    Probando así que  $(a_n)$ es de Cauchy.
+\end{proof}
+
+\begin{prop}{}{}
+    Sea $(a_n)$ una sucesión de Cauchy en $\mathbb{R}$. Entonces
+    \begin{enumerate}
+        \item $(a_n)$ es acotada.
+
+        \item Si existe $a_{n_k} \to \ell$, entonces $a_n \to \ell$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item Para $\varepsilon=1$, existe $n_0 \in \mathbb{N}$ tal que si $n,m\geq n_0$, entonces $|a_n-a_m| < 1$. Luego
+        \begin{align*}
+            |a_n| \leq |a_n-a_{n_0}|+|a_{n_0}|<1+ |a_{n_0}| \quad \forall n \geq n_0
+        \end{align*}
+        Si tomamos $M= \max \{|a_1|, \ldots, |a_{n_0-1}|,1+|a_{n_0}|$, tenemos que $|a_n| \leq M$ $\forall n \in \mathbb{N}$. Así $(a_n)$ es acotada.
+
+        \item Supongamos que existe $a_{n_k} \to \ell$. Entonces 
+        \begin{align*}
+            \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ \forall k \geq n_0, \ |a_{n_k}-\ell| < \frac{\varepsilon}{2} 
+        \end{align*}
+        Por otro lado como $(a_n)$ es de cauchy, entonces
+         \begin{align*}
+         \forall \varepsilon>0, \ \exists n_0 ^{\prime} \in \mathbb{N}, \ \forall n,m \geq n_0^{\prime}, \ |a_n - a_m| < \frac{\varepsilon}{2}
+     \end{align*}
+     Así, tomando $k= \max\{n_0, n_0^{\prime}\}$. Tenemos 
+     \begin{align*}
+         |a_n- \ell | \leq |a_n - a_{n_k}| + |a_{n_k}-\ell| < \frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon
+     \end{align*}
+     Probando que $a_n \to \ell$.
+    \end{enumerate}
+\end{proof}
+
+\begin{teo}{(Criterio de Cauchy)}{}
+    Una secuencia $(a_n)$ en $\mathbb{R}$ es convergente $\Longleftrightarrow$ $(a_n)$ es una sucesión de Cauchy.
+\end{teo}
+\begin{proof}
+    \begin{itemize}
+        \item[$(\Longrightarrow)$]  Sea $(a_n)$ una sucesión convergente. Sea $\ell \in \mathbb{R}$ tal que $a_n \to \ell$. Entonces
+        \begin{align*}
+            \forall \varepsilon>0, \ \exists n_0 \in \mathbb{N}, \ \forall n \geq n_0, \ |a_n-\ell| < \frac{\varepsilon}{2} 
+        \end{align*}
+        Entonces
+        \begin{align*}
+            |a_n-a_m| \leq |a_n-\ell | +|a-a_m| < \frac{\varepsilon}{2}+\frac{\varepsilon}{2}= \varepsilon \quad \forall n,m \geq n_0
+        \end{align*}
+        Entonces $(a_n)$ es una sucesión de Cauchy.
+        \item[$(\Longleftarrow)$] Sea $(a_n)$ una sucesión de Cauchy. Por proposición anterior $(a_n)$ es acotada. Entonces por \textbf{Teorema de Bolzano-Weierstrass}, $(a_n)$ posee una subsucesión convergente. Nuevamente por proposición anterior, tenemos que $a_n \to \ell$.
+    \end{itemize}
+\end{proof}
+
+\textbf{Observación:} El \textbf{Criterio de Cauchy} es una herramienta poderosa, ya que nos dice que si queremos mostrar que una sucesión $a_n$ es convergente, tenemos la posibilidad de probar que $a_n$ es una sucesión de Cauchy. Por lo general, esto es  de útilidad cuando $a_n$ está dado por una relación recursiva.
+
+
+
+
+
+
+
+
+
+
+ 
+\pagebreak
+ \begin{mdframed}[backgroundcolor=gray!10!white]
+    \begin{center}
+    {\Large \textbf{Límites Importantes}}\end{center}\begin{multicols}{2}
+    \begin{itemize}
+        \item $\displaystyle \lim_{n \to \infty} \frac{1}{n} = 0$
+        \item $\displaystyle \lim_{n \to \infty} \frac{1}{n^p} = 0$ \quad (para $p > 0$)
+        \item $\displaystyle \lim_{n \to \infty} \frac{a^n}{n!} = 0$ \quad (para $a \in \mathbb{R}$)
+        \item $\displaystyle \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = e$
+        \item $\displaystyle \lim_{n \to \infty} \sqrt[n]{n} = 1$
+        \item $\displaystyle \lim_{n \to \infty} \frac{n^k}{a^n} = 0$ \quad (para $a > 1$, $k \in \mathbb{N}$)
+        \item $\displaystyle \lim_{n \to \infty} \frac{\ln n}{n} = 0$
+        \item $\displaystyle \lim_{n \to \infty} \frac{n!}{n^n} = 0$
+        \item $\displaystyle \lim_{n \to \infty} \frac{a^n}{b^n} = 0$ \quad (si $|a| < |b|$)
+        \item $\displaystyle \lim_{n \to \infty} \sqrt[n]{a} = 1$, $a>0$ 
+    \end{itemize}
+    \end{multicols}
+\end{mdframed}
+\end{document}

@@ -10,10 +10,25 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{cancel}
+\usepackage{mdframed}
+\usepackage{multicol}
 
 % Gráficos
 \usepackage{graphicx}
 \graphicspath{{assets/images/}{assets/figures/}}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,calc,angles,quotes,plotmarks}
+\usepgfplotslibrary{fillbetween,polar}
+\pgfplotsset{width=7cm,compat=1.18}
+
+% Reutilización de documentos legacy
+\usepackage{docmute}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{skins,theorems,breakable}
 
 % Diseño de página
 \usepackage{geometry}
@@ -21,6 +36,14 @@
 
 % Hipervínculos (sin color para impresión)
 \usepackage[hidelinks]{hyperref}
+
+% Colores heredados por los entornos legacy
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{safetyorangeblazeorange}{rgb}{1.0, 0.4, 0.0}
+\definecolor{goldwebgolden}{rgb}{1.0, 0.84, 0.0}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}
+\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
 
 % Entornos de teoremas
 \newtheorem{teorema}{Teorema}[chapter]
@@ -32,3 +55,60 @@
 \newtheorem{ejemplo}[teorema]{Ejemplo}
 \theoremstyle{remark}
 \newtheorem{observacion}[teorema]{Observación}
+
+% Entornos heredados desde los proyectos importados.
+\NewTcbTheorem[number within=section]{eje}{Ejemplo}
+{left=5mm,colback=buff!25!white,colframe=yellow!90!black,sharp corners,enhanced,boxrule=0pt,
+ attach boxed title to top left={yshift=1mm},fonttitle=\bfseries,coltitle=black,
+ before skip=10pt,after skip=10pt,boxed title style={colback=buff!90!white,boxrule=1.5pt},
+ borderline west={1mm}{0pt}{buff!60!black}}{th}
+
+\newtcbtheorem[number within=section]{prob}{Problema}
+{colback=gray!15!white,enhanced,attach boxed title to top left={yshift=1mm},fonttitle=\bfseries,
+ sharp corners,boxrule=1pt,coltitle=black,boxed title style={colback=black!10,boxrule=1.5pt}}{th}
+
+\newtcbtheorem[number within=section]{defi}{Definición}
+{colback=bleudefrance!10,enhanced,attach boxed title to top left={xshift=-4mm},boxrule=0pt,
+ after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,
+ bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,
+ colframe=bleudefrance,colbacktitle=bleudefrance,boxed title style={
+  frame code={
+	\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+	\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+	\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+	\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\newtcbtheorem[number within=section]{teo}{Teorema}
+{colback=cadmiumred!10,enhanced,attach boxed title to top left={xshift=-4mm},boxrule=0pt,
+ after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,
+ bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,
+ colframe=cadmiumred,colbacktitle=cadmiumred,boxed title style={
+  frame code={
+	\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+	\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+	\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+	\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\newtcbtheorem[number within=section]{prop}{Proposición}
+{colback=goldwebgolden!10,enhanced,attach boxed title to top left={xshift=-4mm},boxrule=0pt,
+ after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,
+ bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,
+ colframe=goldwebgolden,colbacktitle=goldwebgolden,boxed title style={
+  frame code={
+	\fill[goldwebgolden](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+	\draw[line width=1mm,goldwebgolden]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+	\draw[line width=1mm,goldwebgolden]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+	\fill[goldwebgolden!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\newtcbtheorem[number within=section]{coro}{Corolario}
+{colback=kellygreen!10,enhanced,attach boxed title to top left={xshift=-4mm},boxrule=0pt,
+ after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,
+ bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,
+ colframe=kellygreen,colbacktitle=kellygreen,boxed title style={
+  frame code={
+	\fill[kellygreen](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+	\draw[line width=1mm,kellygreen]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+	\draw[line width=1mm,kellygreen]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+	\fill[kellygreen!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\setlength{\parindent}{0pt}

@@ -1,0 +1,749 @@
+\documentclass[12pt]{book}
+\usepackage[spanish]{babel}
+\usepackage[top=3.5cm, bottom=3cm, left=2cm, right=2cm, headheight=2.5cm, footskip=1.5cm, marginparwidth=2cm]{geometry}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mdframed}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage{fancybox}
+\usepackage{lastpage}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{marginnote}
+\usepackage{cancel}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usetikzlibrary{patterns} 
+\tcbuselibrary{skins}
+\usetikzlibrary{calc,angles,quotes}
+\usepackage{float}
+\usepackage{kinematikz}
+\usepackage{titlesec}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{plotmarks}
+\usepgfplotslibrary{polar}
+\tcbuselibrary{theorems}
+\pgfplotsset{width=7cm,compat=1.3}
+
+\arrayrulecolor{internationalkleinblue}
+
+
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{gre}{RGB}{101, 191, 127}
+\definecolor{gree}{RGB}{7, 135, 44}
+\definecolor{safetyorange(blazeorange)}{rgb}{1.0, 0.4, 0.0}
+\definecolor{gold(web)(golden)}{rgb}{1.0, 0.84, 0.0}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}
+\definecolor{internationalkleinblue}{rgb}{0.0, 0.18, 0.65}
+\definecolor{citrine}{rgb}{0.89, 0.82, 0.04}
+\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
+
+\makeatletter
+\renewcommand{\chapter}[1]{%
+  \ifnum\value{chapter}>0  % Evitar agregar el índice como capítulo
+    \addcontentsline{toc}{chapter}{\thechapter\quad #1}  
+  \fi
+  \stepcounter{chapter} % Incrementar el número del capítulo
+  \clearpage
+  \thispagestyle{empty} % Página sin encabezado ni pie de página
+  
+  \begin{tikzpicture}[remember picture, overlay]
+    % Fondo decorativo
+    \fill[safetyorange(blazeorange)] (-3,-2) rectangle (40,2); 
+    \draw[internationalkleinblue, line width=2mm,yshift=0.3cm] (-3,2) -- (40,2);
+    \draw[internationalkleinblue, line width=2mm,yshift=-0.3cm] (-3,-2) -- (40,-2);
+    
+    % Círculo con el número del capítulo
+    \fill[white] (15,0) circle (1.7);
+    \draw[line width=1mm] (15,0) circle (1.7);
+    \draw[line width=0.5mm] (15,0) circle (1.5);
+    \fill[bleudefrance] (15,0) circle (1.5);
+    
+    % Líneas decorativas
+    \draw[safetyorange(blazeorange), line width=2mm] (current page.south west) -- (-2,-11);
+    \draw[internationalkleinblue, line width=2mm] (-2,-2.3)--(-2,-12);
+    \draw[internationalkleinblue, line width=2mm] (-2,2.3) -- (current page.north west);
+    
+    % Número del capítulo
+    \node at (15,0) {\Huge\bfseries\sffamily\color{white}{\thechapter}};
+    % Título del capítulo
+    \node[anchor=west] at (2,0) {\Huge\bfseries\sffamily\color{white}{#1}};
+  \end{tikzpicture}
+  
+  \vspace{3cm} % Espaciado debajo del diseño
+}
+\makeatother
+
+
+
+
+
+\newcommand{\Estilo}{
+ \begin{tikzpicture}[remember picture, overlay]
+         \draw
+     (current page header area.south west) -- (current page header area.south east)
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=7cm]current page.south east) {\textbf{Ingeniería Matemática}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[rotate=270, scale=1.5, text opacity=0.5] 
+        at ([xshift=-1cm, yshift=16.1cm]current page.south east) {\textbf{Cálculo I}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \draw[safetyorange(blazeorange), line width=2mm]
+    (current page.south west) rectangle (current page.north west)
+\end{tikzpicture}
+
+}
+%Carga el estilo
+\fancypagestyle{Normal}{%
+  \fancyhead[L]{\emph{Departamento de Matemáticas}}
+  \fancyhead[R]{\emph{Universidad de Santiago de Chile}}
+  
+  \fancyhead[C]{\Estilo}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+
+
+
+%Estilo de Pagina resumen
+\newcommand{\mypage}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        
+        \fill[fill=safetyorange(blazeorange)(blazeorange)](current page.north west) rectangle ([yshift=-22mm]current page.north east) node[midway] {\Huge\bfseries\sffamily\color{white}{Resumen}};
+
+        
+    \end{tikzpicture}
+}%
+%Carga el estilo
+\fancypagestyle{Resumen}{%
+  \fancyhf{}
+  \fancyhead[C]{\mypage}
+  \renewcommand{\headrulewidth}{0pt}
+}%
+\renewcommand{\footrulewidth}{0.5pt}
+
+
+% Definir un nuevo entorno para proof en español
+\renewenvironment{proof}[1][\textit{Demostración}]{%
+  \par\noindent{\bfseries #1.}\enspace}{\hfill$\blacksquare$\par}
+
+%Axiomas
+\newtcbtheorem{axio}{Axioma}{colback=cadmiumred!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=cadmiumred,colbacktitle=cadmiumred, boxed title style={
+		frame code={ 
+			\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+            
+%Ejemplo
+\NewTcbTheorem[number within=section]{eje}{Ejemplo}
+{left=5mm,colback=buff!25!white,colframe=yellow!90!black,sharp corners,enhanced,boxrule=0pt, title= Definition, attach boxed title to top left={yshift=1mm},fonttitle=\bfseries,coltitle=black,
+ before skip=10pt,after skip=10pt,boxed title style={colback=buff!90!white,boxrule=1.5pt},
+ borderline west={1mm}{0pt}{buff!60!black}}{th}
+
+%Problemas comunes
+\newtcbtheorem[number within=section]{prob}{Problema}{colback=gray!15!white, enhanced
+,title= Definition, attach boxed title to top left={yshift=1mm}, fonttitle=\bfseries, sharp corners,boxrule=1pt,coltitle=black, boxed title style={colback=black!10,boxrule=1.5pt}}{th}
+
+ %Propuestos
+ \tcbset{ribbonbox/.style={enhanced,colback=gray!15!white, sharpish corners,  frame style={left color=red!75!black,
+ right color=blue!75!black}, overlay={\path[fill=blue!75!white,draw=blue,double=white!85!blue,
+ preaction={opacity=0.6,fill=blue!75!white},
+ line width=0.1mm,double distance=0.2mm,
+ pattern=fivepointed stars,pattern color=white!75!blue]
+ ([xshift=-0.2mm,yshift=-1.02cm]frame.north east)-- ++(-1,1)-- ++(-0.5,0)-- ++(1.5,-1.5)-- cycle;}}}
+
+ %DiseñoTCB
+\newtcbtheorem[number within=section]{defi}{Definición}{colback=bleudefrance!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=bleudefrance,colbacktitle=bleudefrance, boxed title style={
+		frame code={ 
+			\fill[bleudefrance](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,bleudefrance]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,bleudefrance]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[bleudefrance!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+\newtcbtheorem[number within=section]{teo}{Teorema}{colback=cadmiumred!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=cadmiumred,colbacktitle=cadmiumred, boxed title style={
+		frame code={ 
+			\fill[cadmiumred](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,cadmiumred]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,cadmiumred]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[cadmiumred!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+            
+\newtcbtheorem[number within=section]{prop}{Proposición}{colback=gold(web)(golden)!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=gold(web)(golden),colbacktitle=gold(web)(golden), boxed title style={
+		frame code={ 
+			\fill[gold(web)(golden)](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,gold(web)(golden)]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,gold(web)(golden)]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[gold(web)(golden)!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+\newtcbtheorem[number within=section]{coro}{Corolario}{colback=kellygreen!10,enhanced,title=Definition,
+	attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=kellygreen,colbacktitle=kellygreen, boxed title style={
+		frame code={ 
+			\fill[kellygreen](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+			\draw[line width=1mm,kellygreen]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+			
+			\draw[line width=1mm,kellygreen]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+			\fill[kellygreen!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;}}}{th}
+
+
+ \pagestyle{Normal}
+ %Sangía
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\frontmatter % Sección sin numeración para el índice
+\tableofcontents
+
+
+\mainmatter % Activa la numeración de capítulos
+\setcounter{chapter}{0} % Asegurar que el primer capítulo sea "Capítulo 1"
+
+
+\chapter{Límites}
+
+\section{Límites de Funciones}
+
+En este capítulo 
+
+\begin{defi}{(Puntos de Acumulación)}{}
+    Sea $A \subseteq \mathbb{R}$ y $a \in \mathbb
+    {R}$. Diremos que $a$ es un \textbf{punto de acumulación} de $A$. Si 
+    \begin{align*}
+        \forall \delta >0, \ A \cap  (a-\delta, a+\delta)\setminus \{a\} \neq \emptyset.
+    \end{align*}
+\end{defi}
+\textbf{Nota:} Esta definición nos dice en dónde "se acumulan" los puntos del conjunto $A$. Al valor $(a-\delta, a+\delta)$ es lo que llamamos una vecindad entorno al punto $a$. Dado que le sacamos el propio elemento $a$, podemos asegurar de aproximarnos al punto $a$ con distintos puntos del conjunto $A$. \\
+
+\textbf{Observación:} Notemos que podemos reescribir la definición de \textbf{punto de acumulación} de la siguiente manera.
+
+\begin{defi}{(Puntos de Acumulación)}{}
+    Sea $A \subseteq \mathbb{R}$, $a \in \mathbb{R}$. Diremos que $a \in \mathbb{R}$ es un \textbf{punto de acumulación} de $A$ si 
+    \begin{align*}
+        \forall \delta >0, \exists x \in A \setminus \{a\}, \ |x-a|<\delta
+    \end{align*}
+\end{defi}
+
+\textbf{Nota:} El conjunto de puntos de acumumlación de $A \subseteq \mathbb{R}$ se denota como $A^{\prime}$.
+
+\begin{eje}{}{}
+    \begin{itemize}
+
+
+        
+        \item  Los puntos de acumulación del conjunto $A=\left\{ \displaystyle \frac{1}{n}: n \in \mathbb{N} \right\}$ es 0. Es decir $A^{\prime}=\{0\}$. Sin embargo, $0 \notin A$.
+
+        \item El conjunto $\mathbb{N}$ no tiene puntos de acumulación.
+
+        \item Si $I=[0,1]$ entonces el conjunto $A=I\cap \mathbb{Q}$ consiste un todos los numeros racionales en el intervalo $[0,1]$. Por densidad de los números racionales, todo punto $x \in I$ se tiene que $x \in A^{\prime}$
+    \end{itemize}
+\end{eje}
+
+\begin{defi}{(Límite)}{def:limite}
+Sea $f : A \subseteq \mathbb{R} \longrightarrow \mathbb{R}$ y $a \in \mathbb{R}$ un punto de acumulación de $A$. Diremos que la función $f$ tiene límite $\ell \in \mathbb{R}$ cuando $x$ tiende al punto $a$, denotado por $\displaystyle \lim_{x \to a}f(x) = \ell$, si 
+\begin{align*}
+    \forall \varepsilon>0, \ \exists \delta >0,  \ \forall x \in A,  \ 0 < |x-a| < \delta \ \Longrightarrow | f(x)-\ell| < \varepsilon
+\end{align*}
+\end{defi}
+
+\textbf{Obsevación:} La desigualdad $0< |x-a| < \delta$ significa que $x\neq a$. Además, tenemos que 
+\begin{align*}
+    -\delta &< x-a < \delta \\
+    a-\delta &< x < a+ \delta \end{align*}
+y de la misma forma tenemos que 
+\begin{align*}
+    \ell - \varepsilon < f(x) < \varepsilon + \ell 
+\end{align*}
+Es decir, si  $x \in (a-\delta ,a + \delta  )$ entonces $f(x) \in (\ell - \varepsilon, \ell + \varepsilon)$. Intuitivamente el concepto de límite nos dice que si la distancia entre $x$ y $a$ es menor que $\delta$, entonces la distancia entre las imagenes $f(x)$ de $\ell$ necesariamente es menor que $\varepsilon$.
+
+
+\begin{eje}{}{}
+    Sea $f: \mathbb{R} \to \mathbb{R}$ dada por $f(x)=c$. Mostremos que $ \displaystyle \lim_{x \to a} f(x)=c$ $\forall a \in \mathbb{R}$.
+
+    Sea $\varepsilon >0$, tomemos $\delta = 1$. Entonces si 
+    \begin{align*}
+        0<|x-a|<1 \Longrightarrow|f(x)-c|=|c-c|=0<\varepsilon
+    \end{align*}
+\end{eje}
+\begin{eje}{}{}
+    Sea $f : \mathbb{R} \to \mathbb{R}$ dada por $f(x)=x$. Probemos que $ \displaystyle \lim_{x \to a} f(x)=a$ $\forall a \in \mathbb{R}$. En efecto, sea $\varepsilon>0$, entonces tomando $\delta =\varepsilon$ y si, $0<|x-a|<\delta$
+    \begin{align*}
+        |f(x)-a|=|x-a|<\delta =\varepsilon
+    \end{align*}
+    Por lo tanto  $ \displaystyle \lim_{x \to a} f(x)=a$ 
+\end{eje}
+\begin{eje}{}{}
+    Sea $f: \mathbb{R} \to \mathbb{R}$ dada por $f(x)=3x+2$. Mostremos que $ \displaystyle \lim_{x \to 1} f(x)=5$. Sea $\varepsilon>0$, nuestro objetivo es hallar el $\delta>0$ tal que si 
+    \begin{align*}
+        0<|x-1|<\delta  \Longrightarrow |(3x+2)-5|<\varepsilon.
+    \end{align*}
+    En efecto, notemos que 
+    \begin{align*}
+        |(3x+2)-5|=|3x-3|=3\cdot |x-1|
+    \end{align*}
+    Entonces tomando $\delta = \displaystyle \frac{\varepsilon}{3}$ tenemos que 
+    \begin{align*}
+        (3x+2)-5|=|3x-3|=3\cdot |x-1| < 3 \cdot \frac{\varepsilon}{3}=\varepsilon
+    \end{align*}
+    Con esto probamos por definición que $ \displaystyle \lim_{x \to 1} f(x)=5$.
+\end{eje}
+
+\textbf{Observación:} Como se mostró en el ejemplo anterior, la "manera" de hallar el $\delta$ es de la manera conveniente que hicimos al tomar $\varepsilon/3$. Sin embargo, en una demostración formal esto no se incluye. Es adecuado hacer un borrador anteriormente para encontrar el $\delta$ que completa la demostración. En la sección de {\Large Problemas resueltos} mostraremos los resultados formales.
+
+
+Veamos un caso en el cual las cosas no resultan tan sencillas.
+\begin{eje}{}{}
+    Sea $f : \mathbb{R} \to \mathbb{R}$ dada por $f(x)=x^2$. Mostremos que $\displaystyle \lim_{x \to a}x^2=a^2$ $\forall a \in \mathbb{R}$. Sea $\varepsilon>0$, notemos que 
+    \begin{align*}
+        |f(x)-a^2|=|x^2-a^2|=|x+a||x-a|
+    \end{align*}
+    Entonces si tomamos $x$ suficientemente de $a$ tal que $|x-a|<1$ entonces
+    \begin{align*}
+        |x|\leq |a|+1 \Longrightarrow|x+a|\leq |x|+|a| \leq 2|a|+1
+    \end{align*}
+    Luego,
+    \begin{align*}
+        |x^2-a^2|=|x+a||x-a|\leq (2|a|+1)\cdot |x-a|
+    \end{align*}
+    Si tenemos que $|x-a| < \varepsilon/(2|a|+1)$, completaríamos la demostración. Sin embargo recordemos que supusimos que $|x-a|<1$. Por lo tanto basta tomar,
+    \begin{align*}
+        \delta= \min\left\{1, \frac{\varepsilon}{2|a|+1} \right\}
+    \end{align*}
+    Con esto tenemos que 
+    \begin{align*}
+        |x^2-a^2|\leq (2|a|+1)\cdot|x-a|<\varepsilon
+    \end{align*}
+\end{eje}
+
+\section{Teoremas sobre Límites}
+
+\begin{teo}{}{}
+    Sea $f : A \subseteq \mathbb{R} \longrightarrow \mathbb{R}$ y $a \in \mathbb{R}$ si $\displaystyle \lim_{x \to a} f(x)=\ell _1$ y  $\displaystyle \lim_{x \to a} f(x)=\ell _2$, entonces $\ell_1 = \ell_2 $.
+\end{teo}
+\begin{proof}
+    Sea $\varepsilon>0$, como $\displaystyle \lim_{x \to a} f(x)=\ell _1$, entonces
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists \delta_1 >0, \ \forall x \in A, \ 0<|x-a|<\delta_1 \Longrightarrow |f(x)-\ell_1| < \frac{\varepsilon}{2}.
+    \end{align*}
+    Análogamente como $\displaystyle \lim_{x \to a} f(x)=\ell _2$, entonces
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists \delta_2 >0, \ \forall x \in A, \ 0<|x-a|<\delta_2 \Longrightarrow |f(x)-\ell_2| < \frac{\varepsilon}{2}.
+    \end{align*}
+    Definimos $\delta = \min\{ \delta_1 , \delta_2\}$. Por tanto si $x\in A$ es tal que $0<|x-a|<\delta$, entonces
+    \begin{align*}
+        0<|x-a|<\delta_1 \quad \text{y} \quad 0<|x-a|<\delta_2 
+    \end{align*}
+    Por lo tanto 
+    \begin{align*}
+        0\leq |\ell_1 - \ell_2| = |\ell _1 - f(x)+f(x)-\ell _2 | \leq |f(x)-\ell_1 | +|f(x_2)-\ell_2 | < \frac{\varepsilon}{2}+ \frac{\varepsilon}{2}= \varepsilon
+    \end{align*}
+    Esto prueba que $0\leq |\ell_1 - \ell_2|< \varepsilon$, entonces $|\ell_1 - \ell_2| = 0 $, es decir $\ell_1 = \ell_2$.
+\end{proof}
+
+\begin{teo}{(Criterio Secuencial)}{teo:criteriosecuencial}
+    Sea $f : A \subseteq  \mathbb{R} \longrightarrow \mathbb{R}$ y $a \in \mathbb{R}$ un punto de acumulación de $A$. Entonces los siguientes enunciados son equivalentes:
+    \begin{enumerate}
+        \item $\displaystyle \lim_{x \to a} f(x)= \ell$ 
+        \item $ \forall (x_n) \subseteq A\setminus \{a\}$ y $x_n \to a $ $\forall n \in \mathbb{N}$ $\Longrightarrow$ $f(x_n) \to \ell$
+    \end{enumerate}
+\end{teo}
+
+\begin{proof}
+   \begin{itemize}
+       \item[$(\Longrightarrow)$]
+
+        Supongamos que $\displaystyle \lim_{x \to a} f(x)= \ell$, y sea $(x_n) \subseteq A\setminus \{a\}$ una secuencia tal que  $x_n \to a$. Sea $\varepsilon>0$, por \hyperref[th:def:limite]{\textbf{Definición 1.1.3}} tenemos que 
+        \begin{align*}
+            \forall x \in A, \ 0<|x-a| < \delta \Longrightarrow |f(x)-\ell|< \varepsilon
+        \end{align*}
+        Dado que $x_n \to a$, $\exists n_0 \in \mathbb{N}$ tal que $\forall n \geq n_0$
+        \begin{align*}
+           0< |x_n-a|<\delta
+        \end{align*}
+        Por tanto,
+        \begin{align*}
+            |f(x_n)-\ell| < \varepsilon \quad \forall n \geq n_0
+        \end{align*}
+        Esto prueba que $f(x_n) \to \ell$.
+
+        \item[$(\Longleftarrow)$] Supongamos que $\displaystyle \lim_{x \to a }f(x)\neq \ell$. 
+        \begin{align*}
+            \exists \varepsilon_0, \ \forall \delta>0, \  \exists x \in A,  \ 0<|x-a|<\delta \Longrightarrow| f(x)-\ell | \geq \varepsilon_0
+        \end{align*}
+      Construimos una sucesión $(x_n) \subseteq A \setminus \{a\}$ tomando $\delta_n = \frac{1}{n}$, entonces $\exists x_n \in A \setminus \{a\}$  
+        \begin{align*}
+            0<|x_n-a|< \frac{1}{n}  
+        \end{align*}
+        Pero 
+        \begin{align*}
+            |f(x_n)-\ell| \geq \varepsilon_0 \quad \forall n \in \mathbb{N}.
+        \end{align*}
+   \end{itemize}
+   Esto implica que $x_n \to a$, ya que $|x_n-a|<1/n \to 0$, pero $|f(x_n)-\ell| $ $\forall n \in \mathbb{N}$. Así $f(x_n) \not\to \ell$ contradiciendo nuestra hipótesis.
+\end{proof}
+\textbf{Observación:} Es importante notar que la equivalencia se cumple si y solo sí \textbf{para toda} sucesión en $A\setminus \{a\}$. Es decir, no podemos tomarnos sucesiones particulares para probar el límite de una función. Por lo tanto, la negación de este teorema nos será de mucha utilidad para probar la divergencia de los límites.
+
+\begin{teo}{(Criterio de Divergencia)}{}
+     Sea $f : A \subseteq  \mathbb{R} \longrightarrow \mathbb{R}$ y $a \in \mathbb{R}$ un punto de acumulación de $A$. Entonces 
+     \begin{itemize}
+         \item  $\displaystyle \lim_{x \to a} f(x)\neq \ell$
+         \item $ \exists  (x_n) \subseteq A\setminus \{a\}$ y $x_n \to a $ $\forall n  \in \mathbb{N}$ $\Longrightarrow$ $f(x_n) \not\to \ell$
+     \end{itemize}
+\end{teo}
+\textbf{Observación:} El cuantificador de existencia nos dice que la sucesión no es necesariamente única. De esta manera podemos, por ejemplo probar que $\exists(x_n), (y_n) \subseteq A\setminus \{a\}$, tal que 
+\begin{align*}
+    \lim_{n\to\infty}x_n=\lim_{n \to \infty}y_n=a \quad \text{pero} \quad \lim_{n \to \infty}f(x_n)\neq \lim_{n \to \infty}f(y_n)
+\end{align*}
+\begin{eje}{}{}
+    Probemos mediante el \textbf{Criterio de la Divergencia} que $\displaystyle \lim_{x\to 0}\frac{1}{x}=\nexists$. Tomemos la sucesion $\displaystyle x_n= \frac{1}{n}$, claramente $x_n \to 0$. Sin embargo
+    \begin{align*}
+        f(x_n)=\frac{1}{\frac{1}{n}}=n \to +\infty
+    \end{align*}
+    Por lo tanto $f(x_n) \to +\infty$, es decir, diverge.
+\end{eje}
+
+\begin{eje}{}{}
+    Probemos que mediante el \textbf{Criterio de la Divergencia} que $\displaystyle \lim_{x\to 0}\sin\left(\frac{1}{x} \right)=\nexists$. Recordemos que si $t=n\pi$, entonces $\sin(t)=0$, y por otro lado si $t= \frac{\pi}{2}+2\pi n$ $ n \in \mathbb{Z}$ tenemos $\sin(t)=0$. Tomemos la sucesión $x_n=\frac{1}{n \pi}$. Claramente $x_n \to 0$, sin embargo
+    \begin{align*}
+        f(x_n)=\sin(x_n)=\sin(n\pi)\to 0 \quad \forall n \in \mathbb{N}
+    \end{align*}
+    Por otro lado, si tomamos la sucesión $y_n=\frac{1}{\frac{\pi}{2}+2n\pi}$, tenemos que
+    \begin{align*}
+        f(y_n)=\sin(y_n)=\sin\left(\frac{\pi}{2}+2\pi n\right)\to1 \quad \forall n \in \mathbb{N
+        }
+    \end{align*}
+    Con esto probamos que 
+    \begin{align*}
+        \lim_{n\to\infty}x_n=\lim_{n \to \infty}y_n=0 \quad \text{pero} \quad \lim_{n \to \infty}f(x_n)=0\neq 1=\lim_{n \to \infty}f(y_n)
+    \end{align*}
+    Utilizando la observación anterior, concluimos que  $\displaystyle \lim_{x\to 0}\sin\left(\frac{1}{x} \right)=\nexists$
+\end{eje}
+
+\begin{teo}{(Álgebra de Límites)}{teo1.2.4}
+    Sean $f$ y $g$ dos funciones tales que  y $a \in \mathbb{R}$  tales que $\displaystyle \lim_{x \to a}f(x)=\ell_1$ y $\displaystyle \lim_{x\to a}g(x)=\ell_2$.  Entonces:
+    \begin{enumerate}
+        \item  
+        Si  $ a \in (\text{Dom}(f))^{\prime}\cap (\text{Dom}(g))^{\prime}$.
+        \begin{itemize}
+            \item $\displaystyle \lim_{x \to a }(f+g)(x)=\ell_1 + \ell_2$ 
+            \item  $\displaystyle \lim_{x \to a }(f-g)(x)=\ell_1 - \ell_2$ 
+            \item  $\displaystyle \lim_{x \to a }(fg)(x)=\ell_1  \ell_2$ 
+        \end{itemize}
+       
+
+        \item Si $a \in (\text{Dom}(f/g))^{\prime}$ y $\ell_2\neq0$. Entonces
+        \begin{align*}
+            \lim_{x\to a }\left(\frac{f}{g}\right)(x)=\frac{\ell_1}{\ell_2}
+        \end{align*}
+
+        \item Si  $a \in (\text{Dom}(f))^{\prime}$ y $\alpha \in \mathbb{R}$ entonces si $ \displaystyle\lim_{x \to a }f(x)=\ell$, se tiene  $ \displaystyle\lim_{x \to a }\alpha f(x)=\alpha \lim_{x \to a }f(x)=\alpha \ell$
+    \end{enumerate}
+\end{teo}
+\begin{proof}
+    Utilizando el \hyperref[th:teo:criteriosecuencial]{\textbf{Teorema 1.2.2}} y el álgebra de secuencias se tiene lo pedido.
+\end{proof}
+
+\vspace{0.5cm}
+
+\textbf{Observación 1:} Es importante entender que es necesario que ambos límites existan. En caso contrario, las igualdades son falsas. Basta analizar este ejemplo:
+
+Sea $f(x)=\frac{1}{x}$ y $g(x)=x$. Es claro que 
+\begin{align*}
+    \lim_{x \to 0}f(x)=+\infty \quad \text{y} \quad \lim_{x \to 0}g(x)=0
+\end{align*}
+Sin embargo
+\begin{align*}
+    \lim_{x\to 0}f(x)\cdot g(x) \neq  \lim_{x\to 0}f(x)\cdot  \lim_{x\to 0}g(x)
+\end{align*}
+
+\textbf{Observación 2:} Del último anterior podemos deducir que si $\{f_i\}_{i=1}^n$ son funciones tales que su límite existe, entonces
+\begin{align*}
+    \lim_{x\to a}\sum_{k=1}^n f_i(x)=\sum_{k=1}^n \lim_{x\to a} f_i(x)
+\end{align*}
+
+Por lo tanto podemos establecer varias cosas directas del teorema anterior.
+\begin{itemize}
+    \item $\displaystyle \lim_{x\to a}x^2=a^2$
+
+    \item $\displaystyle \lim_{x\to a}x^n=a^n$,  $n \in \mathbb{N}$.
+
+    \item $\displaystyle \lim_{x\to c}(a_nx^n+\cdots + a_1x+ a_0)=a_nc^n+\cdots + a_1c+ a_0$, $n \in \mathbb{N}$
+
+    \item $\displaystyle \lim_{x\to c}\frac{a_nx^n+\cdots + a_1x+ a_0}{b_mx^m+\cdots + b_1x^m+ a_0}=\frac{a_nc^n+\cdots + a_1 c +a_0}{b_mc^m+\cdots + b_1c+b_0}$, $n,m \in \mathbb{N}$
+\end{itemize}
+
+\begin{eje}{}{}
+    Utilicemos el \hyperref[th:teo1.2.4]{\textbf{Teorema 1.2.4}} para calcular los siguientes límites.
+    \begin{itemize}
+        \item $\displaystyle \lim_{x\to 1}(x^2+1)(x^4-5)$. \\
+        
+Dado que se cumple $\displaystyle \lim_{x\to 1}(x^2+1)=2$ y $\displaystyle \lim_{x\to 1} (x^4-5)=-4$. Entonces, se sigue por el teorema anterior que
+\begin{align*}
+    \lim_{x\to 1}(x^2+1)(x^4-5)=\left(\lim_{x\to 1 } (x^2+1)\right)\cdot \left(\lim_{x\to 1} (x^4-5) \right)=2\cdot (-4)=-8
+\end{align*}
+
+\item $\displaystyle \lim_{x\to 2}\frac{x^3-4}{x^2+4}$ \\
+
+En este caso, tenemos la división entre dos funciones. Por lo tanto, aplicamos el apartado número 2 del teorema anterior.
+\begin{align*}
+    \lim_{x\to 2}\frac{x^3-4}{x^2+4}=\frac{\displaystyle\lim_{x\to 2}(x^3-4)}{\displaystyle \lim_{x\to 2}(x^2+4)}=\frac{4}{8}=\frac{1}{2}
+\end{align*}
+Notar que el límite del denominador $\displaystyle \lim_{x\to 2}(x^2+4)=8\neq 0$. Por lo tanto, el teorema anterior es aplicable.
+
+\item $\displaystyle \lim_{x \to 3}\frac{x^2+1}{3x-9}$. \\
+
+Notamos que $\displaystyle \lim_{x\to 3}3x-9=0$. Por lo tanto, las hipótesis del teorema anterior \textbf{no} son válidas en este caso. Así
+
+\begin{align*}
+    \lim_{x \to 3}\frac{x^2+1}{3x-9}\neq\frac{\displaystyle \lim_{x \to 3}(x^2+1)}{\displaystyle \lim_{x\to 3}(3x-9)}
+\end{align*}
+
+    \end{itemize}
+\end{eje}
+
+Ahora procederemos a dar un teorema muy importante y muy útil a la hora de calcular límites de funciones.
+
+\begin{teo}{(Teorema del Sandwich)}{teosand}
+    Sean $f,g,h: A \subseteq\mathbb{R} \to \mathbb{R}$, tres funciones, y sea $a \in \mathbb{R}$ un punto de acumulación de $A$. Supongamos que 
+    \begin{align*}
+        \forall x \in A\setminus \{a\} \quad g(x)\leq f(x) \leq h(x)
+    \end{align*}
+    Si $\displaystyle \lim_{x\to a}f(x)=\ell$ y $\displaystyle \lim_{x\to a }h(x)=\ell$, entonces $\displaystyle \lim_{x\to a}f(x)=\ell$.
+\end{teo}
+\begin{proof}
+    Sea $\varepsilon>0$. Como $\displaystyle \lim_{x \to a}f(x)=\ell$, entonces
+    \begin{align*}
+        \exists\delta_1>0, \ \forall x \in A, \ 0<|x-a|<\delta_1, \ |g(x)-\ell|<\varepsilon
+    \end{align*}
+    Entonces en particular sucede que
+    \begin{align*}
+        -\varepsilon<g(x)-\ell
+    \end{align*}
+    Análogamente, como $\displaystyle \lim_{x \to a}g(x)=\ell$, entonces
+    \begin{align*}
+         \exists\delta_2>0, \ \forall x \in A, \ 0<|x-a|<\delta_2, \ |h(x)-\ell|<\varepsilon
+    \end{align*}
+    Por lo que en particular sucede que
+    \begin{align*}
+        h(x)-\ell < \varepsilon
+    \end{align*}
+    Tomamos $\delta=\min\{\delta_1,\delta_2\}>0$. Por tanto si $\forall x \in A$, se cumple que $0<|x-a|<\delta$, entonces se cumple que $0<|x-a|<\delta_1$ y $0<|x-a|<\delta_2$. De esta manera
+    \begin{align*}
+        g(x)&\leq f(x)\leq h(x) \\
+       -\varepsilon<g(x)-\ell &\leq f(x)- \ell \leq h(x)-\ell < \varepsilon 
+    \end{align*}
+    Esto es equivalente a 
+    \begin{align*}
+        \forall \varepsilon>0, \ \exists \delta>0, \ \forall x \in A, \ 0<|x-a|<\delta, \ |f(x)-\ell| < \varepsilon
+    \end{align*}
+    Lo que por definición es igual a $\displaystyle \lim_{x\to a} f(x)=\ell$. 
+\end{proof}
+
+\begin{eje}{}{}
+\begin{itemize}
+    \item $\displaystyle \lim_{x\to 0}\frac{\sin(x)}{x}$. \\
+    
+    Es claro que no podemos utilzar el \hyperref[th:teo1.2.4]{\textbf{Teorema 1.2.4}} para evaluar este límite. Sin embago podemos utilizar las siguientes desigualdades.
+
+    \begin{align*}
+        x-\frac{x^3}{6}\leq \sin(x)\leq x \quad \forall x \geq 0.
+    \end{align*}
+    y 
+    \begin{align*}
+        x \leq \sin(x)\leq x - \frac{x^3}{6} \quad \forall x \leq 0.
+    \end{align*}
+    Por lo tanto, se sigue que 
+    \begin{align*}
+        x-\frac{x^2}{6} \leq \frac{\sin(x)}{x}\leq 1 \quad \forall x \neq 0.
+    \end{align*}
+    Dado que $\displaystyle \lim_{x \to 0}(1-\frac{x^2}{6})=1$. Podemos utlizar \hyperref[th:teosand]{\textbf{Teorema del Sandwich}} para obtener
+    \begin{align*}
+        \lim_{x\to 0}\frac{\sin(x)}{x}=1.
+    \end{align*}
+    \end{itemize}
+\end{eje}
+
+\begin{eje}{}{}
+    Sea $f : \mathbb{R} \to \mathbb{R}$ dada por 
+    \begin{align*}
+        f(x)=\begin{cases}
+            \displaystyle x\sin\left( \frac{1}{x}\right) \ &\text{si} \ x\neq 0 \\
+            0 &\text{si} \ x=0
+        \end{cases}
+    \end{align*}
+    Notemos que $\forall x \in \mathbb{R}$ se cumple que $|\sin(x)|\leq 1$. Por tanto, si $x\neq 0$ tenemos que 
+    \begin{align*}
+        0\leq \left|\sin\left( \frac{1}{x}\right) \right|&\leq 1 \\
+        0 \leq  \left|x\sin\left( \frac{1}{x}\right) \right|&\leq |x|
+    \end{align*}
+    Como $\displaystyle \lim_{x \to 0} |x| = 0$. Por \hyperref[th:teosand]{\textbf{Teorema del Sandwich}} tenemos que 
+    \begin{align*}
+        \lim_{x\to0}\left|x\sin\left( \frac{1}{x}\right) \right|=0
+    \end{align*}
+    Pero por {\Large \textbf{Citar Problema}}
+\end{eje}
+
+\section{Límites Laterales}
+
+\begin{defi}{}{}
+    Sea $f : A \subseteq \mathbb{R} \to \mathbb{R}$ y $a \in \mathbb{R}$. Denotamos los conjuntos $A^+=A \cap (a,+\infty)$ y $A^{-}=A\cap (-\infty,a)$.
+    \begin{itemize}
+        \item Si $a \in \mathbb{R}$ es un punto de acumulación de $A^+$, entonces el \textbf{límite lateral por la derecha} de $f$ se denota por:
+\begin{align*}
+    \lim_{x\to a^+}f(x)=\ell\quad \text{o} \quad \lim_{\underset{x \in A^+}{x\to a}}f(x)=\ell
+\end{align*}
+
+ \item Si $a \in \mathbb{R}$ es un punto de acumulación de $A^+$, entonces el \textbf{límite lateral por la izquierda} de $f$ se denota por:
+ \begin{align*}
+    \lim_{x\to a^-}f(x)=\ell\quad \text{o} \quad \lim_{\underset{x \in A^-}{x\to a}}f(x)=\ell
+\end{align*}
+    \end{itemize}
+\end{defi}
+
+\begin{eje}{}{}
+    Sea $f:\mathbb{R}\setminus\{0\}\to \mathbb{R}$, dada por $\displaystyle f(x)=\frac{|x|}{x}$. Calculemos sus límites laterales en $x=0$.
+
+    \begin{itemize}
+        \item Para $x>0$, $|x|=x$, entonces $f(x)=1$
+        \item Para $x<0$, $|x|=-x$, entonces $f(x)=-1$
+    \end{itemize}
+    Entonces sus límites laterales en $x=0$ son:
+    \begin{itemize}
+        \item $\displaystyle \lim_{x \to 0^+}\frac{|x|}{x}=1$
+
+        \item  $\displaystyle \lim_{x \to 0^+}\frac{|x|}{x}=-1$
+    \end{itemize}
+\end{eje}
+\begin{eje}{}{}
+    Calculemos los límites laterales de la función
+    \begin{align*}
+        f(x)=\begin{cases}
+            x^2, \quad &x<2 \\
+            3x-2, \quad &x\geq 2
+        \end{cases}
+    \end{align*}
+    En $x=2$.
+    \begin{itemize}
+        \item Cuando $x<2$, $f(x)=x^2$. Por tanto
+        \begin{align*}
+            \lim_{x\to 2^+}x^2=4
+        \end{align*}
+
+        \item Cuando $x\geq 2$, $f(x)=3x-2$. De este modo
+        \begin{align*}
+            \lim_{x\to 2-}3x-2=4
+        \end{align*}
+    \end{itemize}
+\end{eje}
+
+Los límites laterales son en general una herramienta muy util para calcular límites. En especial para una función dada por partes. Sin embargo, es necesario analizar los casos en que los límites laterales son iguales o diferentes; y apartir de esto, concluir ciertas propiedades de la función que se está estudiando. \\
+
+El siguiente teorema nos ayudará a demostrar cuando un límite existe o no existe, a partir de los límites laterales.
+
+\begin{teo}{(Existencia del Límite Lateral)}{}
+    Sea $f: A \subseteq \mathbb{R}\to \mathbb{R}$ y $a \in \mathbb{R}$ un punto de acumulación de los conjuntos $A^+$ y $A^-$, entonces 
+    \begin{align*}
+        \lim_{x\to a }f(x)=\ell \Longleftrightarrow \left( \lim_{x\to a^-}f(x)=\ell\right) \wedge \left(\lim_{x \to a+}f(x)=\ell \right)
+    \end{align*}
+\end{teo}
+
+\begin{eje}{}{}
+    Sea $f: \mathbb{R}\setminus\{0\} \to \mathbb{R}$ dada por 
+    \begin{align*}
+        f(x)=\begin{cases}
+            1 &\text{si}\  x \geq0 \\
+            0 &\text{si} \ x< 0
+        \end{cases}
+    \end{align*}
+    Claramente 
+    \begin{itemize}
+        \item $\displaystyle \lim_{x\to0^-}f(x)=0$
+        \item $\displaystyle \lim_{x\to 0^+}f(x)=1$
+    \end{itemize}
+    Dado que $\displaystyle \lim_{x\to0^-}f(x)\neq \lim_{x\to 0^+}f(x)$. Entonces $\displaystyle \lim_{x\to 0}f(x)=\nexists$
+\end{eje}
+
+\section{Límites Infinitos}
+
+\begin{defi}{(Límites Infinitos)}{}
+    Sea $f:A \subseteq \mathbb{R} \to \mathbb{R}$ y $\ell \in \mathbb{R}$.
+
+    \begin{itemize}
+        \item Si $A$ no es acotado superiormente, entonces
+        \begin{align*}
+            \lim_{x \to +\infty}f(x)=\ell \Longleftrightarrow \forall \varepsilon>0, \ \exists K >0, \ \forall x \in A ,  \ x \geq K, \ |f(x)-\ell| <\varepsilon
+        \end{align*}
+
+        \item Si $A$ no es acotado inferiormente, entonces
+        \begin{align*}
+             \lim_{x \to -\infty}f(x)=\ell \Longleftrightarrow \forall \varepsilon>0, \ \exists K <0, \ \forall x \in A ,  \ x \leq K, \ |f(x)-\ell| <\varepsilon
+        \end{align*}
+    \end{itemize}
+\end{defi}
+
+\textbf{Observación:} Por la propia definición de límite infinito, podemos obtener por analogía que el álgebra de límites, la unicidad del límite, criterios de divergencia y teorema del sandwich, se siguen cumpliendo para los límites al infinito.
+
+\begin{eje}{}{}
+    Sea $f: \mathbb{R}\setminus\{0\} \to \mathbb{R}$, dada por $\displaystyle f(x)=\frac{1}{x}$. Probemos que $\displaystyle \lim_{x\to \infty}f(x)=0$.\\
+
+    Sea $\varepsilon>0$. Sabemos por propiedad arquimediana que $\exists K \in \mathbb{N}$ tal que $\displaystyle \frac{1}{K}<\varepsilon$. Por lo tanto, si $x\geq K$, entonces $\displaystyle \frac{1}{x}\leq \frac{1}{K}$. Así
+
+    \begin{align*}
+        |f(x)-0|=\frac{1}{x}\leq \frac{1}{K}<\varepsilon
+    \end{align*}
+    Por lo tanto, $\displaystyle \lim_{x\to \infty}f(x)=0$.
+\end{eje}
+
+\begin{eje}{}{}
+    Probemos para la función del ejemplo anterior, que $\displaystyle \lim_{x\to -\infty}f(x)=0$. \\
+
+    Sea $\varepsilon>0$. Por propiedad arquimediana $\exists K \in \mathbb{N}$, tal que $\displaystyle \frac{1}{K}<\varepsilon$, entonces si $x \leq -K$ tenemos que 
+    \begin{align*}
+        |f(x)-0|=-\frac{1}{x}=\frac{1}{-x}\leq \frac{1}{K}<\varepsilon
+    \end{align*}
+    De esta manera, $\displaystyle \lim_{x\to -\infty}f(x)=0$.
+\end{eje}
+
+\begin{teo}{}{}
+    Sea $f:A \subseteq\mathbb{R} \to \mathbb{R}$
+\end{teo}
+
+
+
+\end{document}
+
+\begin{eje}{}{}
+  \begin{itemize}
+    \item $\displaystyle \lim_{x\to -1} \sqrt{x}=\nexists$. 
+  
+      \item $\displaystyle \lim_{x\to 1} \frac{x^2-1}{x-1}=2$
+
+       \item $\displaystyle \displaystyle \lim_{x\to 0}\frac{1}{x}=\nexists$. Ya que si tomamos $x_n=\displaystyle \frac{1}{n} \to 0 $, sin embargo $f(x_n)=\frac{1}{1/n}=n \to \infty$, por lo que no converge.
+  \end{itemize}  
+\end{eje}
